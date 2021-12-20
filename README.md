@@ -1,4 +1,4 @@
-# dedi-cms
+# Desa Digital - Content Management System
 
 ## Build Setup
 
