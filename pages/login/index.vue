@@ -135,5 +135,5 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-@import './Login.pcss';
+@import './login.pcss';
 </style>
