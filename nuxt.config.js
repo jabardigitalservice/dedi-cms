@@ -128,7 +128,7 @@ export default {
     ],
     postcss: {
       plugins: {
-        'postcss-import': {}
+        'postcss-import': true
       }
     }
   }
