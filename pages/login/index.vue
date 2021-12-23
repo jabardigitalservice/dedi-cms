@@ -117,18 +117,16 @@ export default {
 
       try {
         await this.$auth.loginWith('local', { data: { email: this.email, password: this.password } })
-        this.loading = false
       } catch (err) {
+        if (err.response.status === 429) {
+          this.$router.push('/forgot-password')
+        }
         if (err.response.status === 401) {
           this.error = true
           this.errorMessage = err.response.data?.error
-          this.totalFailedLogin++
-          if (this.totalFailedLogin > 2) {
-            this.$router.push('/forgot-password')
-          }
         }
-        this.loading = false
       }
+      this.loading = false
     }
   }
 }
