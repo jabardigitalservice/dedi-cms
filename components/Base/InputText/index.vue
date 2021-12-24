@@ -21,7 +21,7 @@
         v-if="$slots['icon-left']"
         :class="{
           'input-text__icon-left': true,
-          'input-text__icon-left--border': iconLeftType === 'border' ? true : false,
+          'input-text__icon-left--border': iconLeftType === 'border',
           'input-text__icon-left--focus': iconLeftType !== 'border' && isTyped
         }"
         @click="onClickEye"
@@ -47,7 +47,7 @@
         v-if="type === 'password' || $slots['icon-right']"
         :class="{
           'input-text__icon-right': true,
-          'input-text__icon-right--border': iconRightType === 'border' ? true : false,
+          'input-text__icon-right--border': iconRightType === 'border',
           'input-text__icon-right--focus': isTyped
         }"
       >
