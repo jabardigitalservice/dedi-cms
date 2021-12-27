@@ -1,0 +1,40 @@
+.login {
+  background-image: url('~assets/images/background-login.svg');
+  @apply bg-no-repeat bg-bottom flex justify-center items-center h-screen w-screen bg-[#EDEFF3];
+
+  &__form {
+    @apply flex h-[558px] rounded-full mt-[60px] relative;
+    
+    &-background-side {
+      @apply rounded-l-2xl;
+    }
+
+    &-logo {
+      @apply absolute left-[24px] top-[24px] flex flex-col gap-1;
+    }
+
+    &-login {
+      @apply w-[390px] bg-white rounded-r-2xl py-6 pr-12 flex flex-col gap-6;
+
+      &-title {
+        @apply font-roboto font-bold text-base leading-[26px];
+      }
+
+      &-error-message {
+        @apply !gap-4;
+      }
+
+      &-password {
+        @apply flex flex-col gap-3;
+      }
+
+      &-forgot-password {
+        @apply cursor-pointer text-sm leading-[18px] font-bold text-blue-600;
+      }
+
+      &-button-submit {
+        @apply h-[38px] !py-0 active:(!my-0 w-[calc(100%-2px)]));
+      }
+    }
+  }
+}
