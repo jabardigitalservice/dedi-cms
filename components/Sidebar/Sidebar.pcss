@@ -1,0 +1,41 @@
+/* exact link will show the primary color for only the exact matching link */
+a.nuxt-link-exact-active {
+  @apply bg-green-50 text-green-700;
+}
+
+.sidebar {
+  @apply p-6;
+
+  &__logo {
+    @apply flex flex-col gap-1 mb-10;
+  }
+
+  &__menu {
+    @apply flex flex-col gap-2;
+
+    &-item {
+      @apply text-body h-[50px] w-full p-[15px] flex justify-between 
+      items-center rounded-lg hover:(bg-green-50 text-green-700);
+
+      &-box {
+        @apply flex gap-3 items-center;
+      }
+
+      &-icon {
+        @apply flex items-center;
+      }
+
+      &-title {
+        @apply font-medium text-sm leading-[18px];
+      }
+
+      &-arrow {
+        @apply cursor-pointer;
+      }
+    }
+
+    &-title {
+      @apply h-[50px] p-[15px] font-roboto text-blue-gray-600 font-medium leading-[26px];
+    }
+  } 
+}

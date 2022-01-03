@@ -6,6 +6,7 @@ export default {
       roboto: ['Roboto', 'serif']
     },
     colors: {
+      body: '#788896',
       transparent: 'transparent',
       white: '#FFF',
       black: '#000',

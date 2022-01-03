@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard">
-    <div class="dashboard__sidebar" />
+    <Sidebar class="dashboard__sidebar" />
     <div class="dashboard__header">
       <Header />
       <div class="dashboard__content">
@@ -23,11 +23,11 @@ export default {
   w-full h-screen grid grid-cols-[minmax(260px,15%),1fr];
 
   &__sidebar {
-    @apply bg-white;
+    @apply bg-white h-screen;
   }
 
   &__header {
-    @apply w-full max-h-screen overflow-y-auto;
+    @apply w-full overflow-y-auto;
   }
 
   &__content {
