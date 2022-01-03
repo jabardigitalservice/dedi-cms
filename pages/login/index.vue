@@ -31,7 +31,7 @@
           :error="error"
         >
           <template #icon-left>
-            <img width="16" height="16" src="~/assets/icons/icon-email.svg" alt="icon email">
+            <img width="16" height="16" src="~/assets/icons/email.svg" alt="icon email">
           </template>
         </BaseInputText>
         <div class="login__form-login-password">
@@ -45,7 +45,7 @@
             icon-left-type="border"
           >
             <template #icon-left>
-              <img width="16" height="16" src="~/assets/icons/icon-key.svg" alt="icon key">
+              <img width="16" height="16" src="~/assets/icons/key.svg" alt="icon key">
             </template>
           </BaseInputText>
           <div class="flex justify-end items-center">
