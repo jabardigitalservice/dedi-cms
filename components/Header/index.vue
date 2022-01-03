@@ -16,7 +16,6 @@
           :value="8"
         >
           <jds-icon
-            fill="#B9C3D3"
             name="bell"
             size="20px"
           />
@@ -26,7 +25,7 @@
       <div
         class="header-dashboard__user"
       >
-        <jds-popover :options="optionsPopover" :value="isUserDropdownOpen">
+        <jds-popover ref="popover" v-clickaway="onClickAwayPopover" :options="optionsPopover" :value="isUserDropdownOpen">
           <template #activator>
             <div class="header-dashboard__user-activator">
               <!-- TODO: Replace dummy image with user avatar -->
@@ -47,11 +46,12 @@
                   Superadmin
                 </p>
                 <jds-icon
-                  fill="#069550"
                   name="chevron-right"
                   size="16px"
-                  class="header-dashboard__user-icon"
-                  :class="isUserDropdownOpen ? 'rotate-90' : ''"
+                  :class="{
+                    'header-dashboard__user-icon': true,
+                    'header-dashboard__user-icon--rotate': isUserDropdownOpen
+                  }"
                 />
               </button>
             </div>
@@ -60,8 +60,18 @@
             <ul
               class="header-dashboard__user-list-action"
             >
-              <div class="header-dashboard__user-list-action-logout" @click="logout">
-                <div class="header-dashboard__user-list-action-logout-button">
+              <div
+                class="header-dashboard__user-list-action-logout"
+                @mouseover="menuActive = 'logout'"
+                @mouseout="menuActive = null"
+                @click="logout"
+              >
+                <div
+                  :class="{
+                    'header-dashboard__user-list-action-logout-button': true,
+                    'header-dashboard__user-list-action-logout-button--hover': menuActive === 'logout'
+                  }"
+                >
                   <jds-icon
                     name="door-exit"
                     size="16px"
@@ -78,28 +88,31 @@
 </template>
 
 <script>
+import { directive as clickaway } from 'vue-clickaway'
+import optionsPopover from '@/constants/optionsPopover'
 export default {
   name: 'ComponentHeader',
+  directives: {
+    clickaway
+  },
   data () {
     return {
       notification: true,
       isUserDropdownOpen: false,
-      pageName: 'Dashboard',
-      optionsPopover: {
-        strategy: 'fixed',
-        placement: 'bottom-end',
-        modifiers: [
-          {
-            name: 'offset',
-            options: {
-              offset: [0, 4]
-            }
-          }
-        ]
-      }
+      optionsPopover,
+      menuActive: null
+    }
+  },
+  computed: {
+    pageName () {
+      return this.$store.state.pageName
     }
   },
   methods: {
+    onClickAwayPopover () {
+      this.isUserDropdownOpen = false
+      this.$refs.popover.close()
+    },
     logout () {
       this.$auth.logout()
     },
@@ -112,14 +125,4 @@ export default {
 
 <style lang="postcss">
 @import './Header.pcss';
-
-.notification__custom-badge .jds-badge__indicator {
-  position: relative !important;
-  left: -12px !important;
-}
-.notification__custom-badge .jds-badge__indicator span {
-  color: white !important;
-  font-weight: bold !important;
-}
-
 </style>

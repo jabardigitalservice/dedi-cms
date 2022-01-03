@@ -1,3 +1,17 @@
+.notification__custom-badge {
+  @apply text-green-700;
+
+  & .jds-badge__indicator {
+    position: relative !important;
+    left: -12px !important;
+  }
+
+  & .jds-badge__indicator span {
+    color: white !important;
+    font-weight: bold !important;
+  }
+}
+
 .header-dashboard {
   @apply w-full h-[72px] sticky top-0 px-6 flex items-center justify-between bg-white;
 
@@ -21,15 +35,19 @@
     }
 
     &-box {
-      @apply flex items-center gap-2;
+      @apply flex items-center gap-2 text-green-700;
     }
 
     &-title {
-      @apply font-medium text-sm leading-[23px] text-green-700;
+      @apply font-medium text-sm leading-[23px] ;
     }
 
     &-icon {
       @apply w-4 h-4 transform transition-all ease-in duration-150;
+
+      &--rotate {
+        @apply rotate-90;
+      }
     }
 
     &-popover {
@@ -40,10 +58,14 @@
       @apply flex flex-col gap-2;
 
       &-logout {
-        @apply p-2 rounded-md hover:bg-gray-100 cursor-pointer;
+        @apply p-2 rounded-md hover:(bg-green-50) cursor-pointer;
 
         &-button {
           @apply flex gap-2 items-center font-medium text-sm text-gray-800;
+
+          &--hover {
+            @apply text-green-700 font-bold;
+          }
         }
       }
     }
