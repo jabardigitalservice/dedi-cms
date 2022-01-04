@@ -15,7 +15,9 @@
             class="login__form-login-error-message"
             show
             variant="error"
+            dismissible
             :message="errorMessage"
+            @click:close="error = false"
           />
         </div>
         <BaseInputText
@@ -26,7 +28,7 @@
           label="E-mail"
           label-italic
           placeholder="Contoh: agus.permadi@gmail.com"
-          type="email"
+          type="text"
           icon-left-type="border"
           :error="error"
         >
@@ -118,12 +120,21 @@ export default {
       try {
         await this.$auth.loginWith('local', { data: { email: this.email, password: this.password } })
       } catch (err) {
-        if (err.response.status === 429) {
+        if (err.response?.status === 429) {
           this.$router.push('/forgot-password')
         }
-        if (err.response.status === 401) {
+        if (err.response?.status === 422) {
+          const errors = err.response.data?.errors
+          this.errorMessage = errors[Object.keys(errors)[0]] // get first property from errors object
+          this.error = !!this.errorMessage // if error message undefined section message cannot show error
+        }
+        if (err.response?.status === 401) {
           this.error = true
           this.errorMessage = err.response.data?.error
+        }
+        if (!err.response) {
+          this.error = true
+          this.errorMessage = 'Mohon maaf server sedang dalam gangguan'
         }
       }
       this.loading = false
