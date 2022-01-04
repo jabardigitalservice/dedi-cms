@@ -56,7 +56,6 @@
           class="cursor-pointer"
           :name="iconEye"
           size="1rem"
-          fill="#424242"
           @click="onClickEye"
         />
         <slot name="icon-right" />
