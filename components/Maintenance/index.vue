@@ -1,6 +1,6 @@
 <template>
   <div class="maintenance">
-    <img src="~/assets/images/maintenance.svg" alt="Image Maintenance Desa Digital">
+    <img width="363" height="229" src="~/assets/images/maintenance.svg" alt="Image Maintenance Desa Digital">
     <span class="maintenance__title">
       Oops, fitur ini sedang dalam tahap pengembangan
     </span>
