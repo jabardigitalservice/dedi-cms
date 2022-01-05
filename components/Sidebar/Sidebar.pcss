@@ -10,9 +10,28 @@ a.nuxt-link-exact-active {
     @apply flex flex-col gap-1 mb-10;
   }
 
-  &__menu {
-    @apply flex flex-col gap-2;
+  &__container-menu {
+    scrollbar-color: #E0E0E0 white;
+    scrollbar-width: thin;
 
+    @apply w-[calc(100%+1rem)] h-[calc(100%-100px)] overflow-y-scroll;
+
+    &::-webkit-scrollbar{
+      @apply w-[6px];
+    }
+  
+    &::-webkit-scrollbar-track {
+      @apply bg-white;
+    }
+  
+    &::-webkit-scrollbar-thumb {
+        @apply bg-gray-300 rounded-[6px];
+    }
+  }
+
+  &__menu {
+    @apply flex flex-col gap-2 w-[calc(100%-1rem)];
+    
     &-item {
       @apply text-body h-[50px] w-full p-[15px] flex justify-between 
       items-center rounded-lg hover:(bg-green-50 text-green-700);
