@@ -1,0 +1,19 @@
+.submenu {
+  @apply bg-white w-full h-14 rounded-lg px-4 pt-2 relative;
+
+  &__wrapper{
+    @apply py-2 px-[10px] flex gap-9;
+  }
+
+  &__menu {
+    @apply text-blue-gray-800 font-medium text-sm leading-[18px] text-center flex flex-col items-center cursor-pointer;
+
+    &--active {
+      @apply text-green-700 font-bold;
+    }
+
+    &-indicator-active {
+      @apply absolute bottom-0 h-[3px] w-[70px] bg-green-700 rounded-t-lg self-center;
+    }
+  }
+}
