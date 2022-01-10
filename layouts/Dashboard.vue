@@ -31,7 +31,7 @@ export default {
   }
 
   &__content {
-    @apply w-full h-[calc(100%-72px)] py-[14px] px-6;
+    @apply w-full h-[calc(100%-72px)] px-6 py-[26px];
   }
 }
 </style>
