@@ -1,21 +1,23 @@
 <template>
-  <div class="submenu">
-    <div class="submenu__wrapper">
-      <span
-        v-for="(menu, index) in menus"
-        :key="index"
-        :class="{
-          'submenu__menu': true,
-          'submenu__menu--active': activeMenu === menu.value
-        }"
-        @click="activeMenu = menu.value"
-      >
-        {{ menu.label }}
-        <div
-          v-if="activeMenu === menu.value"
-          class="submenu__menu-indicator-active"
-        />
-      </span>
+  <div class="sticky-submenu">
+    <div class="submenu">
+      <div class="submenu__wrapper">
+        <span
+          v-for="(menu, index) in menus"
+          :key="index"
+          :class="{
+            'submenu__menu': true,
+            'submenu__menu--active': activeMenu === menu.value
+          }"
+          @click="activeMenu = menu.value"
+        >
+          {{ menu.label }}
+          <div
+            v-if="activeMenu === menu.value"
+            class="submenu__menu-indicator-active"
+          />
+        </span>
+      </div>
     </div>
   </div>
 </template>
