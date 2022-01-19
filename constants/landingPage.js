@@ -1,4 +1,4 @@
-export const headerTable = [
+export const headerTableHeroBanner = [
   {
     key: 'title',
     text: 'Judul Banner'
@@ -18,18 +18,18 @@ export const headerTable = [
   }
 ]
 
-export const header = {
+export const headerHeroBanner = {
   title: 'Daftar Hero Banner',
   descriptions: 'Daftar Hero Banner yang ada digunakan di landing page.'
 }
 
 export const menus = [
   {
-    value: 'herobanner',
+    value: 'HeroBanner',
     label: 'Hero Banner'
   },
   {
-    value: 'testimonials',
+    value: 'Testimonials',
     label: 'Testimonials'
   }
 ]
