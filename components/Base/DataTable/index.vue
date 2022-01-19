@@ -1,5 +1,5 @@
 <template>
-  <div class="rounded-lg overflow-hidden border border-gray-100">
+  <div class="datatable">
     <JdsDataTable
       local-sort
       v-bind="$props"
@@ -47,15 +47,5 @@ export default {
 </script>
 
 <style lang="postcss">
-.jds-data-table__column-wrapper span {
-  @apply text-left;
-}
-
-.jds-options__filter{
-  @apply !w-full;
-}
-
-.jds-pagination__page-control__select__input .jds-input-text__input-wrapper {
-  @apply !h-[36px];
-}
+@import './DataTable.pcss';
 </style>
