@@ -1,0 +1,24 @@
+/** Override default jds popover content styling */
+.datatable__action-button .jds-popover__content {
+  z-index: 20 !important;
+}
+
+.action {
+
+  &__icon{
+    @apply ml-[10px] transition-all ease-in duration-200;
+  }
+
+  &__dropdown {
+    @apply bg-white p-[18px] rounded-lg border border-gray-200 shadow-xl;
+
+    &-list {
+      @apply flex flex-col gap-4;
+    }
+
+    &-item {
+      @apply text-sm leading-4 text-gray-800;
+    }
+  }
+
+}

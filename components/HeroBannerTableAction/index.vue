@@ -1,14 +1,14 @@
 <template>
   <JdsPopover
-    class="agenda-table__action-button"
+    class="datatable__action-button"
     :value="isDropdownOpen"
     :options="popoverOptions"
   >
     <template #activator>
-      <button
+      <BaseButton
         v-on-clickaway="closeDropdown"
-        class="py-[6px] px-4 rounded-lg border border-green-700 flex items-center font-lato
-        font-bold text-sm leading-5 text-green-700 hover:bg-green-50"
+        variant="secondary"
+        size="small"
         @click="toggleDropdown"
       >
         Aksi
@@ -16,37 +16,26 @@
           name="chevron-down"
           size="14px"
           fill="#069550"
-          class="ml-[10px] transition-all ease-in duration-200"
+          class="action__icon"
           :class="isDropdownOpen ? '-rotate-180' : null"
         />
-      </button>
+      </BaseButton>
     </template>
 
-    <div class="bg-white p-[18px] rounded-lg border border-gray-200 shadow-xl">
-      <ul class="flex flex-col gap-4">
+    <div class="action__dropdown">
+      <ul class="action__dropdown-list">
         <li>
-          <router-link
-            to="#"
-            class="font-lato text-sm leading-4 text-gray-800"
-          >
-            Lihat Detail
-          </router-link>
-        </li>
-        <li>
-          <button class="font-lato text-sm leading-4 text-gray-800">
-            Pratinjau
+          <button class="action__dropdown-item">
+            Detail
           </button>
         </li>
         <li>
-          <router-link
-            to="#"
-            class="font-lato text-sm leading-4 text-gray-800"
-          >
+          <button class="action__dropdown-item">
             Ubah
-          </router-link>
+          </button>
         </li>
         <li>
-          <button class="font-lato text-sm leading-4 text-gray-800">
+          <button class="action__dropdown-item">
             Hapus
           </button>
         </li>
@@ -76,7 +65,7 @@ export default {
         modifiers: [
           {
             name: 'offset',
-            options: { offset: [-8, 8] }
+            options: { offset: [0, 8] }
           }
         ]
       }
@@ -93,9 +82,6 @@ export default {
 }
 </script>
 
-<style>
-/** Override default jds popover content styling */
-.agenda-table__action-button .jds-popover__content {
-  z-index: 20 !important;
-}
+<style lang="postcss">
+@import './HeroBannerTableAction.pcss';
 </style>
