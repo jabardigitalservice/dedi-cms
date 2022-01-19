@@ -1,9 +1,6 @@
 <template>
   <jds-button
-    :class="{
-      'jds-button--circle' : variant === 'circle',
-      'jds-button--disabled' : variant === 'disabled',
-    }"
+    :class="[renderClasses]"
     v-bind="{...props,...$attrs}"
     v-on="$listeners"
   >
@@ -59,6 +56,13 @@ export default {
     textLoading: {
       type: String,
       default: ''
+    },
+    /**
+     * Size of buttton
+     */
+    size: {
+      type: String,
+      default: 'base'
     }
   },
   computed: {
@@ -72,6 +76,9 @@ export default {
         return props
       }
       return this.$props
+    },
+    renderClasses () {
+      return `jds-button--${this.variant}-${this.size === 'base' ? '' : this.size}`
     }
   }
 }
