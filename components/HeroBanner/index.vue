@@ -100,26 +100,32 @@ export default {
       return options
     }
   },
+  watch: {
+    query: {
+      deep: true,
+      handler () {
+        this.$fetch()
+      }
+    }
+  },
   mounted () {
     this.pagination.itemsPerPageOptions = this.generateItemsPerPageOptions
   },
   methods: {
     perPageChange (value) {
-      this.query.per_page = value
+      if (value) {
+        this.query.per_page = value
+      }
       this.query.current_page = 1
-      this.$fetch()
     },
     pageChange (value) {
       this.query.current_page = value
-      this.$fetch()
     },
     nextPage (value) {
       this.query.current_page = value
-      this.$fetch()
     },
     previousPage (value) {
       this.query.current_page = value
-      this.$fetch()
     }
   }
 }
