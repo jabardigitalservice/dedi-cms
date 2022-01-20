@@ -19,22 +19,18 @@ export default {
   props: {
     headers: {
       type: Array,
-      require: true,
       default: () => []
     },
     items: {
       type: Array,
-      require: false,
       default: () => []
     },
     loading: {
       type: Boolean,
-      require: false,
       default: false
     },
     pagination: {
       type: Object,
-      require: false,
       default: () => {}
     }
   },
