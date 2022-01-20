@@ -88,7 +88,7 @@ export default {
       return this.data.map((item) => {
         return {
           ...item,
-          status: item.is_active === true ? 'Aktif' : 'Non-Aktif'
+          status: item.is_active ? 'Aktif' : 'Non-Aktif'
         }
       })
     },
