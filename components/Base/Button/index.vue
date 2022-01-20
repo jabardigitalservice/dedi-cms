@@ -78,7 +78,7 @@ export default {
       return this.$props
     },
     renderClasses () {
-      return `jds-button--${this.variant}-${this.size === 'base' ? '' : this.size}`
+      return `jds-button--${this.variant + (this.size === 'base' ? '' : '-' + this.size)}`
     }
   }
 }
