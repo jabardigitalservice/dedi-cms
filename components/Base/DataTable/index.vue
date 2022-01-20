@@ -33,11 +33,6 @@ export default {
       type: Object,
       default: () => {}
     }
-  },
-  data () {
-    return {
-
-    }
   }
 }
 </script>
