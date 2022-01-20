@@ -3,7 +3,7 @@
     <h1 class="subheader__title">
       {{ title }}
     </h1>
-    <p v-if="true" class="subheader__descriptions">
+    <p v-if="descriptions" class="subheader__descriptions">
       {{ descriptions }}
     </p>
   </div>
