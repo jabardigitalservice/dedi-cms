@@ -1,7 +1,6 @@
 <template>
   <div class="datatable">
     <JdsDataTable
-      local-sort
       v-bind="$props"
       v-on="$listeners"
     >

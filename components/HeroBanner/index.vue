@@ -41,6 +41,7 @@
         @previous-page="previousPage"
         @page-change="pageChange"
         @per-page-change="perPageChange"
+        @change:sort="sortChange"
       >
         <!-- eslint-disable-next-line vue/valid-v-slot -->
         <template #item.action="{item}">
@@ -128,6 +129,16 @@ export default {
     },
     previousPage (value) {
       this.query.current_page = value
+    },
+    sortChange (value) {
+      const key = Object.keys(value)[0]
+      if (key && value[key] !== 'no-sort') {
+        this.query.sort_by = value[key]
+        this.query.order_by = key === 'status' ? 'is_active' : ''
+      } else {
+        this.query.order_by = 'created_at'
+        this.query.sort_by = 'desc'
+      }
     }
   }
 }
