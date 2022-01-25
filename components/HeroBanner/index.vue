@@ -71,6 +71,8 @@ export default {
       },
       query: {
         per_page: 5,
+        sort_by: 'desc',
+        order_by: 'created_at',
         current_page: 1
       }
     }
