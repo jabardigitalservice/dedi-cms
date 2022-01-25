@@ -18,7 +18,7 @@ const mainMenu = [
     arrow: true
   },
   {
-    name: 'Desa',
+    name: 'Desa Digital',
     path: 'village',
     icon: 'desa',
     arrow: true
