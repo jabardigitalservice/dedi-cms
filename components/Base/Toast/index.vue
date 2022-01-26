@@ -5,14 +5,14 @@
   >
     <div
       v-if="isOpen"
-      class="fixed z-1000 top-[88px] w-full flex justify-center min-h-[55px] pointer-events-none"
+      class="toast"
     >
       <JdsSectionMessage
         :show="isOpen"
         :variant="type"
         :message="message"
         dismissible
-        class="w-fit min-w-[150px] shadow-lg pointer-events-auto"
+        class="toast__section-message"
         @click:close="onClose"
       />
     </div>
@@ -46,3 +46,7 @@ export default {
   }
 }
 </script>
+
+<style lang="postcss">
+@import './Toast.pcss';
+</style>
