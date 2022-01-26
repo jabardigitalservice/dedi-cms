@@ -221,6 +221,7 @@ export default {
         image_original_name: '',
         fileImage: null
       }
+      this.isDragOver = false
       this.linkErrorMessage = ''
       this.dropFileErrorMessage = ''
     },
