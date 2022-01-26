@@ -4,7 +4,7 @@
     <div class="herobanner__datatable">
       <div class="herobanner__datatable-header">
         <div class="herobanner__datatable-header-box-right">
-          <BaseButton variant="secondary">
+          <BaseButton variant="secondary" @click="addHeroBanner">
             <template #icon>
               <div class="herobanner__datatable-header-add">
                 <div class="herobanner__datatable-header-plus-icon">
@@ -30,6 +30,7 @@
           icon
           :button="false"
           class="herobanner__datatable-header-search"
+          @input="onSearchChange"
         />
       </div>
       <BaseDataTable
@@ -49,10 +50,12 @@
         </template>
       </BaseDataTable>
     </div>
+    <AddHeroBanner :total-banner="pagination.totalRows" :show="showAddHeroBanner" @added="onSuccessAdd" @close="showAddHeroBanner = false" />
   </div>
 </template>
 
 <script>
+import { debounce } from 'lodash'
 import { headerTableHeroBanner, headerHeroBanner } from '@/constants/landingPage'
 export default {
   name: 'ComponentHeroBanner',
@@ -62,6 +65,7 @@ export default {
       search: '',
       headerTableHeroBanner,
       headerHeroBanner,
+      showAddHeroBanner: false,
       data: [],
       pagination: {
         currentPage: 1,
@@ -71,6 +75,7 @@ export default {
         disabled: false
       },
       query: {
+        q: null,
         per_page: 5,
         sort_by: 'desc',
         order_by: 'created_at',
@@ -115,6 +120,26 @@ export default {
     this.pagination.itemsPerPageOptions = this.generateItemsPerPageOptions
   },
   methods: {
+    searchTitle: debounce(function (value) {
+      if (value.length > 2) {
+        this.query.q = value
+      } else {
+        this.query.q = null
+      }
+    }, 500),
+    onSearchChange (value) {
+      this.searchTitle(value)
+    },
+    onSuccessAdd () {
+      this.query = {
+        q: null,
+        per_page: 5,
+        sort_by: 'desc',
+        order_by: 'created_at',
+        current_page: 1
+      }
+      this.$fetch()
+    },
     perPageChange (value) {
       if (value) {
         this.query.per_page = value
@@ -139,6 +164,9 @@ export default {
         this.query.order_by = 'created_at'
         this.query.sort_by = 'desc'
       }
+    },
+    addHeroBanner () {
+      this.showAddHeroBanner = true
     }
   }
 }
