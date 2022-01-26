@@ -16,18 +16,30 @@
 export default {
   name: 'BaseDataTable',
   props: {
+    /**
+     * List header datatable
+     */
     headers: {
       type: Array,
       default: () => []
     },
+    /**
+     * List item content datatable
+     */
     items: {
       type: Array,
       default: () => []
     },
+    /**
+     * show loading when data changes
+     */
     loading: {
       type: Boolean,
       default: false
     },
+    /**
+     * Data Object pagination
+     */
     pagination: {
       type: Object,
       default: () => ({})
