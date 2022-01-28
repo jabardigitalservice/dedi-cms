@@ -1,5 +1,6 @@
 <template>
   <div class="dashboard">
+    <BaseToast />
     <Sidebar class="dashboard__sidebar" />
     <Header class="dashboard__header" />
     <div class="dashboard__content">

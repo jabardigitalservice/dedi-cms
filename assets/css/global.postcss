@@ -11,4 +11,42 @@ There may also be large incompatibilities between implementations and the behavi
 This is enhancement from UI Designer  */
 * {
   @apply antialiased;
+
+  &::-webkit-scrollbar{
+    @apply w-[6px];
+  }
+
+  &::-webkit-scrollbar-track {
+    @apply bg-white;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 rounded-[6px];
+  }
+}
+
+.jds-popover__content {
+  @apply !z-10;
+}
+
+.jds-options__option-list {
+  @apply max-h-[200px] min-h-min
+}
+
+.jds-select,
+.jds-popover__activator,
+.jds-input-text {
+  width: 100% !important;
+}
+
+.jds-popover {
+  @apply !block;
+}
+
+.jds-text-area__input-wrapper > textarea {
+  border: 1px solid #9E9E9E;
+}
+
+.jds-text-area__input-wrapper > textarea:hover {
+  border: 1px solid #16a34a;
 }

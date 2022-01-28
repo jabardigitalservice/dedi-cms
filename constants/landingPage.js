@@ -4,10 +4,6 @@ export const headerTableHeroBanner = [
     text: 'Judul Banner'
   },
   {
-    key: 'description',
-    text: 'Deskripsi'
-  },
-  {
     key: 'status',
     text: 'Status',
     sortable: true

@@ -5,8 +5,7 @@
   @apply font-sans font-bold;
 
   &--disabled {
-    @apply cursor-not-allowed text-sm px-[16px] py-[14px] text-gray-500 bg-gray-200
-    sm:(text-size-[14px] leading-[18px] px-[22px] py-[16px]);
+    @apply cursor-not-allowed text-sm px-[16px] py-[9px] text-gray-500 bg-gray-200;
   }
 
   &--circle {
@@ -15,10 +14,14 @@
   }
 
   &--primary {
-     @apply text-sm px-[16px] py-[14px] bg-green-700
-     active:(px-[15px] py-[13px] m-[1px])
-     sm:(leading-[18px] px-[22px] py-[16px]
-     active:(px-[21px] py-[15px] m-[1px]));
+    @apply text-sm py-[8px];
+
+    &-large {
+      @apply text-sm px-[16px] py-[14px] bg-green-700
+      active:(px-[15px] py-[13px] m-[1px])
+      sm:(leading-[18px] px-[22px] py-[16px]
+      active:(px-[21px] py-[15px] m-[1px]));
+    }
   }
 
   &--secondary{
@@ -44,6 +47,6 @@
   }
 
   &__loading {
-    @apply flex items-center justify-between;
+    @apply flex items-center justify-between gap-3;
   }
 }

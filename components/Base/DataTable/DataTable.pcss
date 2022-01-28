@@ -7,13 +7,25 @@
   @apply !w-full;
 }
 
-.jds-pagination__page-control__select__input .jds-input-text__input-wrapper {
+.jds-options__filter .jds-input-text__input-wrapper {
   @apply !h-[36px];
 }
 
 .jds-data-table {
   border-spacing: 1px !important;
   @apply !bg-[#EDEFF3];
+}
+
+.jds-data-table__body tr td {
+  @apply !border-none;
+}
+
+.jds-data-table__head th:last-child {
+  @apply rounded-tr-lg;
+}
+
+.jds-data-table__head th:first-child {
+  @apply rounded-tl-lg;
 }
 
 .jds-data-table__head th:last-of-type{
@@ -24,11 +36,19 @@
   @apply !flex !justify-center;
 }
 
-.jds-data-table__body td[colspan="4"]{
+.jds-data-table__footer td{
+  @apply !p-0;
+}
+
+.jds-pagination{
+  @apply rounded-b-lg;
+}
+
+.jds-data-table__body td[colspan]{
   @apply !table-cell;
 }
 /* this start of customized styling datatable and pagination */
 
 .datatable{
-  @apply rounded-lg overflow-hidden border border-gray-100;
+  @apply rounded-lg overflow-hidden;
 }
