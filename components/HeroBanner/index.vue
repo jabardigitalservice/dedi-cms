@@ -50,7 +50,7 @@
         </template>
       </BaseDataTable>
     </div>
-    <AddHeroBanner :show="showAddHeroBanner" @added="onSuccessAdd" @close="showAddHeroBanner = false" />
+    <HeroBannerAdd :show="showAddHeroBanner" @added="onSuccessAdd" @close="showAddHeroBanner = false" />
   </div>
 </template>
 
