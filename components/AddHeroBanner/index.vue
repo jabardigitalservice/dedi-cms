@@ -117,13 +117,6 @@ export default {
     show: {
       type: Boolean,
       default: false
-    },
-    /**
-     * Number of total banner
-     */
-    totalBanner: {
-      type: Number,
-      default: 0
     }
   },
   data () {
@@ -157,7 +150,7 @@ export default {
   computed: {
     optionsOrderBanner () {
       const options = []
-      for (let i = 1; i <= this.totalBanner; i++) {
+      for (let i = 1; i <= 5; i++) {
         options.push(i)
       }
       return options
