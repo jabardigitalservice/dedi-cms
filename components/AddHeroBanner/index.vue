@@ -282,7 +282,7 @@ export default {
         }
       } else {
         this.form.fileImage = null
-        this.dropFileErrorMessage = 'Maaf file yang anda memasukan tidak didukung'
+        this.dropFileErrorMessage = 'Maaf file yang anda masukan tidak didukung'
         this.isDragOver = false
       }
     }
