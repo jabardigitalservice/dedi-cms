@@ -25,17 +25,17 @@
     <div class="action__dropdown">
       <ul class="action__dropdown-list">
         <li>
-          <button class="action__dropdown-item">
+          <button class="action__dropdown-item" @click="$emit('detail')">
             Detail
           </button>
         </li>
         <li>
-          <button class="action__dropdown-item">
+          <button class="action__dropdown-item" @click="$emit('edit')">
             Ubah
           </button>
         </li>
         <li>
-          <button class="action__dropdown-item">
+          <button class="action__dropdown-item" @click="$emit('delete')">
             Hapus
           </button>
         </li>

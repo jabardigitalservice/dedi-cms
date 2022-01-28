@@ -109,7 +109,7 @@
 
 <script>
 export default {
-  name: 'ComponentAddHeroBanner',
+  name: 'ComponentHeroBannerAdd',
   props: {
     /**
      * make modal visible or not
@@ -291,5 +291,5 @@ export default {
 </script>
 
 <style lang="postcss">
-@import './AddHeroBanner.pcss';
+@import './HeroBannerAdd.pcss';
 </style>
