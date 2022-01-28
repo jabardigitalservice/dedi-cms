@@ -1,0 +1,34 @@
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .3s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+
+.dialog {
+  @apply fixed bg-black bg-opacity-75 inset-0 flex justify-center items-center z-10000 text-gray-800;
+
+  &__card {
+    @apply bg-white w-[510px] rounded-lg;
+  }
+
+  &__header {
+    @apply text-green-800 py-2 px-6 h-[50px] font-roboto font-bold text-[21px] leading-[34px];
+  }
+
+  &__content {
+    @apply p-6 flex flex-col gap-2;
+  }
+
+  &__title {
+    @apply text-sm leading-[23px];
+  }
+
+  &__message {
+    @apply leading-[23px] font-bold;
+  }
+
+  &__action {
+    @apply py-4 flex gap-4 justify-end bg-gray-50 px-6 rounded-b-lg;
+  }
+}
