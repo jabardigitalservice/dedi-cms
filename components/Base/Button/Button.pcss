@@ -14,7 +14,7 @@
   }
 
   &--primary {
-    @apply text-sm py-[8px];
+    @apply text-sm py-[8px] active:(py-[7px] px-[15px] m-[1px]);
 
     &-large {
       @apply text-sm px-[16px] py-[14px] bg-green-700
@@ -22,6 +22,10 @@
       sm:(leading-[18px] px-[22px] py-[16px]
       active:(px-[21px] py-[15px] m-[1px]));
     }
+  }
+
+  &--danger {
+    @apply text-sm py-[8px] active:(py-[7px] px-[15px] m-[1px]);
   }
 
   &--secondary{
