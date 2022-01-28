@@ -46,11 +46,11 @@
       >
         <!-- eslint-disable-next-line vue/valid-v-slot -->
         <template #item.action="{item}">
-          <HeroBannerTableAction :item="item" />
+          <HeroBannerTableAction :item="item" @delete="deleteHeroBanner(item)" />
         </template>
       </BaseDataTable>
     </div>
-    <HeroBannerAdd :show="showAddHeroBanner" @added="onSuccessAdd" @close="showAddHeroBanner = false" />
+    <HeroBannerAdd :show="showAddHeroBanner" @added="refreshDatatable" @close="showAddHeroBanner = false" />
   </div>
 </template>
 
@@ -130,7 +130,7 @@ export default {
     onSearchChange (value) {
       this.searchTitle(value)
     },
-    onSuccessAdd () {
+    refreshDatatable () {
       this.query = {
         q: null,
         per_page: 5,
@@ -167,6 +167,27 @@ export default {
     },
     addHeroBanner () {
       this.showAddHeroBanner = true
+    },
+    async actionBtnRight (id) {
+      try {
+        const response = await this.$axios.delete(`/pages/${id}`)
+        if (response) {
+          this.refreshDatatable()
+          this.$store.dispatch('dialog/closeDialog')
+        }
+      } catch (error) {
+        //
+      }
+    },
+    deleteHeroBanner (item) {
+      this.$store.dispatch('dialog/showDialog', {
+        header: 'Hapus Hero Banner',
+        title: 'Apakah Anda yakin akan menghapus Hero Banner ini?',
+        message: item.title,
+        btnRightVariant: 'danger',
+        btnLeftVariant: 'secondary',
+        actionBtnRight: () => this.actionBtnRight(item.id)
+      })
     }
   }
 }

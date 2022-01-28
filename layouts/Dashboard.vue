@@ -1,5 +1,6 @@
 <template>
   <div class="dashboard">
+    <BaseDialog />
     <BaseToast />
     <Sidebar class="dashboard__sidebar" />
     <Header class="dashboard__header" />
