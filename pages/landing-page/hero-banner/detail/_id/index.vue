@@ -7,10 +7,14 @@ export default {
   name: 'PagesHeroBannerDetail',
   layout: 'Dashboard',
   async asyncData ({ params, $axios }) {
-    const response = await $axios.get(`/pages/${params.id}`)
-    const data = response.data?.data
-    return {
-      data
+    try {
+      const response = await $axios.get(`/pages/${params.id}`)
+      const data = response.data?.data
+      return {
+        data
+      }
+    } catch (error) {
+      error({ message: 'Gagal memuat data' })
     }
   }
 }
