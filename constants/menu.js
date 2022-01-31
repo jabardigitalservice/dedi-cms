@@ -1,7 +1,7 @@
 const mainMenu = [
   {
     name: 'Dashboard',
-    path: '/',
+    path: 'index',
     icon: 'dashboard',
     arrow: true
   },
