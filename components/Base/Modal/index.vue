@@ -11,7 +11,7 @@
         <div class="modal__action">
           <BaseButton label="Batal" variant="secondary" @click="onClose" />
           <BaseButton
-            label="Tambah"
+            :label="labelRightBtn"
             text-loading="Sedang mengirim"
             :loading="loading"
             :variant="variantAddButton"
@@ -55,6 +55,13 @@ export default {
     loading: {
       type: Boolean,
       default: false
+    },
+    /**
+     * text of button right
+     */
+    labelRightBtn: {
+      type: String,
+      default: ''
     }
   },
   computed: {
