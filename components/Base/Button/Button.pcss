@@ -14,7 +14,7 @@
   }
 
   &--primary {
-    @apply text-sm py-[8px] active:(py-[7px] px-[15px] m-[1px]);
+    @apply text-sm py-[9px] active:(py-[8px] px-[15px] m-[1px]);
 
     &-large {
       @apply text-sm px-[16px] py-[14px] bg-green-700
@@ -25,17 +25,18 @@
   }
 
   &--danger {
-    @apply text-sm py-[8px] active:(py-[7px] px-[15px] m-[1px]);
+    @apply text-sm py-[9px] active:(py-[8px] px-[15px] m-[1px]);
   }
 
   &--secondary{
-    @apply text-sm px-[16px] py-[14px] text-green-700 border-green-700 border
-    active:(px-[15px] py-[13px] m-[1px])
-    sm:(leading-[18px] py-[10px])
-    sm:active:(px-[15px] py-[9px] m-[1px]);
+    @apply text-sm py-[8px] active:(py-[7px] px-[15px] m-[1px]);
 
     &-small {
       @apply py-[6px] active:(py-[5px]);
+
+      & * {
+        @apply !leading-[18px];
+      }
     }
   }
 
