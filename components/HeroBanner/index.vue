@@ -46,11 +46,12 @@
       >
         <!-- eslint-disable-next-line vue/valid-v-slot -->
         <template #item.action="{item}">
-          <HeroBannerTableAction :item="item" @delete="deleteHeroBanner(item)" />
+          <HeroBannerTableAction :item="item" @edit="editHeroBanner(item)" @delete="deleteHeroBanner(item)" />
         </template>
       </BaseDataTable>
     </div>
     <HeroBannerAdd :show="showAddHeroBanner" @added="refreshDatatable" @close="showAddHeroBanner = false" />
+    <HeroBannerEdit :show="showEditHeroBanner" :item="itemHeroBanner" @stored="refreshDatatable" @close="showEditHeroBanner = false" />
   </div>
 </template>
 
@@ -66,6 +67,8 @@ export default {
       headerTableHeroBanner,
       headerHeroBanner,
       showAddHeroBanner: false,
+      showEditHeroBanner: false,
+      itemHeroBanner: {},
       data: [],
       pagination: {
         currentPage: 1,
@@ -167,6 +170,10 @@ export default {
     },
     addHeroBanner () {
       this.showAddHeroBanner = true
+    },
+    editHeroBanner (item) {
+      this.showEditHeroBanner = true
+      this.itemHeroBanner = item
     },
     async actionBtnRight (id) {
       try {

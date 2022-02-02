@@ -1,0 +1,32 @@
+
+.form-edit-hero-banner {
+  @apply text-sm leading-[23px] text-gray-800 py-4;
+
+  &__title {
+    @apply font-roboto text-gray-900 font-medium text-base leading-[23px];
+  }
+
+  &__image {
+    @apply w-full h-[212px] object-cover mt-4 rounded-lg;
+
+    &-placeholder{
+      @apply bg-gray-100;
+    }
+  }
+
+  &__path {
+    @apply flex items-center gap-2 cursor-pointer;
+
+    &-icon {
+      @apply w-6 h-6 flex items-center justify-center;
+    }
+
+    &-text {
+      @apply font-medium text-green-700 text-sm leading-[18px];
+    }
+  }
+
+  &__form-group {
+    @apply mt-6 w-full;
+  }
+}
