@@ -6,7 +6,7 @@
     </div>
     <div class="sidebar__container-menu">
       <div class="sidebar__menu">
-        <nuxt-link v-for="menu in mainMenu" :key="menu.path" :to="menu.path" class="sidebar__menu-item">
+        <nuxt-link v-for="menu in mainMenu" :key="menu.path" :to="{name: menu.path}" class="sidebar__menu-item">
           <div class="sidebar__menu-item-box">
             <!-- eslint-disable-next-line vue/no-v-html -->
             <div class="sidebar__menu-item-icon" v-html="svg(menu.icon)" />

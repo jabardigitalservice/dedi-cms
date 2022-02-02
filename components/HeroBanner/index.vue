@@ -46,7 +46,7 @@
       >
         <!-- eslint-disable-next-line vue/valid-v-slot -->
         <template #item.action="{item}">
-          <HeroBannerTableAction :item="item" @delete="deleteHeroBanner(item)" />
+          <HeroBannerTableAction :item="item" @detail="$router.push(`/landing-page/hero-banner/detail/${item.id}`)" @delete="deleteHeroBanner(item)" />
         </template>
       </BaseDataTable>
     </div>
