@@ -3,11 +3,12 @@
     :show="mShow"
     :loading="loading"
     :is-form-completed="isFormCompleted"
+    label-right-btn="Tambah"
     title="Tambah - Hero Banner"
     @submit="onSubmit"
     @close="onModalClose"
   >
-    <form class="form-add-hero-banner">
+    <form v-if="mShow" class="form-add-hero-banner">
       <div class="form-add-hero-banner__title">
         Upload file
       </div>

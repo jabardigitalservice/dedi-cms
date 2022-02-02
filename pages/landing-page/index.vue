@@ -29,6 +29,6 @@ export default {
 
 <style lang="postcss">
 .landing-page {
-  @apply flex flex-col gap-[14px];
+  @apply flex flex-col gap-[14px] min-h-[calc(100vh-72px-52px)];
 }
 </style>
