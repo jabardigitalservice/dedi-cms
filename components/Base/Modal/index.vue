@@ -9,7 +9,12 @@
           <slot />
         </div>
         <div class="modal__action">
-          <BaseButton label="Batal" variant="secondary" @click="onClose" />
+          <BaseButton
+            label="Batal"
+            :variant="variantCloseButton"
+            :disabled="!isFormCompleted || loading"
+            @click="onClose"
+          />
           <BaseButton
             :label="labelRightBtn"
             text-loading="Sedang mengirim"
@@ -67,6 +72,9 @@ export default {
   computed: {
     variantAddButton () {
       return !this.isFormCompleted || this.loading ? 'disabled' : 'primary'
+    },
+    variantCloseButton () {
+      return !this.isFormCompleted || this.loading ? 'disabled' : 'secondary'
     }
   },
   methods: {
