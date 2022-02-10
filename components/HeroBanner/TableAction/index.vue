@@ -52,12 +52,6 @@ export default {
   directives: {
     onClickaway
   },
-  props: {
-    item: {
-      type: Object,
-      default: () => ({})
-    }
-  },
   data () {
     return {
       isDropdownOpen: false,
