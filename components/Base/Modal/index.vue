@@ -12,7 +12,7 @@
           <BaseButton
             label="Batal"
             :variant="variantCloseButton"
-            :disabled="!isFormCompleted || loading"
+            :disabled="loading"
             @click="onClose"
           />
           <BaseButton
@@ -74,7 +74,7 @@ export default {
       return !this.isFormCompleted || this.loading ? 'disabled' : 'primary'
     },
     variantCloseButton () {
-      return !this.isFormCompleted || this.loading ? 'disabled' : 'secondary'
+      return this.loading ? 'disabled' : 'secondary'
     }
   },
   methods: {
