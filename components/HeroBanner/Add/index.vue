@@ -249,14 +249,21 @@ export default {
     },
     onFileChange () {
       if (this.$refs.file.files[0]) {
-        if (this.$refs.file.files[0].size > 1000000) {
-          this.form.fileImage = null
-          this.dropFileErrorMessage = 'Gambar anda melebihi ukuran maksimal'
-          this.isDragOver = false
+        const isValidFormat = ['image/png', 'image/jpeg', 'image/svg+xml'].includes(this.$refs.file.files[0].type)
+        if (isValidFormat) {
+          if (this.$refs.file.files[0].size > 1000000) {
+            this.form.fileImage = null
+            this.dropFileErrorMessage = 'Gambar anda melebihi ukuran maksimal'
+            this.isDragOver = false
+          } else {
+            this.dropFileErrorMessage = ''
+            this.isDragOver = true
+            this.setFile(this.$refs.file.files[0])
+          }
         } else {
-          this.dropFileErrorMessage = ''
-          this.isDragOver = true
-          this.setFile(this.$refs.file.files[0])
+          this.form.fileImage = null
+          this.dropFileErrorMessage = 'Maaf file yang anda masukan tidak didukung'
+          this.isDragOver = false
         }
       } else {
         this.form.fileImage = null
