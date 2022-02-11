@@ -1,0 +1,43 @@
+.testimonial {
+  @apply min-h-[calc(100vh-200px)] flex flex-col gap-[14px];
+  
+  &__datatable {
+    @apply flex flex-col gap-[14px] py-[14px] px-6 rounded-lg bg-white;
+
+    &-header {
+      @apply flex items-center justify-between;
+
+      &-box-right{
+        @apply flex items-center;
+      }
+
+      &-add {
+        @apply flex items-center gap-2;
+      }
+
+      &-plus-icon{
+        @apply w-5 h-5 flex justify-center items-center;
+      }
+
+      &-filter {
+
+        &-text {
+          @apply mx-2 text-blue-gray-800 text-sm leading-[23px];
+        }
+
+        &-icon {
+          @apply w-5 h-5 text-blue-gray-800 ml-5;
+        }
+
+        &-dropdown {
+          @apply bg-[#F7F9FC] px-3 py-2 text-[#788896] rounded-[27px] text-sm leading-[18px] font-normal;
+        }
+      }
+
+      &-search {
+        @apply justify-items-end w-[232px];
+      }
+    }
+
+  }
+}

@@ -48,7 +48,7 @@
 import { directive as onClickaway } from 'vue-clickaway'
 
 export default {
-  name: 'HeroBannerTableAction',
+  name: 'TestimonialsTableAction',
   directives: {
     onClickaway
   },
@@ -77,5 +77,5 @@ export default {
 </script>
 
 <style lang="postcss">
-@import './HeroBannerTableAction.pcss';
+@import './TestimonialsTableAction.pcss';
 </style>
