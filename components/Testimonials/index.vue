@@ -43,6 +43,7 @@
         @previous-page="previousPage"
         @page-change="pageChange"
         @per-page-change="perPageChange"
+        @change:sort="sortChange"
       >
         <template #item.action="{item}">
           <TestimonialsTableAction :item="item" />
@@ -73,7 +74,9 @@ export default {
       query: {
         q: null,
         per_page: 5,
-        current_page: 1
+        current_page: 1,
+        sort_by: null,
+        order_by: null
       }
     }
   },
@@ -148,6 +151,20 @@ export default {
     },
     previousPage (value) {
       this.query.current_page = value
+    },
+    sortChange (value) {
+      const key = Object.keys(value)[0]
+      if (key && value[key] !== 'no-sort') {
+        if (key === 'role') {
+          this.query.order_by = 'type'
+        } else if (key === 'status') {
+          this.query.order_by = 'is_active'
+        }
+        this.query.sort_by = value[key]
+      } else {
+        this.query.order_by = null
+        this.query.sort_by = null
+      }
     }
   }
 }
