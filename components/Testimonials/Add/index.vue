@@ -276,7 +276,7 @@ export default {
           }
         })
         .catch(() => {
-          this.$store.dispatch('toast/showToast', { type: 'error', message: 'Gambar hero banner gagal diupload' })
+          this.$store.dispatch('toast/showToast', { type: 'error', message: 'Gambar testimonial banner gagal diupload' })
         }).finally(() => {
           this.loading = false
         })
