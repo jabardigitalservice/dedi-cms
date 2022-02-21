@@ -9,11 +9,11 @@
   @apply fixed h-screen w-screen bg-black bg-opacity-75 z-100 inset-0 flex justify-center items-center;
 
   &__wrapper {
-    @apply w-[613px] min-h-min max-h-[calc(100vh-64px)] rounded-lg bg-white overflow-y-scroll;
+    @apply w-[613px] min-h-min rounded-lg bg-white;
   }
 
   &__content {
-    @apply px-6;
+    @apply px-6 max-h-[calc(100vh-64px-120px)] overflow-y-scroll;
   }
 
   &__title {
@@ -21,6 +21,6 @@
   }
 
   &__action {
-    @apply py-4 flex gap-4 justify-end bg-gray-50 px-6;
+    @apply py-4 flex gap-4 justify-end bg-gray-50 px-6 rounded-lg;
   }
 }
