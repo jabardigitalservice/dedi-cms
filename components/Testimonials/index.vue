@@ -23,7 +23,7 @@
             Belum ada filter
           </button>
         </div>
-        <BaseButton variant="secondary">
+        <BaseButton variant="secondary" @click="addTestimonial">
           <template #icon>
             <div class="testimonial__datatable-header-add">
               <div class="testimonial__datatable-header-plus-icon">
@@ -50,6 +50,9 @@
         </template>
       </BaseDataTable>
     </div>
+    <TestimonialsAdd :show="showAddTestimonials" @added="refreshDatatable" @close="showAddTestimonials = false" />
+    <!-- in this PR this is unused code and next PR will be active -->
+    <!-- <HeroBannerEdit :show="showEditHeroBanner" :item="itemHeroBanner" @stored="refreshDatatable" @close="showEditHeroBanner = false" /> -->
   </div>
 </template>
 
@@ -63,6 +66,7 @@ export default {
       headerTableTestimonials,
       headerTestimonials,
       search: '',
+      showAddTestimonials: false,
       testimonials: [],
       pagination: {
         currentPage: 1,
@@ -119,6 +123,9 @@ export default {
     this.pagination.itemsPerPageOptions = this.generateItemsPerPageOptions
   },
   methods: {
+    addTestimonial () {
+      this.showAddTestimonials = true
+    },
     searchTitle: debounce(function (value) {
       if (value.length > 2) {
         this.query.q = value
