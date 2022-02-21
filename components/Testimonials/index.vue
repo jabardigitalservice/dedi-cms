@@ -46,7 +46,7 @@
         @change:sort="sortChange"
       >
         <template #item.action="{item}">
-          <TestimonialsTableAction :item="item" />
+          <TestimonialsTableAction :item="item" @delete="deleteTestimonial(item)" />
         </template>
       </BaseDataTable>
     </div>
@@ -96,6 +96,7 @@ export default {
     listTestimonial () {
       return this.testimonials.map((item) => {
         return {
+          id: item.id,
           name: item.name,
           role: item.type === 'mitra' ? 'Mitra' : 'Masyarakat',
           testimonial: item.description,
@@ -172,6 +173,28 @@ export default {
         this.query.order_by = null
         this.query.sort_by = null
       }
+    },
+    async actionBtnRight (id) {
+      try {
+        const response = await this.$axios.delete(`/testimonials/${id}`)
+        if (response) {
+          this.refreshDatatable()
+          this.$store.dispatch('dialog/closeDialog')
+          this.$store.dispatch('toast/showToast', { type: 'success', message: 'Data berhasil dihapus' })
+        }
+      } catch (error) {
+        this.$store.dispatch('toast/showToast', { type: 'error', message: 'Data gagal dihapus' })
+      }
+    },
+    deleteTestimonial (item) {
+      this.$store.dispatch('dialog/showDialog', {
+        header: 'Hapus Testimonial',
+        title: 'Apakah Anda yakin akan menghapus testimonial ini?',
+        message: item.name,
+        btnRightVariant: 'danger',
+        btnLeftVariant: 'secondary',
+        actionBtnRight: () => this.actionBtnRight(item.id)
+      })
     }
   }
 }
