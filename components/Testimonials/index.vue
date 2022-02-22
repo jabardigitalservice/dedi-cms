@@ -46,13 +46,12 @@
         @change:sort="sortChange"
       >
         <template #item.action="{item}">
-          <TestimonialsTableAction :item="item" @delete="deleteTestimonial(item)" />
+          <TestimonialsTableAction :item="item" @edit="editTestimonial(item)" @delete="deleteTestimonial(item)" />
         </template>
       </BaseDataTable>
     </div>
     <TestimonialsAdd :show="showAddTestimonials" @added="refreshDatatable" @close="showAddTestimonials = false" />
-    <!-- in this PR this is unused code and next PR will be active -->
-    <!-- <HeroBannerEdit :show="showEditHeroBanner" :item="itemHeroBanner" @stored="refreshDatatable" @close="showEditHeroBanner = false" /> -->
+    <TestimonialsEdit :show="showEditTestimonials" :item="itemTestimonials" @stored="refreshDatatable" @close="showEditTestimonials = false" />
   </div>
 </template>
 
@@ -67,6 +66,8 @@ export default {
       headerTestimonials,
       search: '',
       showAddTestimonials: false,
+      showEditTestimonials: false,
+      itemTestimonials: {},
       testimonials: [],
       pagination: {
         currentPage: 1,
@@ -96,11 +97,10 @@ export default {
     listTestimonial () {
       return this.testimonials.map((item) => {
         return {
-          id: item.id,
-          name: item.name,
           role: item.type === 'mitra' ? 'Mitra' : 'Masyarakat',
           testimonial: item.description,
-          status: item.is_active ? 'Aktif' : 'Non-Aktif'
+          status: item.is_active ? 'Aktif' : 'Non-Aktif',
+          ...item
         }
       })
     },
@@ -126,6 +126,10 @@ export default {
   methods: {
     addTestimonial () {
       this.showAddTestimonials = true
+    },
+    editTestimonial (item) {
+      this.showEditTestimonials = true
+      this.itemTestimonials = item
     },
     searchTitle: debounce(function (value) {
       if (value.length > 2) {

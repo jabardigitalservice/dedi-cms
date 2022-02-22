@@ -3,16 +3,16 @@
     :show="mShow"
     :loading="loading"
     :is-form-completed="isFormCompleted"
-    label-right-btn="Tambah"
-    title="Tambah - Testimoni"
+    label-right-btn="Simpan Perubahan"
+    title="Ubah Data - Testimoni"
     @submit="onSubmit"
     @close="onModalClose"
   >
-    <form v-if="mShow" class="form-add-testimonial" @submit.prevent>
-      <div class="form-add-testimonial__box-avatar">
+    <form v-if="mShow" class="form-edit-testimonial" @submit.prevent>
+      <div class="form-edit-testimonial__box-avatar">
         <div>
-          <div class="form-add-testimonial__box-avatar-avatar">
-            <img v-if="imagePath.length" class="form-add-testimonial__box-avatar-image" :src="imagePath" :alt="form.image">
+          <div class="form-edit-testimonial__box-avatar-avatar">
+            <img v-if="imagePath.length" class="form-edit-testimonial__box-avatar-image" :src="imagePath" :alt="form.image">
             <jds-icon
               v-else
               fill="#BDBDBD"
@@ -22,24 +22,24 @@
           </div>
         </div>
         <div>
-          <div class="form-add-testimonial__box-avatar-title">
+          <div class="form-edit-testimonial__box-avatar-title">
             Upload Foto Profile
           </div>
           <div>Ukuran maksimal file adalah 1 Mb.</div>
           <div>File yang didukung adalah .jpg dan .png</div>
-          <div class="form-add-testimonial__box-avatar-button">
+          <div class="form-edit-testimonial__box-avatar-button">
             <BaseButton @click="$refs.avatar.click()">
               <template #icon>
                 <div class="testimonial__datatable-header-add">
-                  Tambah File
+                  Ubah File
                   <div class="testimonial__datatable-header-plus-icon">
-                    <jds-icon size="14px" name="plus-bold" />
+                    <jds-icon size="14px" name="pencil" />
                   </div>
                 </div>
               </template>
             </BaseButton>
           </div>
-          <div v-if="fileErrorMessage" class="form-add-testimonial__box-avatar-error-message">
+          <div v-if="fileErrorMessage" class="form-edit-testimonial__box-avatar-error-message">
             {{ fileErrorMessage }}
           </div>
           <div v-else-if="!imagePath.length">
@@ -55,16 +55,16 @@
           @change="onFileChange"
         >
       </div>
-      <div class="form-add-testimonial__form-group">
+      <div class="form-edit-testimonial__form-group">
         <jds-radio-button-group
-          v-model="form.role"
+          v-model="form.type"
           name="role"
           orientation="horizontal"
           :items="optionsRole"
           label="Role Pengguna"
         />
       </div>
-      <div class="form-add-testimonial__form-group">
+      <div class="form-edit-testimonial__form-group">
         <jds-input-text
           v-model="form.name"
           name="name"
@@ -72,7 +72,7 @@
           placeholder="Masukan nama anda"
         />
       </div>
-      <div v-if="form.role === 'masyarakat'" class="form-add-testimonial__form-group">
+      <div v-if="form.type === 'masyarakat'" class="form-edit-testimonial__form-group">
         <jds-select
           v-model="form.desa"
           name="desa"
@@ -83,7 +83,7 @@
           placeholder="Pilih Desa"
         />
       </div>
-      <div v-else class="form-add-testimonial__form-group">
+      <div v-else class="form-edit-testimonial__form-group">
         <jds-select
           v-model="form.mitra"
           name="mitra"
@@ -94,7 +94,7 @@
           placeholder="Pilih Mitra"
         />
       </div>
-      <div class="form-add-testimonial__form-group">
+      <div class="form-edit-testimonial__form-group">
         <jds-text-area
           v-model="form.testimonial"
           name="name"
@@ -103,9 +103,9 @@
           class="w-full"
           :error-message="testimonialErrorMessage"
         />
-        <span v-if="!testimonialErrorMessage.length" class="form-add-testimonial__form-group-desc">Tersisa {{ 155 - form.testimonial.length }} Karakter</span>
+        <span v-if="!testimonialErrorMessage.length" class="form-edit-testimonial__form-group-desc">Tersisa {{ 155 - form.testimonial.length }} Karakter</span>
       </div>
-      <div class="form-add-testimonial__form-group">
+      <div class="form-edit-testimonial__form-group">
         <jds-radio-button-group
           v-model="form.is_active"
           name="status"
@@ -120,7 +120,7 @@
 
 <script>
 export default {
-  name: 'ComponentTestimoanialsAdd',
+  name: 'ComponentTestimoanialsEdit',
   props: {
     /**
      * make modal visible or not
@@ -128,6 +128,13 @@ export default {
     show: {
       type: Boolean,
       default: false
+    },
+    /**
+     * object of hero banner
+     */
+    item: {
+      type: Object,
+      default: () => ({})
     }
   },
   data () {
@@ -136,7 +143,7 @@ export default {
       loading: false,
       form: {
         name: '',
-        role: 'masyarakat',
+        type: 'masyarakat',
         mitra: null,
         desa: null,
         testimonial: '',
@@ -199,10 +206,9 @@ export default {
     },
     isFormCompleted () {
       return !!((
-        this.form.role.length &&
+        this.form.type.length &&
         this.form.name.length &&
         this.form.is_active &&
-        this.form.fileImage &&
         this.form.testimonial.length &&
         !this.fileErrorMessage.length &&
         !this.testimonialErrorMessage.length
@@ -213,6 +219,19 @@ export default {
     show: {
       handler (val) {
         this.mShow = val
+        if (Object.keys(this.item).length) {
+          const isActive = this.item.is_active ? 'true' : 'false'
+          this.form = {
+            ...this.form,
+            ...this.item,
+            desa: this.item.village?.id,
+            mitra: this.item.partner?.id,
+            is_active: isActive.toString()
+          }
+          this.fileErrorMessage = ''
+          this.testimonialErrorMessage = ''
+          this.imagePath = this.item?.avatar?.path
+        }
       },
       immediate: true
     },
@@ -246,37 +265,50 @@ export default {
         this.listMitra = []
       }
     },
-    onSubmit () {
+    async onSubmit () {
       this.loading = true
-      this.submitFile(this.form.fileImage)
-        .then((response) => {
-          this.form.avatar = response.source
-          this.form.avatar_original_name = response.original_name
+      if (this.form.fileImage) {
+        this.submitFile(this.form.fileImage)
+          .then((response) => {
+            this.form.avatar_original_name = response.original_name
+            this.form.avatar = response.source
+            this.form.description = this.form.testimonial
+            this.form.village_id = this.form.desa
+            this.form.partner_id = this.form.mitra
+          })
+          .then(async () => {
+            try {
+              await this.$axios.put(`/testimonials/${this.form.id}`, this.form)
+              this.$emit('close')
+              this.$store.dispatch('toast/showToast', { type: 'success', message: 'Data berhasil disimpan' })
+              this.$emit('added')
+              this.resetForm()
+            } catch (error) {
+              this.$store.dispatch('toast/showToast', { type: 'error', message: 'Data gagal disimpan, periksa kembali data yang dinputkan' })
+            }
+          })
+          .catch(() => {
+            this.$store.dispatch('toast/showToast', { type: 'error', message: 'Gambar testimonial testimonial gagal diupload' })
+          }).finally(() => {
+            this.loading = false
+          })
+      } else {
+        try {
+          this.form.avatar_original_name = this.form.avatar.original_name
+          this.form.avatar = this.form.avatar.source
           this.form.description = this.form.testimonial
-          this.form.type = this.form.role
           this.form.village_id = this.form.desa
           this.form.partner_id = this.form.mitra
-        })
-        .then(async () => {
-          try {
-            await this.$axios.post('/testimonials', this.form)
-            this.$emit('close')
-            this.$store.dispatch('toast/showToast', { type: 'success', message: 'Data berhasil disimpan' })
-            this.$emit('added')
-            this.resetForm()
-          } catch (error) {
-            this.$store.dispatch('toast/showToast', { type: 'error', message: 'Data gagal disimpan, periksa kembali data yang dinputkan' })
-          }
-        })
-        .catch(() => {
-          this.$store.dispatch('toast/showToast', { type: 'error', message: 'Gambar testimonial banner gagal diupload' })
-        }).finally(() => {
+          await this.$axios.put(`/testimonials/${this.form.id}`, this.form)
+          this.$emit('close')
+          this.$store.dispatch('toast/showToast', { type: 'success', message: 'Data berhasil diubah' })
+          this.$emit('stored')
+        } catch (error) {
+          this.$store.dispatch('toast/showToast', { type: 'error', message: 'Data gagal diubah, periksa kembali data yang dinputkan' })
+        } finally {
           this.loading = false
-        })
-    },
-    onModalClose () {
-      this.$emit('close')
-      this.resetForm()
+        }
+      }
     },
     resetForm () {
       this.form = {
@@ -307,6 +339,9 @@ export default {
           reject(error)
         })
       })
+    },
+    onModalClose () {
+      this.$emit('close')
     },
     setFile (value) {
       const formData = new FormData()
@@ -341,5 +376,5 @@ export default {
 </script>
 
 <style lang="postcss">
-@import './TestimonialsAdd.pcss';
+@import './TestimoanialsEdit.pcss';
 </style>
