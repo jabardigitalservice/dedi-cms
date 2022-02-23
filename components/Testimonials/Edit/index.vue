@@ -119,6 +119,7 @@
 </template>
 
 <script>
+import { isEqual, cloneDeep } from 'lodash'
 export default {
   name: 'ComponentTestimoanialsEdit',
   props: {
@@ -139,6 +140,8 @@ export default {
   },
   data () {
     return {
+      isChangedForm: false,
+      cloneForm: {},
       mShow: undefined,
       loading: false,
       form: {
@@ -211,7 +214,8 @@ export default {
         this.form.is_active &&
         this.form.testimonial.length &&
         !this.fileErrorMessage.length &&
-        !this.testimonialErrorMessage.length
+        !this.testimonialErrorMessage.length &&
+        this.isChangedForm
       ) && (this.form.desa || this.form.mitra))
     }
   },
@@ -219,7 +223,7 @@ export default {
     show: {
       handler (val) {
         this.mShow = val
-        if (Object.keys(this.item).length) {
+        if (val && Object.keys(this.item).length) {
           const isActive = this.item.is_active ? 'true' : 'false'
           this.form = {
             ...this.form,
@@ -231,9 +235,20 @@ export default {
           this.fileErrorMessage = ''
           this.testimonialErrorMessage = ''
           this.imagePath = this.item.avatar?.path
+          this.cloneForm = cloneDeep(this.form)
         }
       },
       immediate: true
+    },
+    form: {
+      handler () {
+        if (!isEqual(this.form, this.cloneForm)) {
+          this.isChangedForm = true
+        } else {
+          this.isChangedForm = false
+        }
+      },
+      deep: true
     },
     'form.testimonial' (value) {
       if (value.length > 155) {
@@ -250,7 +265,6 @@ export default {
   methods: {
     async fetchDesa () {
       try {
-        // this query is temporary and will be replace in the future
         const response = await this.$axios.get('/villages/suggestion')
         this.listDesa = response.data.data || []
       } catch {
@@ -309,22 +323,6 @@ export default {
         }
       }
     },
-    resetForm () {
-      this.form = {
-        name: '',
-        role: 'masyarakat',
-        mitra: null,
-        desa: null,
-        testimonial: '',
-        is_active: 'true',
-        fileImage: null,
-        image: '',
-        image_original_name: ''
-      }
-      this.imagePath = ''
-      this.testimonialErrorMessage = ''
-      this.fileErrorMessage = ''
-    },
     submitFile (image) {
       return new Promise((resolve, reject) => {
         this.$axios.post('/files/upload', image, {
@@ -339,8 +337,18 @@ export default {
         })
       })
     },
-    onModalClose () {
+    actionBtnRight () {
       this.$emit('close')
+      this.$store.dispatch('dialog/closeDialog')
+    },
+    onModalClose () {
+      this.$store.dispatch('dialog/showDialog', {
+        header: 'Batalkan perubahan testimonial',
+        title: 'Apakah Anda yakin tidak akan melanjutkan perubahan ini?',
+        btnRightVariant: 'danger',
+        btnLeftVariant: 'secondary',
+        actionBtnRight: () => this.actionBtnRight()
+      })
     },
     setFile (value) {
       const formData = new FormData()
