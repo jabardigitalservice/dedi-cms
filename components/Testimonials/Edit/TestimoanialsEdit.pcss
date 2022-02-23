@@ -1,0 +1,59 @@
+.form-edit-testimonial {
+  @apply text-sm leading-[23px] text-gray-800 py-4;
+
+  &__box-avatar {
+    @apply flex items-start gap-4;
+
+    &-avatar {
+      @apply w-[90px] h-[90px] rounded-full flex items-center justify-center border border-gray-500 border-dashed overflow-hidden;
+    }
+
+    &-image {
+      @apply w-[90px] h-[90px] object-cover;
+    }
+
+    &-title {
+      @apply font-roboto font-medium text-gray-900 text-base leading-[26px];
+    }
+
+    &-error-message {
+      @apply text-red-700;
+    }
+
+    &-button {
+      @apply my-[14px];
+    }
+  }
+
+  &__title {
+    @apply font-roboto text-gray-900 text-base leading-[23px] font-medium;
+  }
+
+  &__box-upload-file {
+    @apply h-[108px] my-4 py-2 w-full rounded-lg border-2 border-[#9E9E9E] box-border border-dashed stroke-dash-2 bg-gray-50 flex justify-center items-center;
+  
+    &--dragover {
+      @apply border-green-700 bg-green-50;
+    }
+
+    &-wrapper {
+      @apply flex flex-col items-center;
+    }
+
+    &-icon {
+      @apply mb-3 cursor-pointer;
+    }
+
+    &-title-click {
+      @apply text-blue-600 font-bold underline cursor-pointer;
+    }
+  }
+
+  &__form-group {
+    @apply mt-6 w-full;
+
+    &-desc {
+      @apply text-sm leading-[19px] text-gray-600;
+    }
+  }
+}
