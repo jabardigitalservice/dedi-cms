@@ -230,7 +230,7 @@ export default {
           }
           this.fileErrorMessage = ''
           this.testimonialErrorMessage = ''
-          this.imagePath = this.item?.avatar?.path
+          this.imagePath = this.item.avatar?.path
         }
       },
       immediate: true
@@ -281,8 +281,7 @@ export default {
               await this.$axios.put(`/testimonials/${this.form.id}`, this.form)
               this.$emit('close')
               this.$store.dispatch('toast/showToast', { type: 'success', message: 'Data berhasil disimpan' })
-              this.$emit('added')
-              this.resetForm()
+              this.$emit('stored')
             } catch (error) {
               this.$store.dispatch('toast/showToast', { type: 'error', message: 'Data gagal disimpan, periksa kembali data yang dinputkan' })
             }
