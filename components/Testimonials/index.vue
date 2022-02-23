@@ -46,7 +46,7 @@
         @change:sort="sortChange"
       >
         <template #item.action="{item}">
-          <TestimonialsTableAction :item="item" @edit="editTestimonial(item)" @delete="deleteTestimonial(item)" />
+          <TestimonialsTableAction :item="item" @edit="editTestimonial(item)" @detail="$router.push(`/landing-page/testimonials/detail/${item.id}`)" @delete="deleteTestimonial(item)" />
         </template>
       </BaseDataTable>
     </div>

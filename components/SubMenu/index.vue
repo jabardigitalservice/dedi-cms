@@ -38,11 +38,12 @@ export default {
   },
   watch: {
     activeMenu (value) {
+      this.$store.commit('setSubMenu', value)
       this.$emit('change', value)
     }
   },
   mounted () {
-    this.activeMenu = this.menus[0].value
+    this.activeMenu = this.$store.state.subMenu ?? this.menus[0].value
   }
 }
 </script>
