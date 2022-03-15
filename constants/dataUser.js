@@ -17,7 +17,7 @@ export const menus = [
   }
 ]
 
-export const headerTableUser = [
+export const headerTableUserAdmin = [
   {
     key: 'name',
     text: 'Nama User',

@@ -34,7 +34,7 @@
         />
       </div>
       <BaseDataTable
-        :headers="headerTableUser"
+        :headers="headerTableUserAdmin"
         :items="dataUser"
         :loading="$fetchState.pending"
         :pagination="pagination"
@@ -62,7 +62,7 @@
 
 <script>
 import { debounce } from 'lodash'
-import { headerTableUser } from '@/constants/dataUser'
+import { headerTableUserAdmin } from '@/constants/dataUser'
 
 export default {
   name: 'ComponentAdmin',
@@ -70,7 +70,7 @@ export default {
   data () {
     return {
       search: '',
-      headerTableUser,
+      headerTableUserAdmin,
       data: [],
       pagination: {
         currentPage: 1,
