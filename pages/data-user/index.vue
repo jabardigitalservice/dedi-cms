@@ -1,7 +1,10 @@
 <template>
   <div class="data-user">
     <SubMenu :menus="menus" @change="onChangeSubMenu" />
-    <Maintenance />
+    <component :is="selectedSubMenu" v-if="!isMaintenance" />
+
+    <!-- @todo: remove component Maintenance after all menu developed -->
+    <Maintenance v-else />
   </div>
 </template>
 
@@ -13,7 +16,8 @@ export default {
   data () {
     return {
       menus,
-      selectedSubMenu: 'admin'
+      selectedSubMenu: 'Admin',
+      isMaintenance: false
     }
   },
   mounted () {
@@ -22,6 +26,9 @@ export default {
   methods: {
     onChangeSubMenu (value) {
       this.selectedSubMenu = value
+
+      // @todo: remove after all menu developed
+      this.isMaintenance = value !== 'Admin'
     }
   }
 }
