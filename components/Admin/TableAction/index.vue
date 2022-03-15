@@ -35,7 +35,7 @@
           </button>
         </li>
         <li>
-          <button v-if="isActive" class="action__dropdown-item" @click="$emit('activate')">
+          <button v-if="!isActive" class="action__dropdown-item" @click="$emit('activate')">
             Aktif
           </button>
           <button v-else class="action__dropdown-item" @click="$emit('deactivate')">
