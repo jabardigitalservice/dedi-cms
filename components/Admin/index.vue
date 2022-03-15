@@ -161,22 +161,22 @@ export default {
         this.query.sort_by = 'asc'
       }
     },
-    addUser (item) {
+    addUser () {
       // @todo: add user
     },
-    editUser (item) {
+    editUser () {
       // @todo: edit user
     },
-    activateUser (item) {
+    activateUser () {
       // @todo: activate user
     },
-    deactivateUser (item) {
+    deactivateUser () {
       // @todo: deactivate user
     },
-    deleteUser (item) {
+    deleteUser () {
       // @todo: delete user
     },
-    detailUser (item) {
+    detailUser () {
       // @todo: detail user
     }
   }
