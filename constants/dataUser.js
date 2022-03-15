@@ -1,18 +1,40 @@
 export const menus = [
   {
-    value: 'admin',
+    value: 'Admin',
     label: 'Admin'
   },
   {
-    value: 'mitra',
+    value: 'Mitra',
     label: 'Mitra'
   },
   {
-    value: 'perangkat-desa',
+    value: 'PerangkatDesa',
     label: 'Perangkat Desa'
   },
   {
-    value: 'masyarakat',
+    value: 'Masyarakat',
     label: 'Masyarakat'
+  }
+]
+
+export const headerTableUser = [
+  {
+    key: 'name',
+    text: 'Nama User',
+    sortable: true
+  },
+  {
+    key: 'email',
+    text: 'Email',
+    sortable: true
+  },
+  {
+    key: 'status',
+    text: 'Status',
+    sortable: true
+  },
+  {
+    key: 'action',
+    text: 'Aksi'
   }
 ]
