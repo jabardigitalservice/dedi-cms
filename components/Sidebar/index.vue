@@ -22,7 +22,7 @@
         <div class="sidebar__menu-title">
           Master Data
         </div>
-        <nuxt-link v-for="menu in masterDataMenu" :key="menu.path" :to="menu.path" class="sidebar__menu-item">
+        <nuxt-link v-for="menu in masterDataMenu" :key="menu.path" :to="{name: menu.path}" class="sidebar__menu-item">
           <div class="sidebar__menu-item-box">
             <!-- eslint-disable-next-line vue/no-v-html -->
             <div class="sidebar__menu-item-icon" v-html="svg(menu.icon)" />

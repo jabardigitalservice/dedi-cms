@@ -43,7 +43,11 @@ export default {
     }
   },
   mounted () {
-    this.activeMenu = this.$store.state.subMenu ?? this.menus[0].value
+    if (this.$store.state.isSameRoutePage) {
+      this.activeMenu = this.$store.state.subMenu
+    } else {
+      this.activeMenu = this.menus[0].value
+    }
   }
 }
 </script>
