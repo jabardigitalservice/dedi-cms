@@ -88,12 +88,6 @@
           placeholder="Masukkan kata sandi"
           type="password"
         />
-        <!-- <jds-input-text
-          v-model="form.password"
-          name="password"
-          label="Kata Sandi"
-          placeholder="Masukkan kata sandi"
-        /> -->
       </div>
     </form>
   </BaseModal>
@@ -120,7 +114,6 @@ export default {
         name: '',
         email: '',
         password: '',
-        is_active: true,
         avatar: '',
         avatar_original_name: ''
       },
@@ -151,7 +144,6 @@ export default {
   methods: {
     async onSubmit () {
       this.loading = true
-      this.form.password_confirm = this.form.password
       try {
         await this.$axios.post('/users', this.form)
         this.$emit('close')
@@ -171,8 +163,6 @@ export default {
         name: '',
         email: '',
         password: '',
-        password_confirm: '',
-        is_active: 'true',
         avatar: '',
         avatar_original_name: ''
       }
