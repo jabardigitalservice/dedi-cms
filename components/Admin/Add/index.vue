@@ -121,13 +121,6 @@ export default {
     }
   },
   computed: {
-    optionsOrderBanner () {
-      const options = []
-      for (let i = 1; i <= 5; i++) {
-        options.push(i)
-      }
-      return options
-    },
     isFormCompleted () {
       return !!((
         this.form.name.length &&
@@ -167,7 +160,7 @@ export default {
           }
         })
         .catch(() => {
-          this.$store.dispatch('toast/showToast', { type: 'error', message: 'Gambar hero banner gagal diupload' })
+          this.$store.dispatch('toast/showToast', { type: 'error', message: 'Gambar gagal diupload' })
         }).finally(() => {
           this.loading = false
         })
