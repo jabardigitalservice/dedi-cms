@@ -17,7 +17,15 @@
               'form-add-admin__image--attached': isAttached
             }"
           >
-            <jds-icon size="14px" name="user" />
+            <jds-icon v-if="!imageSource" size="14px" name="user" />
+            <img
+              v-else
+              class="form-add-admin__image--attached-uploaded"
+              width="88"
+              height="88"
+              :src="imageSource"
+              alt="Avatar User Admin"
+            >
           </div>
         </div>
         <div class="col-span-3">
@@ -116,6 +124,7 @@ export default {
         avatar: '',
         avatar_original_name: ''
       },
+      imageSource: null,
       fileImage: null,
       uploadFileErrorMessage: ''
     }
@@ -140,30 +149,18 @@ export default {
     }
   },
   methods: {
-    onSubmit () {
+    async onSubmit () {
       this.loading = true
       this.form.password_confirm = this.form.password
-      this.submitFile(this.fileImage)
-        .then((response) => {
-          this.form.avatar = response.source
-          this.form.avatar_original_name = response.original_name
-        })
-        .then(async () => {
-          try {
-            await this.$axios.post('/users', this.form)
-            this.$emit('close')
-            this.$store.dispatch('toast/showToast', { type: 'success', message: 'Data berhasil disimpan' })
-            this.$emit('added')
-            this.resetForm()
-          } catch (error) {
-            this.$store.dispatch('toast/showToast', { type: 'error', message: 'Data gagal disimpan, periksa kembali data yang dinputkan' })
-          }
-        })
-        .catch(() => {
-          this.$store.dispatch('toast/showToast', { type: 'error', message: 'Gambar gagal diupload' })
-        }).finally(() => {
-          this.loading = false
-        })
+      try {
+        await this.$axios.post('/users', this.form)
+        this.$emit('close')
+        this.$store.dispatch('toast/showToast', { type: 'success', message: 'Data berhasil disimpan' })
+        this.$emit('added')
+        this.resetForm()
+      } catch (error) {
+        this.$store.dispatch('toast/showToast', { type: 'error', message: 'Data gagal disimpan, periksa kembali data yang dinputkan' })
+      }
     },
     onModalClose () {
       this.$emit('close')
@@ -179,6 +176,7 @@ export default {
         avatar: '',
         avatar_original_name: ''
       }
+      this.imageSource = null
       this.fileImage = null
       this.isAttached = false
       this.uploadFileErrorMessage = ''
@@ -214,6 +212,18 @@ export default {
             this.uploadFileErrorMessage = ''
             this.isAttached = true
             this.setFile(this.$refs.file.files[0])
+            this.submitFile(this.fileImage)
+              .then((response) => {
+                const { source, original_name: originalName, path } = response || null
+                this.form.avatar = source
+                this.form.avatar_original_name = originalName
+                this.imageSource = path
+              })
+              .catch(() => {
+                this.$store.dispatch('toast/showToast', { type: 'error', message: 'Gambar gagal diupload' })
+              }).finally(() => {
+                this.loading = false
+              })
           }
         } else {
           this.fileImage = null
@@ -238,7 +248,11 @@ export default {
     border-2 border-gray-400 rounded-full box-border border-dashed stroke-dash-2;
 
     &--attached {
-      @apply border-green-700 bg-green-50;
+      @apply border-green-700 bg-green-50 overflow-hidden;
+
+    &--uploaded {
+      @apply bg-cover;
+    }
     }
   }
 
