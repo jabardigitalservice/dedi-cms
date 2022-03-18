@@ -71,6 +71,9 @@
           label="Nama Administrator"
           placeholder="Masukkan nama Administrator"
         />
+        <div v-if="errors.name" class="text-red-700">
+          {{ errors.name }}
+        </div>
       </div>
       <div class="form-add-admin__form-group">
         <jds-input-text
@@ -78,7 +81,11 @@
           name="email"
           label="Email"
           placeholder="Masukkan alamat email"
+          type="email"
         />
+        <div v-if="errors.email" class="text-red-700">
+          {{ errors.email }}
+        </div>
       </div>
       <div class="form-add-admin__form-group">
         <BaseInputText
@@ -88,6 +95,9 @@
           placeholder="Masukkan kata sandi"
           type="password"
         />
+        <div v-if="errors.password" class="text-red-700">
+          {{ errors.password }}
+        </div>
       </div>
     </form>
   </BaseModal>
@@ -119,7 +129,12 @@ export default {
       },
       imageSource: null,
       fileImage: null,
-      uploadFileErrorMessage: ''
+      uploadFileErrorMessage: '',
+      errors: {
+        name: null,
+        email: null,
+        password: null
+      }
     }
   },
   computed: {
@@ -151,6 +166,12 @@ export default {
         this.$emit('added')
         this.resetForm()
       } catch (error) {
+        const { response: { status, data: { errors } } } = error || {}
+        if (status === 422 && errors) {
+          this.errors.name = errors?.name || null
+          this.errors.email = errors?.email || null
+          this.errors.password = errors?.password || null
+        }
         this.$store.dispatch('toast/showToast', { type: 'error', message: 'Data gagal disimpan, periksa kembali data yang dinputkan' })
       }
     },
@@ -170,6 +191,12 @@ export default {
       this.fileImage = null
       this.isAttached = false
       this.uploadFileErrorMessage = ''
+      this.loading = false
+      this.errrors = {
+        name: null,
+        email: null,
+        password: null
+      }
     },
     submitFile (image) {
       return new Promise((resolve, reject) => {
