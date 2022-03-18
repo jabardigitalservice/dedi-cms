@@ -3,7 +3,7 @@
     <div class="admin__datatable">
       <div class="admin__datatable-header">
         <div class="admin__datatable-header-box-right">
-          <BaseButton variant="secondary" @click="addUser">
+          <BaseButton variant="secondary" @click="addUserAdmin">
             <template #icon>
               <div class="admin__datatable-header-add">
                 <div class="admin__datatable-header-plus-icon">
@@ -57,6 +57,7 @@
         </template>
       </BaseDataTable>
     </div>
+    <AdminAdd :show="showModalAddAdmin" @added="refreshDatatable" @close="showModalAddAdmin = false" />
   </div>
 </template>
 
@@ -86,7 +87,8 @@ export default {
         order_by: 'name',
         current_page: 1,
         is_admin: true
-      }
+      },
+      showModalAddAdmin: false
     }
   },
   async fetch () {
@@ -161,8 +163,19 @@ export default {
         this.query.sort_by = 'asc'
       }
     },
-    addUser () {
-      // @todo: add user
+    refreshDatatable () {
+      this.query = {
+        q: null,
+        per_page: 5,
+        sort_by: 'asc',
+        order_by: 'name',
+        is_admin: true,
+        current_page: 1
+      }
+      this.$fetch()
+    },
+    addUserAdmin () {
+      this.showModalAddAdmin = true
     },
     editUser () {
       // @todo: edit user
