@@ -16,7 +16,7 @@ export default {
   data () {
     return {
       menus,
-      selectedSubMenu: 'Admin',
+      selectedSubMenu: null,
       isMaintenance: false
     }
   },
