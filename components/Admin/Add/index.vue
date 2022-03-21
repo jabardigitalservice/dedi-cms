@@ -17,15 +17,15 @@
               'form-add-admin__image--attached': isAttached
             }"
           >
-            <jds-icon v-if="!imageSource" size="14px" name="user" />
             <img
-              v-else
+              v-if="imageSource"
               class="form-add-admin__image--attached-uploaded"
               width="88"
               height="88"
               :src="imageSource"
               alt="Avatar User Admin"
             >
+            <jds-icon v-else size="14px" name="user" />
           </div>
         </div>
         <div class="col-span-3">
@@ -157,23 +157,37 @@ export default {
     }
   },
   methods: {
-    async onSubmit () {
+    onSubmit () {
       this.loading = true
-      try {
-        await this.$axios.post('/users', this.form)
-        this.$emit('close')
-        this.$store.dispatch('toast/showToast', { type: 'success', message: 'Data berhasil disimpan' })
-        this.$emit('added')
-        this.resetForm()
-      } catch (error) {
-        const { response: { status, data: { errors } } } = error || {}
-        if (status === 422 && errors) {
-          this.errors.name = errors?.name || null
-          this.errors.email = errors?.email || null
-          this.errors.password = errors?.password || null
-        }
-        this.$store.dispatch('toast/showToast', { type: 'error', message: 'Data gagal disimpan, periksa kembali data yang dinputkan' })
-      }
+      this.submitFile(this.fileImage)
+        .then((response) => {
+          const { source, original_name: originalName, path } = response || null
+          this.form.avatar = source
+          this.form.avatar_original_name = originalName
+          this.imageSource = path
+        })
+        .then(async () => {
+          try {
+            await this.$axios.post('/users', this.form)
+            this.$emit('close')
+            this.$store.dispatch('toast/showToast', { type: 'success', message: 'Data berhasil disimpan' })
+            this.$emit('added')
+            this.resetForm()
+          } catch (error) {
+            const { response: { status, data: { errors } } } = error || {}
+            if (status === 422 && errors) {
+              this.errors.name = errors?.name || null
+              this.errors.email = errors?.email || null
+              this.errors.password = errors?.password || null
+            }
+            this.$store.dispatch('toast/showToast', { type: 'error', message: 'Data gagal disimpan, periksa kembali data yang dinputkan' })
+          }
+        })
+        .catch(() => {
+          this.$store.dispatch('toast/showToast', { type: 'error', message: 'Gambar gagal diupload' })
+        }).finally(() => {
+          this.loading = false
+        })
     },
     onModalClose () {
       this.$emit('close')
@@ -229,19 +243,8 @@ export default {
             this.uploadFileErrorMessage = ''
             this.isAttached = true
             this.setFile(this.$refs.file.files[0])
-            this.submitFile(this.fileImage)
-              .then((response) => {
-                const { source, original_name: originalName, path } = response || null
-                this.form.avatar = source
-                this.form.avatar_original_name = originalName
-                this.imageSource = path
-              })
-              .catch(() => {
-                this.$store.dispatch('toast/showToast', { type: 'error', message: 'Gambar gagal diupload' })
-              }).finally(() => {
-                this.loading = false
-              })
           }
+          this.imageSource = URL.createObjectURL(this.$refs.file.files[0])
         } else {
           this.fileImage = null
           this.uploadFileErrorMessage = 'Maaf file yang anda masukan tidak didukung'
