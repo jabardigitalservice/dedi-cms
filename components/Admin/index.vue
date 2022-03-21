@@ -48,7 +48,7 @@
         <template #item.action="{item}">
           <AdminTableAction
             :is-active="item.is_active"
-            @edit="editUser(item)"
+            @edit="editUserAdmin(item)"
             @detail="detailUser(item)"
             @activate="activateUser(item)"
             @deactivate="deactivateUser(item)"
@@ -88,7 +88,8 @@ export default {
         current_page: 1,
         is_admin: true
       },
-      showModalAddAdmin: false
+      showModalAddAdmin: false,
+      showModalEditAdmin: false
     }
   },
   async fetch () {
@@ -177,8 +178,9 @@ export default {
     addUserAdmin () {
       this.showModalAddAdmin = true
     },
-    editUser () {
+    editUserAdmin () {
       // @todo: edit user
+      this.showModalEditAdmin = true
     },
     activateUser () {
       // @todo: activate user
