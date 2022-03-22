@@ -180,11 +180,23 @@ export default {
     editUser () {
       // @todo: edit user
     },
-    activateUser () {
-      // @todo: activate user
+    async activateUser (item) {
+      const { id } = item || null
+      try {
+        await this.$axios.patch(`/users/${id}/status`, { is_active: true })
+        this.$fetch()
+      } catch (error) {
+        this.$store.dispatch('toast/showToast', { type: 'error', message: 'Gagal mengaktifkan user' })
+      }
     },
-    deactivateUser () {
-      // @todo: deactivate user
+    async deactivateUser (item) {
+      const { id } = item || null
+      try {
+        await this.$axios.patch(`/users/${id}/status`, { is_active: false })
+        this.$fetch()
+      } catch (error) {
+        this.$store.dispatch('toast/showToast', { type: 'error', message: 'Gagal menonaktifkan user' })
+      }
     },
     deleteUser () {
       // @todo: delete user
