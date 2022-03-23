@@ -25,7 +25,7 @@
               :src="imageSource"
               alt="Avatar User Admin"
             >
-            <jds-icon v-else size="14px" name="user" />
+            <jds-icon v-else size="20px" name="user" />
           </div>
         </div>
         <div class="col-span-3">
@@ -243,8 +243,8 @@ export default {
             this.uploadFileErrorMessage = ''
             this.isAttached = true
             this.setFile(this.$refs.file.files[0])
+            this.imageSource = URL.createObjectURL(this.$refs.file.files[0])
           }
-          this.imageSource = URL.createObjectURL(this.$refs.file.files[0])
         } else {
           this.fileImage = null
           this.uploadFileErrorMessage = 'Maaf file yang anda masukan tidak didukung'
@@ -265,10 +265,10 @@ export default {
 
   &__image {
     @apply w-[88px] h-[88px] bg-gray-50 text-gray-400 flex justify-center items-center
-    border-2 border-gray-400 rounded-full box-border border-dashed stroke-dash-2;
+    border border-gray-400 rounded-full box-border border-dashed stroke-dash-2;
 
     &--attached {
-      @apply border-green-700 bg-green-50 overflow-hidden;
+      @apply border-none overflow-hidden;
 
     &--uploaded {
       @apply bg-cover;
