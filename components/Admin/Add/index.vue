@@ -8,7 +8,7 @@
     @submit="onSubmit"
     @close="onModalClose"
   >
-    <form v-if="modalShow" class="form-add-admin">
+    <form v-if="modalShow" class="form-add-admin" autocomplete="off">
       <div class="grid grid-cols-4">
         <div class="col-span-1">
           <div
@@ -70,6 +70,7 @@
           name="nama"
           label="Nama Administrator"
           placeholder="Masukkan nama Administrator"
+          autocomplete="false"
         />
         <div v-if="errors.name" class="text-red-700">
           {{ errors.name }}
@@ -78,10 +79,11 @@
       <div class="form-add-admin__form-group">
         <jds-input-text
           v-model="form.email"
-          name="email"
+          name="admin-mail"
           label="Email"
+          type="text"
           placeholder="Masukkan alamat email"
-          type="email"
+          autocomplete="false"
         />
         <div v-if="errors.email" class="text-red-700">
           {{ errors.email }}
@@ -90,10 +92,12 @@
       <div class="form-add-admin__form-group">
         <BaseInputText
           v-model="form.password"
-          name="password"
+          name="admin-password"
           label="Kata Sandi"
           placeholder="Masukkan kata sandi"
           type="password"
+          autocomplete="false"
+          autofill="off"
         />
         <div v-if="errors.password" class="text-red-700">
           {{ errors.password }}
@@ -155,6 +159,12 @@ export default {
       },
       immediate: true
     }
+  },
+  mounted () {
+    const adminEmail = document.getElementsByName('admin-email')
+    const adminPass = document.getElementsByName('admin-password')
+    console.log('bacot anhing')
+    console.log(adminEmail, adminPass)
   },
   methods: {
     onSubmit () {
