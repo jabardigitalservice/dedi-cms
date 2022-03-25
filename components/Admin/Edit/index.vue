@@ -8,19 +8,19 @@
     @submit="onSubmit"
     @close="onModalClose"
   >
-    <form v-if="modalShow" class="form-add-admin">
+    <form v-if="modalShow" class="form-edit-admin">
       <div class="grid grid-cols-4">
         <div class="col-span-1">
           <div
             :class="{
-              'form-add-admin__image': true,
-              'form-add-admin__image--attached': isAttached
+              'form-edit-admin__image': true,
+              'form-edit-admin__image--attached': isAttached
             }"
           >
             <jds-icon v-if="!imageSource" size="14px" name="user" />
             <img
               v-else
-              class="form-add-admin__image--attached-uploaded"
+              class="form-edit-admin__image--attached-uploaded"
               width="88"
               height="88"
               :src="imageSource"
@@ -29,7 +29,7 @@
           </div>
         </div>
         <div class="col-span-3">
-          <div class="form-add-admin__title">
+          <div class="form-edit-admin__title">
             Upload Foto Profile
           </div>
           <div>
@@ -40,8 +40,8 @@
               File yang didukung adalah .jpg dan .png
             </div>
           </div>
-          <div class="form-add-admin__button">
-            <button class="form-add-admin__button-btn" type="button" @click="$refs.file.click()">
+          <div class="form-edit-admin__button">
+            <button class="form-edit-admin__button-btn" type="button" @click="$refs.file.click()">
               Tambah File
               <jds-icon class="ml-2" size="12px" name="plus-bold" />
             </button>
@@ -64,7 +64,7 @@
           </div>
         </div>
       </div>
-      <div class="form-add-admin__form-group">
+      <div class="form-edit-admin__form-group">
         <jds-input-text
           v-model="form.name"
           name="nama"
@@ -75,7 +75,7 @@
           {{ errors.name }}
         </div>
       </div>
-      <div class="form-add-admin__form-group">
+      <div class="form-edit-admin__form-group">
         <jds-input-text
           v-model="form.email"
           name="email"
@@ -146,25 +146,56 @@ export default {
         this.modalShow = val
       },
       immediate: true
+    },
+    'form.name' () {
+      if (this.form.name.length < 3) {
+        this.errors.name = 'Isian nama minimal 3 karakter.'
+      } else {
+        this.errors.name = ''
+      }
+    },
+    'form.email' () {
+      // test format input text email using pattern
+      const pattern = /^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/
+      if (!pattern.test(this.form.email)) {
+        this.errors.email = 'Isian email tidak valid.'
+      } else {
+        this.errors.email = ''
+      }
     }
   },
   methods: {
-    async onSubmit () {
+    onSubmit () {
       this.loading = true
-      try {
-        await this.$axios.post('/users', this.form)
-        this.$emit('close')
-        this.$store.dispatch('toast/showToast', { type: 'success', message: 'Data berhasil diubah' })
-        this.$emit('stored')
-        this.resetForm()
-      } catch (error) {
-        const { response: { status, data: { errors } } } = error || {}
-        if (status === 422 && errors) {
-          this.errors.name = errors?.name || null
-          this.errors.email = errors?.email || null
-        }
-        this.$store.dispatch('toast/showToast', { type: 'error', message: 'Data gagal diubah, periksa kembali data yang dinputkan' })
-      }
+      this.submitFile(this.fileImage)
+        .then((response) => {
+          const { source, original_name: originalName, path } = response || null
+          this.form.avatar = source
+          this.form.avatar_original_name = originalName
+          this.imageSource = path
+        })
+        .then(async () => {
+          try {
+            await this.$axios.post('/users', this.form)
+            this.$emit('close')
+            this.$store.dispatch('toast/showToast', { type: 'success', message: 'Data berhasil disimpan' })
+            this.$emit('stored')
+            this.resetForm()
+          } catch (error) {
+            const { response: { status, data: { errors } } } = error || {}
+            if (status === 422 && errors) {
+              this.errors.name = errors?.name || null
+              this.errors.email = errors?.email || null
+              this.errors.password = errors?.password || null
+            }
+            this.$store.dispatch('toast/showToast', { type: 'error', message: 'Data gagal disimpan, periksa kembali data yang dinputkan' })
+          }
+        })
+        .catch(() => {
+          this.$store.dispatch('toast/showToast', { type: 'error', message: 'Gambar gagal diupload' })
+        }).finally(() => {
+          this.loading = false
+        })
     },
     onModalClose () {
       this.$emit('close')
@@ -182,7 +213,7 @@ export default {
       this.isAttached = false
       this.uploadFileErrorMessage = ''
       this.loading = false
-      this.errrors = {
+      this.errors = {
         name: null,
         email: null
       }
@@ -218,18 +249,7 @@ export default {
             this.uploadFileErrorMessage = ''
             this.isAttached = true
             this.setFile(this.$refs.file.files[0])
-            this.submitFile(this.fileImage)
-              .then((response) => {
-                const { source, original_name: originalName, path } = response || null
-                this.form.avatar = source
-                this.form.avatar_original_name = originalName
-                this.imageSource = path
-              })
-              .catch(() => {
-                this.$store.dispatch('toast/showToast', { type: 'error', message: 'Gambar gagal diupload' })
-              }).finally(() => {
-                this.loading = false
-              })
+            this.imageSource = URL.createObjectURL(this.$refs.file.files[0])
           }
         } else {
           this.fileImage = null
@@ -246,15 +266,15 @@ export default {
 </script>
 
 <style lang="postcss">
-.form-add-admin {
+.form-edit-admin {
   @apply text-sm leading-[23px] text-gray-800 py-4;
 
   &__image {
     @apply w-[88px] h-[88px] bg-gray-50 text-gray-400 flex justify-center items-center
-    border-2 border-gray-400 rounded-full box-border border-dashed stroke-dash-2;
+    border border-gray-400 rounded-full box-border border-dashed stroke-dash-2;
 
     &--attached {
-      @apply border-green-700 bg-green-50 overflow-hidden;
+      @apply border-none overflow-hidden;
 
     &--uploaded {
       @apply bg-cover;
