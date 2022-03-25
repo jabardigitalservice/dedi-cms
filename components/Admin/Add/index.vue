@@ -79,11 +79,10 @@
       <div class="form-add-admin__form-group">
         <jds-input-text
           v-model="form.email"
-          name="admin-mail"
           label="Email"
-          type="text"
+          type="email"
           placeholder="Masukkan alamat email"
-          autocomplete="false"
+          autocomplete="off"
         />
         <div v-if="errors.email" class="text-red-700">
           {{ errors.email }}
@@ -92,12 +91,10 @@
       <div class="form-add-admin__form-group">
         <BaseInputText
           v-model="form.password"
-          name="admin-password"
           label="Kata Sandi"
           placeholder="Masukkan kata sandi"
           type="password"
-          autocomplete="false"
-          autofill="off"
+          autocomplete="off"
         />
         <div v-if="errors.password" class="text-red-700">
           {{ errors.password }}
@@ -158,13 +155,30 @@ export default {
         this.modalShow = val
       },
       immediate: true
+    },
+    'form.name' () {
+      if (this.form.name.length < 3) {
+        this.errors.name = 'Isian nama minimal 3 karakter.'
+      } else {
+        this.errors.name = ''
+      }
+    },
+    'form.email' () {
+      // test format input text email using pattern
+      const pattern = /^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/
+      if (!pattern.test(this.form.email)) {
+        this.errors.email = 'Isian email tidak valid.'
+      } else {
+        this.errors.email = ''
+      }
+    },
+    'form.password' () {
+      if (this.form.password.length < 8) {
+        this.errors.password = 'Isian password minimal 8 karakter.'
+      } else {
+        this.errors.password = ''
+      }
     }
-  },
-  mounted () {
-    const adminEmail = document.getElementsByName('admin-email')
-    const adminPass = document.getElementsByName('admin-password')
-    console.log('bacot anhing')
-    console.log(adminEmail, adminPass)
   },
   methods: {
     onSubmit () {
@@ -216,7 +230,7 @@ export default {
       this.isAttached = false
       this.uploadFileErrorMessage = ''
       this.loading = false
-      this.errrors = {
+      this.errors = {
         name: null,
         email: null,
         password: null
