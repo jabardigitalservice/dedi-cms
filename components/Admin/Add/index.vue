@@ -79,6 +79,7 @@
       <div class="form-add-admin__form-group">
         <jds-input-text
           v-model="form.email"
+          name="email"
           label="Email"
           type="email"
           placeholder="Masukkan alamat email"
@@ -91,6 +92,7 @@
       <div class="form-add-admin__form-group">
         <BaseInputText
           v-model="form.password"
+          name="password"
           label="Kata Sandi"
           placeholder="Masukkan kata sandi"
           type="password"
