@@ -83,8 +83,8 @@ export default {
       query: {
         q: null,
         per_page: 5,
-        sort_by: 'asc',
-        order_by: 'name',
+        sort_by: 'desc',
+        order_by: 'updated_at',
         current_page: 1,
         is_admin: true
       },
@@ -158,18 +158,18 @@ export default {
       const key = Object.keys(value)[0]
       if (key && value[key] !== 'no-sort') {
         this.query.sort_by = value[key]
-        this.query.order_by = key === 'status' ? 'is_active' : ''
+        this.query.order_by = key === 'status' ? 'is_active' : key
       } else {
-        this.query.order_by = 'name'
-        this.query.sort_by = 'asc'
+        this.query.order_by = 'updated_at'
+        this.query.sort_by = 'desc'
       }
     },
     refreshDatatable () {
       this.query = {
         q: null,
         per_page: 5,
-        sort_by: 'asc',
-        order_by: 'name',
+        sort_by: 'desc',
+        order_by: 'updated_at',
         is_admin: true,
         current_page: 1
       }
@@ -182,11 +182,23 @@ export default {
       // @todo: edit user
       this.showModalEditAdmin = true
     },
-    activateUser () {
-      // @todo: activate user
+    async activateUser (item) {
+      const { id } = item || null
+      try {
+        await this.$axios.patch(`/users/${id}/status`, { is_active: true })
+        this.$fetch()
+      } catch (error) {
+        this.$store.dispatch('toast/showToast', { type: 'error', message: 'Gagal mengaktifkan user' })
+      }
     },
-    deactivateUser () {
-      // @todo: deactivate user
+    async deactivateUser (item) {
+      const { id } = item || null
+      try {
+        await this.$axios.patch(`/users/${id}/status`, { is_active: false })
+        this.$fetch()
+      } catch (error) {
+        this.$store.dispatch('toast/showToast', { type: 'error', message: 'Gagal menonaktifkan user' })
+      }
     },
     deleteUser () {
       // @todo: delete user

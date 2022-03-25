@@ -8,7 +8,7 @@
     @submit="onSubmit"
     @close="onModalClose"
   >
-    <form v-if="modalShow" class="form-add-admin">
+    <form v-if="modalShow" class="form-add-admin" autocomplete="off">
       <div class="grid grid-cols-4">
         <div class="col-span-1">
           <div
@@ -25,7 +25,7 @@
               :src="imageSource"
               alt="Avatar User Admin"
             >
-            <jds-icon v-else size="14px" name="user" />
+            <jds-icon v-else size="20px" name="user" />
           </div>
         </div>
         <div class="col-span-3">
@@ -70,6 +70,7 @@
           name="nama"
           label="Nama Administrator"
           placeholder="Masukkan nama Administrator"
+          autocomplete="false"
         />
         <div v-if="errors.name" class="text-red-700">
           {{ errors.name }}
@@ -80,8 +81,9 @@
           v-model="form.email"
           name="email"
           label="Email"
-          placeholder="Masukkan alamat email"
           type="email"
+          placeholder="Masukkan alamat email"
+          autocomplete="off"
         />
         <div v-if="errors.email" class="text-red-700">
           {{ errors.email }}
@@ -94,6 +96,7 @@
           label="Kata Sandi"
           placeholder="Masukkan kata sandi"
           type="password"
+          autocomplete="off"
         />
         <div v-if="errors.password" class="text-red-700">
           {{ errors.password }}
@@ -154,6 +157,29 @@ export default {
         this.modalShow = val
       },
       immediate: true
+    },
+    'form.name' () {
+      if (this.form.name.length < 3) {
+        this.errors.name = 'Isian nama minimal 3 karakter.'
+      } else {
+        this.errors.name = ''
+      }
+    },
+    'form.email' () {
+      // test format input text email using pattern
+      const pattern = /^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/
+      if (!pattern.test(this.form.email)) {
+        this.errors.email = 'Isian email tidak valid.'
+      } else {
+        this.errors.email = ''
+      }
+    },
+    'form.password' () {
+      if (this.form.password.length < 8) {
+        this.errors.password = 'Isian password minimal 8 karakter.'
+      } else {
+        this.errors.password = ''
+      }
     }
   },
   methods: {
@@ -206,7 +232,7 @@ export default {
       this.isAttached = false
       this.uploadFileErrorMessage = ''
       this.loading = false
-      this.errrors = {
+      this.errors = {
         name: null,
         email: null,
         password: null
@@ -243,8 +269,8 @@ export default {
             this.uploadFileErrorMessage = ''
             this.isAttached = true
             this.setFile(this.$refs.file.files[0])
+            this.imageSource = URL.createObjectURL(this.$refs.file.files[0])
           }
-          this.imageSource = URL.createObjectURL(this.$refs.file.files[0])
         } else {
           this.fileImage = null
           this.uploadFileErrorMessage = 'Maaf file yang anda masukan tidak didukung'
@@ -265,10 +291,10 @@ export default {
 
   &__image {
     @apply w-[88px] h-[88px] bg-gray-50 text-gray-400 flex justify-center items-center
-    border-2 border-gray-400 rounded-full box-border border-dashed stroke-dash-2;
+    border border-gray-400 rounded-full box-border border-dashed stroke-dash-2;
 
     &--attached {
-      @apply border-green-700 bg-green-50 overflow-hidden;
+      @apply border-none overflow-hidden;
 
     &--uploaded {
       @apply bg-cover;
