@@ -58,6 +58,7 @@
       </BaseDataTable>
     </div>
     <AdminAdd :show="showModalAddAdmin" @added="refreshDatatable" @close="showModalAddAdmin = false" />
+    <AdminEdit :show="showModalEditAdmin" :item="dataAdmin" @stored="refreshDatatable" @close="showModalEditAdmin = false" />
   </div>
 </template>
 
@@ -73,6 +74,7 @@ export default {
       search: '',
       headerTableUserAdmin,
       data: [],
+      dataAdmin: {},
       pagination: {
         currentPage: 1,
         totalRows: 0,
@@ -178,8 +180,8 @@ export default {
     addUserAdmin () {
       this.showModalAddAdmin = true
     },
-    editUserAdmin () {
-      // @todo: edit user
+    editUserAdmin (item) {
+      this.dataAdmin = item
       this.showModalEditAdmin = true
     },
     async activateUser (item) {

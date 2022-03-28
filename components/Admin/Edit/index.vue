@@ -3,7 +3,7 @@
     :show="modalShow"
     :loading="loading"
     :is-form-completed="isFormCompleted"
-    label-right-btn="Tambahkan"
+    label-right-btn="Simpan Perubahan"
     title="Ubah Data - Administrator"
     @submit="onSubmit"
     @close="onModalClose"
@@ -13,19 +13,19 @@
         <div class="col-span-1">
           <div
             :class="{
-              'form-edit-admin__image': true,
-              'form-edit-admin__image--attached': isAttached
+              'form-add-admin__image': true,
+              'form-add-admin__image--attached': imageSource
             }"
           >
-            <jds-icon v-if="!imageSource" size="14px" name="user" />
             <img
-              v-else
-              class="form-edit-admin__image--attached-uploaded"
+              v-if="imageSource"
+              class="form-edit-admin__image--attached"
               width="88"
               height="88"
               :src="imageSource"
               alt="Avatar User Admin"
             >
+            <jds-icon v-else size="20px" name="user" />
           </div>
         </div>
         <div class="col-span-3">
@@ -42,8 +42,8 @@
           </div>
           <div class="form-edit-admin__button">
             <button class="form-edit-admin__button-btn" type="button" @click="$refs.file.click()">
-              Tambah File
-              <jds-icon class="ml-2" size="12px" name="plus-bold" />
+              Ubah File
+              <jds-icon class="ml-2" size="12px" name="pencil" />
             </button>
             <input
               ref="file"
@@ -53,13 +53,13 @@
               @change="onFileChange"
             >
           </div>
-          <div v-if="fileImage">
-            Filename: {{ fileImage.get('file').name }}
+          <div v-if="form.fileImage">
+            Filename: {{ form.fileImage.get('file').name }}
           </div>
           <div v-else-if="uploadFileErrorMessage" class="text-red-700">
             {{ uploadFileErrorMessage }}
           </div>
-          <div v-else>
+          <div v-else-if="!imageSource.length">
             Belum ada file terpilih.
           </div>
         </div>
@@ -92,6 +92,7 @@
 </template>
 
 <script>
+import { isEqual, cloneDeep } from 'lodash'
 export default {
   name: 'ComponentAdminEdit',
   props: {
@@ -112,6 +113,8 @@ export default {
   },
   data () {
     return {
+      isChangedForm: false,
+      cloneForm: {},
       modalShow: undefined,
       isAttached: false,
       loading: false,
@@ -119,10 +122,10 @@ export default {
         name: '',
         email: '',
         avatar: '',
-        avatar_original_name: ''
+        avatar_original_name: '',
+        fileImage: null
       },
-      imageSource: null,
-      fileImage: null,
+      imageSource: '',
       uploadFileErrorMessage: '',
       errors: {
         name: null,
@@ -135,8 +138,8 @@ export default {
       return !!((
         this.form.name.length &&
         this.form.email.length &&
-        this.fileImage &&
-        !this.uploadFileErrorMessage.length
+        !this.uploadFileErrorMessage.length &&
+        this.isChangedForm
       ))
     }
   },
@@ -144,8 +147,27 @@ export default {
     show: {
       handler (val) {
         this.modalShow = val
+        if (val && Object.keys(this.item).length) {
+          this.form = {
+            ...this.form,
+            ...this.item
+          }
+          this.uploadFileErrorMessage = ''
+          this.imageSource = this.item.avatar?.path
+          this.cloneForm = cloneDeep(this.form)
+        }
       },
       immediate: true
+    },
+    form: {
+      handler () {
+        if (!isEqual(this.form, this.cloneForm)) {
+          this.isChangedForm = true
+        } else {
+          this.isChangedForm = false
+        }
+      },
+      deep: true
     },
     'form.name' () {
       if (this.form.name.length < 3) {
@@ -167,7 +189,7 @@ export default {
   methods: {
     onSubmit () {
       this.loading = true
-      this.submitFile(this.fileImage)
+      this.submitFile(this.form.fileImage)
         .then((response) => {
           const { source, original_name: originalName, path } = response || null
           this.form.avatar = source
@@ -176,17 +198,15 @@ export default {
         })
         .then(async () => {
           try {
-            await this.$axios.post('/users', this.form)
+            await this.$axios.put(`/users/${this.form.id}`, this.form)
             this.$emit('close')
             this.$store.dispatch('toast/showToast', { type: 'success', message: 'Data berhasil disimpan' })
             this.$emit('stored')
-            this.resetForm()
           } catch (error) {
             const { response: { status, data: { errors } } } = error || {}
             if (status === 422 && errors) {
               this.errors.name = errors?.name || null
               this.errors.email = errors?.email || null
-              this.errors.password = errors?.password || null
             }
             this.$store.dispatch('toast/showToast', { type: 'error', message: 'Data gagal disimpan, periksa kembali data yang dinputkan' })
           }
@@ -199,24 +219,7 @@ export default {
     },
     onModalClose () {
       this.$emit('close')
-      this.resetForm()
-    },
-    resetForm () {
-      this.form = {
-        name: '',
-        email: '',
-        avatar: '',
-        avatar_original_name: ''
-      }
-      this.imageSource = null
-      this.fileImage = null
-      this.isAttached = false
-      this.uploadFileErrorMessage = ''
-      this.loading = false
-      this.errors = {
-        name: null,
-        email: null
-      }
+      this.$store.dispatch('dialog/closeDialog')
     },
     submitFile (image) {
       return new Promise((resolve, reject) => {
@@ -235,30 +238,28 @@ export default {
     setFile (value) {
       const formData = new FormData()
       formData.append('file', value)
-      this.fileImage = formData
+      this.form.fileImage = formData
+      this.imageSource = URL.createObjectURL(this.$refs.file.files[0])
     },
     onFileChange () {
       if (this.$refs.file.files[0]) {
         const isValidFormat = ['image/png', 'image/jpeg'].includes(this.$refs.file.files[0].type)
         if (isValidFormat) {
           if (this.$refs.file.files[0].size > 1000000) {
-            this.fileImage = null
+            this.form.fileImage = null
             this.uploadFileErrorMessage = 'Gambar anda melebihi ukuran maksimal'
-            this.isAttached = false
           } else {
             this.uploadFileErrorMessage = ''
-            this.isAttached = true
             this.setFile(this.$refs.file.files[0])
-            this.imageSource = URL.createObjectURL(this.$refs.file.files[0])
           }
         } else {
-          this.fileImage = null
+          this.form.fileImage = null
+          this.imageSource = ''
           this.uploadFileErrorMessage = 'Maaf file yang anda masukan tidak didukung'
-          this.isAttached = false
         }
       } else {
-        this.fileImage = null
-        this.isAttached = false
+        this.form.fileImage = null
+        this.imageSource = ''
       }
     }
   }
@@ -274,11 +275,7 @@ export default {
     border border-gray-400 rounded-full box-border border-dashed stroke-dash-2;
 
     &--attached {
-      @apply border-none overflow-hidden;
-
-    &--uploaded {
-      @apply bg-cover;
-    }
+      @apply border-none overflow-hidden bg-cover;
     }
   }
 
