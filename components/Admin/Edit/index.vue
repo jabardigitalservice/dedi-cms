@@ -13,8 +13,8 @@
         <div class="col-span-1">
           <div
             :class="{
-              'form-add-admin__image': true,
-              'form-add-admin__image--attached': imageSource
+              'form-edit-admin__image': true,
+              'form-edit-admin__image--attached': imageSource
             }"
           >
             <img
