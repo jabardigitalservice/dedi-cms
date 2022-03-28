@@ -48,7 +48,7 @@
         <template #item.action="{item}">
           <AdminTableAction
             :is-active="item.is_active"
-            @edit="editUser(item)"
+            @edit="editUserAdmin(item)"
             @detail="detailUser(item)"
             @activate="activateUser(item)"
             @deactivate="deactivateUser(item)"
@@ -58,6 +58,7 @@
       </BaseDataTable>
     </div>
     <AdminAdd :show="showModalAddAdmin" @added="refreshDatatable" @close="showModalAddAdmin = false" />
+    <AdminEdit :show="showModalEditAdmin" :item="dataAdmin" @stored="refreshDatatable" @close="showModalEditAdmin = false" />
   </div>
 </template>
 
@@ -73,6 +74,7 @@ export default {
       search: '',
       headerTableUserAdmin,
       data: [],
+      dataAdmin: {},
       pagination: {
         currentPage: 1,
         totalRows: 0,
@@ -88,7 +90,8 @@ export default {
         current_page: 1,
         is_admin: true
       },
-      showModalAddAdmin: false
+      showModalAddAdmin: false,
+      showModalEditAdmin: false
     }
   },
   async fetch () {
@@ -177,8 +180,9 @@ export default {
     addUserAdmin () {
       this.showModalAddAdmin = true
     },
-    editUser () {
-      // @todo: edit user
+    editUserAdmin (item) {
+      this.dataAdmin = item
+      this.showModalEditAdmin = true
     },
     async activateUser (item) {
       const { id } = item || null
