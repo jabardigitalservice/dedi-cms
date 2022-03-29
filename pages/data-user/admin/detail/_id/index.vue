@@ -10,7 +10,6 @@ export default {
     try {
       const response = await $axios.get(`/users/${params.id}`)
       const data = response.data?.data
-      console.log(data)
       return {
         data
       }
