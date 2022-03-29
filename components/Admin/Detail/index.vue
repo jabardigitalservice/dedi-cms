@@ -36,7 +36,9 @@
         </thead>
         <tbody>
           <tr>
-            <td><strong>Foto Profil</strong></td>
+            <td width="200">
+              <strong>Foto Profil</strong>
+            </td>
             <td>
               <img width="90" height="90" class="rounded-full object-cover w-[90px] h-[90px]" :src="item.avatar.path" :alt="item.name">
             </td>
@@ -71,7 +73,9 @@
         </thead>
         <tbody>
           <tr>
-            <td><strong>Dibuat pada</strong></td>
+            <td width="200">
+              <strong>Dibuat pada</strong>
+            </td>
             <td>{{ formattedDate(item.created_at) }}</td>
           </tr>
           <tr>
