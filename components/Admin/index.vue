@@ -49,7 +49,7 @@
           <AdminTableAction
             :is-active="item.is_active"
             @edit="editUserAdmin(item)"
-            @detail="detailUser(item)"
+            @detail="$router.push(`/data-user/admin/detail/${item.id}`)"
             @activate="activateUser(item)"
             @deactivate="deactivateUser(item)"
             @delete="deleteUser(item)"
@@ -223,9 +223,6 @@ export default {
       } catch (error) {
         this.$store.dispatch('toast/showToast', { type: 'error', message: 'User gagal dihapus' })
       }
-    },
-    detailUser () {
-      // @todo: detail user
     }
   }
 }
