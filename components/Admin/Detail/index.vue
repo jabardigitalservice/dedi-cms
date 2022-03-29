@@ -72,15 +72,15 @@
         <tbody>
           <tr>
             <td><strong>Dibuat pada</strong></td>
-            <td>{{ item.created_at || '-' }}</td>
+            <td>{{ formattedDate(item.created_at) }}</td>
           </tr>
           <tr>
             <td><strong>Terakhir diupdate</strong></td>
-            <td>{{ item.updated_at || '-' }}</td>
+            <td>{{ formattedDate(item.updated_at) }}</td>
           </tr>
           <tr>
             <td><strong>Login terakhir</strong></td>
-            <td>{{ item.last_login_at || '-' }}</td>
+            <td>{{ formattedDate(item.last_login_at) }}</td>
           </tr>
         </tbody>
       </jds-simple-table>
@@ -90,6 +90,9 @@
 </template>
 
 <script>
+import { formatInTimeZone } from 'date-fns-tz'
+import { id } from 'date-fns/esm/locale'
+
 export default {
   name: 'ComponentAdminDetail',
   props: {
@@ -118,6 +121,13 @@ export default {
   methods: {
     refreshData () {
       this.$emit('updated')
+    },
+    formattedDate (date) {
+      if (date) {
+        return formatInTimeZone(date, 'Asia/Jakarta', 'dd MMMM yyyy HH:mm:ss', { locale: id })
+      } else {
+        return '-'
+      }
     }
   }
 }
