@@ -202,8 +202,27 @@ export default {
         this.$store.dispatch('toast/showToast', { type: 'error', message: 'Gagal menonaktifkan user' })
       }
     },
-    deleteUser () {
-      // @todo: delete user
+    deleteUser (item) {
+      this.$store.dispatch('dialog/showDialog', {
+        header: 'Hapus Admin',
+        title: 'Apakah Anda yakin akan menghapus user ini?',
+        message: item.name,
+        btnRightVariant: 'danger',
+        btnLeftVariant: 'secondary',
+        actionBtnRight: () => this.actionDeleteUser(item.id)
+      })
+    },
+    async actionDeleteUser (id) {
+      try {
+        const response = await this.$axios.delete(`/users/${id}`)
+        if (response) {
+          this.refreshDatatable()
+          this.$store.dispatch('dialog/closeDialog')
+          this.$store.dispatch('toast/showToast', { type: 'success', message: 'User berhasil dihapus' })
+        }
+      } catch (error) {
+        this.$store.dispatch('toast/showToast', { type: 'error', message: 'User gagal dihapus' })
+      }
     },
     detailUser () {
       // @todo: detail user
