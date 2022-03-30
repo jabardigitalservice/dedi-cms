@@ -187,35 +187,49 @@ export default {
     }
   },
   methods: {
-    onSubmit () {
+    async onSubmit () {
       this.loading = true
-      this.submitFile(this.form.fileImage)
-        .then((response) => {
-          const { source, original_name: originalName, path } = response || null
-          this.form.avatar = source
-          this.form.avatar_original_name = originalName
-          this.imageSource = path
-        })
-        .then(async () => {
-          try {
-            await this.$axios.put(`/users/${this.form.id}`, this.form)
-            this.$emit('close')
-            this.$store.dispatch('toast/showToast', { type: 'success', message: 'Data berhasil disimpan' })
-            this.$emit('stored')
-          } catch (error) {
-            const { response: { status, data: { errors } } } = error || {}
-            if (status === 422 && errors) {
-              this.errors.name = errors?.name || null
-              this.errors.email = errors?.email || null
+      if (this.form.fileImage) {
+        this.submitFile(this.form.fileImage)
+          .then((response) => {
+            const { source, original_name: originalName } = response || null
+            this.form.avatar = source
+            this.form.avatar_original_name = originalName
+          })
+          .then(async () => {
+            try {
+              await this.$axios.put(`/users/${this.form.id}`, this.form)
+              this.$emit('close')
+              this.$store.dispatch('toast/showToast', { type: 'success', message: 'Data berhasil disimpan' })
+              this.$emit('stored')
+            } catch (error) {
+              const { response: { status, data: { errors } } } = error || {}
+              if (status === 422 && errors) {
+                this.errors.name = errors?.name || null
+                this.errors.email = errors?.email || null
+              }
+              this.$store.dispatch('toast/showToast', { type: 'error', message: 'Data gagal disimpan, periksa kembali data yang dinputkan' })
             }
-            this.$store.dispatch('toast/showToast', { type: 'error', message: 'Data gagal disimpan, periksa kembali data yang dinputkan' })
-          }
-        })
-        .catch(() => {
-          this.$store.dispatch('toast/showToast', { type: 'error', message: 'Gambar gagal diupload' })
-        }).finally(() => {
+          })
+          .catch(() => {
+            this.$store.dispatch('toast/showToast', { type: 'error', message: 'Gambar gagal diupload' })
+          }).finally(() => {
+            this.loading = false
+          })
+      } else {
+        try {
+          this.form.avatar_original_name = this.form.avatar.original_name
+          this.form.avatar = this.form.avatar.source
+          await this.$axios.put(`/users/${this.form.id}`, this.form)
+          this.$emit('close')
+          this.$store.dispatch('toast/showToast', { type: 'success', message: 'Data berhasil diubah' })
+          this.$emit('stored')
+        } catch (error) {
+          this.$store.dispatch('toast/showToast', { type: 'error', message: 'Data gagal diubah, periksa kembali data yang dinputkan' })
+        } finally {
           this.loading = false
-        })
+        }
+      }
     },
     onModalClose () {
       this.$emit('close')
@@ -239,7 +253,7 @@ export default {
       const formData = new FormData()
       formData.append('file', value)
       this.form.fileImage = formData
-      this.imageSource = URL.createObjectURL(this.$refs.file.files[0])
+      this.imageSource = URL.createObjectURL(value)
     },
     onFileChange () {
       if (this.$refs.file.files[0]) {
