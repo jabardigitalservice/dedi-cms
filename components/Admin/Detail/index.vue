@@ -76,15 +76,15 @@
             <td width="200">
               <strong>Dibuat pada</strong>
             </td>
-            <td>{{ formattedDate(item.created_at) }}</td>
+            <td>{{ formatDate(item.created_at) }}</td>
           </tr>
           <tr>
             <td><strong>Terakhir diupdate</strong></td>
-            <td>{{ formattedDate(item.updated_at) }}</td>
+            <td>{{ formatDate(item.updated_at) }}</td>
           </tr>
           <tr>
             <td><strong>Login terakhir</strong></td>
-            <td>{{ formattedDate(item.last_login_at) }}</td>
+            <td>{{ formatDate(item.last_login_at) }}</td>
           </tr>
         </tbody>
       </jds-simple-table>
@@ -94,9 +94,6 @@
 </template>
 
 <script>
-import { formatInTimeZone } from 'date-fns-tz'
-import { id } from 'date-fns/esm/locale'
-
 export default {
   name: 'ComponentAdminDetail',
   props: {
@@ -126,9 +123,13 @@ export default {
     refreshData () {
       this.$emit('updated')
     },
-    formattedDate (date) {
+    formatDate (date) {
       if (date) {
-        return formatInTimeZone(date, 'Asia/Jakarta', 'dd MMMM yyyy HH:mm:ss', { locale: id })
+        // format date from utc timezone to locale date string with custom format
+        const newDate = new Date(date)
+        const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' }
+        const formattedDate = newDate.toLocaleDateString('id', options).replace(/\./g, ':')
+        return formattedDate
       } else {
         return '-'
       }
