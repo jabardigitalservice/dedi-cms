@@ -51,6 +51,9 @@ export default {
       masterDataMenu
     }
   },
+  mounted () {
+    this.$store.commit('setTrackPage', false)
+  },
   methods: {
     svg (name) {
       return require(`~/assets/icons/${name}.svg?raw`)

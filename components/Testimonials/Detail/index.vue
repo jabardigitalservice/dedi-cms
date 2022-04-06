@@ -1,7 +1,7 @@
 <template>
   <div class="testimonial-detail">
     <div class="testimonial-detail__action">
-      <BaseButton variant="primary" @click="$router.go(-1)">
+      <BaseButton variant="primary" @click="goBack">
         <template #icon>
           <div class="testimonial-detail__action-button">
             <div class="testimonial-detail__action-icon">
@@ -104,6 +104,11 @@ export default {
   methods: {
     refreshData () {
       this.$emit('updated')
+    },
+    goBack () {
+      this.$store.commit('setSubMenu', 'Testimonials')
+      this.$store.commit('setTrackPage', true)
+      this.$router.push('/landing-page')
     }
   }
 }
