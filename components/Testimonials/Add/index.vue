@@ -11,7 +11,12 @@
     <form v-if="mShow" class="form-add-testimonial" @submit.prevent>
       <div class="form-add-testimonial__box-avatar">
         <div>
-          <div class="form-add-testimonial__box-avatar-avatar">
+          <div
+            :class="{
+              'form-add-testimonial__box-avatar-avatar': true,
+              'form-add-testimonial__box-avatar-avatar-attached': isAttached
+            }"
+          >
             <img v-if="imagePath.length" class="form-add-testimonial__box-avatar-image" :src="imagePath" :alt="form.image">
             <jds-icon
               v-else
@@ -146,6 +151,7 @@ export default {
         image_original_name: ''
       },
       imagePath: '',
+      isAttached: false,
       fileErrorMessage: '',
       testimonialErrorMessage: '',
       listDesa: [],
@@ -291,6 +297,7 @@ export default {
         image_original_name: ''
       }
       this.imagePath = ''
+      this.isAttached = false
       this.testimonialErrorMessage = ''
       this.fileErrorMessage = ''
     },
@@ -321,19 +328,23 @@ export default {
           if (this.$refs.avatar.files[0].size > 1000000) {
             this.form.fileImage = null
             this.imagePath = ''
+            this.isAttached = false
             this.fileErrorMessage = 'Gambar anda melebihi ukuran maksimal'
           } else {
+            this.isAttached = true
             this.fileErrorMessage = ''
             this.setFile(this.$refs.avatar.files[0])
           }
         } else {
           this.form.fileImage = null
           this.imagePath = ''
+          this.isAttached = false
           this.fileErrorMessage = 'Maaf file yang anda masukan tidak didukung'
         }
       } else {
         this.imagePath = ''
         this.form.fileImage = null
+        this.isAttached = false
       }
     }
   }
