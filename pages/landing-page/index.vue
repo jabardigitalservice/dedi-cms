@@ -18,6 +18,7 @@ export default {
   },
   mounted () {
     this.$store.commit('setPageName', 'Landing Page')
+    this.$store.commit('setTrackPage', false)
   },
   methods: {
     onChangeSubMenu (value) {

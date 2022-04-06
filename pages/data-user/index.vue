@@ -22,6 +22,7 @@ export default {
   },
   mounted () {
     this.$store.commit('setPageName', 'Master Data - User')
+    this.$store.commit('setTrackPage', false)
   },
   methods: {
     onChangeSubMenu (value) {

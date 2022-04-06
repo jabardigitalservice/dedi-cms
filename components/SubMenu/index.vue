@@ -43,9 +43,9 @@ export default {
     }
   },
   mounted () {
-    if (this.$store.state.isSameRoutePage) {
+    if (this.$store.state.subMenu && this.$store.state.isSameRoutePage) {
       this.activeMenu = this.$store.state.subMenu
-    } else {
+    } else if (Array.isArray(this.menus)) {
       this.activeMenu = this.menus[0].value
     }
   }
