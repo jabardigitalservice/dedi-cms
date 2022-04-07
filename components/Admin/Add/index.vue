@@ -147,7 +147,10 @@ export default {
         this.form.email.length &&
         this.form.password.length &&
         this.fileImage &&
-        !this.uploadFileErrorMessage.length
+        !this.uploadFileErrorMessage.length &&
+        !this.errors.name &&
+        !this.errors.email &&
+        !this.errors.password
       ))
     }
   },
@@ -265,6 +268,7 @@ export default {
             this.fileImage = null
             this.uploadFileErrorMessage = 'Gambar anda melebihi ukuran maksimal'
             this.isAttached = false
+            this.imageSource = null
           } else {
             this.uploadFileErrorMessage = ''
             this.isAttached = true
