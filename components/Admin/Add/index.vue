@@ -162,7 +162,7 @@ export default {
       immediate: true
     },
     'form.name' () {
-      if (this.form.name.length < 3) {
+      if (this.form.name.length > 0 && this.form.name.length < 3) {
         this.errors.name = 'Isian nama minimal 3 karakter.'
       } else {
         this.errors.name = ''
