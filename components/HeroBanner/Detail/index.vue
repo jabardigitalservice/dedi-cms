@@ -12,7 +12,7 @@
           </div>
         </template>
       </BaseButton>
-      <BaseButton variant="secondary">
+      <BaseButton variant="secondary" @click="editHeroBanner(item)">
         <template #icon>
           <div class="hero-banner-detail__action-button">
             <div class="hero-banner-detail__action-icon">
@@ -51,6 +51,7 @@
         </tbody>
       </jds-simple-table>
     </div>
+    <HeroBannerEdit :show="showEditHeroBanner" :item="itemHeroBanner" @stored="refreshData" @close="showEditHeroBanner = false" />
   </div>
 </template>
 
@@ -61,6 +62,21 @@ export default {
     item: {
       type: Object,
       default: () => ({})
+    }
+  },
+  data () {
+    return {
+      showEditHeroBanner: false,
+      itemHeroBanner: {}
+    }
+  },
+  methods: {
+    editHeroBanner (item) {
+      this.showEditHeroBanner = true
+      this.itemHeroBanner = item
+    },
+    refreshData () {
+      this.$emit('updated')
     }
   }
 }

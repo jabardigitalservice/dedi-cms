@@ -1,5 +1,5 @@
 <template>
-  <HeroBannerDetail :item="data" />
+  <HeroBannerDetail :item="data" @updated="updated" />
 </template>
 
 <script>
@@ -15,6 +15,11 @@ export default {
       }
     } catch (error) {
       error({ message: 'Gagal memuat data' })
+    }
+  },
+  methods: {
+    async updated () {
+      await this.$nuxt.refresh()
     }
   }
 }
