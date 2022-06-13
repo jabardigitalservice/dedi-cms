@@ -185,7 +185,7 @@ export default {
         desa = this.listDesa.map((item) => {
           return {
             value: item.id,
-            label: item.name
+            label: `${item.name}, ${item.city.name}`
           }
         })
       }
