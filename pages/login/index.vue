@@ -50,7 +50,8 @@
               <img width="16" height="16" src="~/assets/icons/key.svg" alt="icon key">
             </template>
           </BaseInputText>
-          <div class="flex justify-end items-center">
+          <!-- Temporary hide this feature -->
+          <div v-show="false" class="flex justify-end items-center">
             <nuxt-link to="/forgot-password" class="login__form-login-forgot-password">
               Lupa Kata Sandi ?
             </nuxt-link>

@@ -30,7 +30,7 @@
             <div class="header-dashboard__user-activator">
               <!-- TODO: Replace dummy image with user avatar -->
               <img
-                src="https://avatars.dicebear.com/api/micah/superadmin.svg"
+                :src="userAvatar"
                 alt="user avatar"
                 width="34"
                 height="34"
@@ -43,7 +43,7 @@
                 <p
                   class="header-dashboard__user-title"
                 >
-                  Superadmin
+                  {{ profile.name || '' }}
                 </p>
                 <jds-icon
                   name="chevron-right"
@@ -96,16 +96,29 @@ export default {
     clickaway
   },
   data () {
+    const { name, avatar } = this.$auth.user || ''
     return {
       notification: true,
       isUserDropdownOpen: false,
       optionsPopover,
-      menuActive: null
+      menuActive: null,
+      profile: {
+        name,
+        avatar
+      },
+      defaultAvatar: 'https://avatars.dicebear.com/api/micah/superadmin.svg'
     }
   },
   computed: {
     pageName () {
       return this.$store.state.pageName
+    },
+    userAvatar () {
+      if (this.profile.avatar && this.profile.avatar.startsWith('http')) {
+        return this.profile.avatar
+      } else {
+        return this.defaultAvatar
+      }
     }
   },
   methods: {
