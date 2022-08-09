@@ -52,12 +52,6 @@ export default {
   directives: {
     onClickaway
   },
-  props: {
-    isActive: {
-      type: Boolean,
-      default: true
-    }
-  },
   data () {
     return {
       isDropdownOpen: false,
