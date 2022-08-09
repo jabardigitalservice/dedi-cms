@@ -133,3 +133,7 @@ export default {
   }
 }
 </script>
+
+<style lang="postcss">
+@import './VillageAdd.pcss';
+</style>
