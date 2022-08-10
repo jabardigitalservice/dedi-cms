@@ -7,7 +7,7 @@
     <form v-if="true" class="form-add-village" autocomplete="off">
       <div class="form-add-village__form-group">
         <BaseInputText
-          v-model="form.villageId"
+          v-model="form.id"
           class="form-add-village__form-group-field--label"
           name="id desa"
           label="Kode Wilayah Desa"
@@ -21,7 +21,7 @@
       </div>
       <div class="form-add-village__form-group">
         <jds-input-text
-          v-model="form.villageName"
+          v-model="form.name"
           class="form-add-village__form-group-field--label"
           name="nama"
           label="Nama Desa"
@@ -34,7 +34,7 @@
       </div>
       <div class="form-add-village__form-group">
         <jds-select
-          v-model="form.cityId"
+          v-model="form.city_id"
           class="form-add-village__form-group-field--label"
           name="kabupaten/kota"
           filterable
@@ -46,7 +46,7 @@
       </div>
       <div class="form-add-village__form-group">
         <jds-select
-          v-model="form.districtId"
+          v-model="form.district_id"
           :disabled="isDisabledOptionDistricts"
           class="form-add-village__form-group-field--label"
           name="Kecamatan"
@@ -108,10 +108,10 @@ export default {
       modalShow: false,
       loading: false,
       form: {
-        villageId: '',
-        villageName: '',
-        cityId: null,
-        districtId: null,
+        id: '',
+        name: '',
+        city_id: null,
+        district_id: null,
         level: '',
         longitude: '',
         latitude: ''
@@ -179,8 +179,8 @@ export default {
     }
   },
   watch: {
-    'form.villageName' () {
-      if (this.form.villageName.length < 3) {
+    'form.name' () {
+      if (this.form.name.length < 3) {
         this.errors.villageName = 'Isian nama minimal 3 karakter.'
       } else if (this.form.villageName.length > 100) {
         this.errors.villageName = 'Isian nama maksimal 100 karakter.'
@@ -188,10 +188,10 @@ export default {
         this.errors.villageName = ''
       }
     },
-    'form.cityId' (newId, oldId) {
+    'form.city_id' (newId, oldId) {
       if (newId && newId !== oldId) {
         this.isDisabledOptionDistricts = false
-        this.districtId = null
+        this.form.district_id = null
         this.fetchDistricts(newId)
       } else {
         this.isDisabledOptionDistricts = true
