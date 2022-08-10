@@ -47,7 +47,7 @@
       <div class="form-add-village__form-group">
         <jds-select
           v-model="form.districtId"
-          :disabled="true"
+          :disabled="isDisabledOptionDistricts"
           class="form-add-village__form-group-field--label"
           name="Kecamatan"
           filterable
@@ -111,8 +111,8 @@ export default {
       form: {
         villageId: '',
         villageName: '',
-        cityId: '',
-        districtId: '',
+        cityId: null,
+        districtId: null,
         villageLevel: '',
         longitude: '',
         latitude: ''
@@ -126,9 +126,36 @@ export default {
         longitude: null,
         latitude: null
       },
-      optionsCity: [],
-      optionsDistrict: [],
-      optionsLevel: []
+      listCity: [],
+      listDistrict: [],
+      optionsLevel: [],
+      isDisabledOptionDistricts: true
+    }
+  },
+  computed: {
+    optionsCity () {
+      let city = []
+      if (Array.isArray(this.listCity) && this.listCity.length) {
+        city = this.listCity.map((item) => {
+          return {
+            value: item.id,
+            label: item.name
+          }
+        })
+      }
+      return city
+    },
+    optionsDistrict () {
+      let districts = []
+      if (Array.isArray(this.listDistrict) && this.listDistrict.length) {
+        districts = this.listDistrict.map((item) => {
+          return {
+            value: item.id,
+            label: item.name
+          }
+        })
+      }
+      return districts
     }
   },
   watch: {
@@ -139,6 +166,36 @@ export default {
         this.errors.villageName = 'Isian nama maksimal 100 karakter.'
       } else {
         this.errors.villageName = ''
+      }
+    },
+    'form.cityId' (newId, oldId) {
+      if (newId && newId !== oldId) {
+        this.isDisabledOptionDistricts = false
+        this.districtId = null
+        this.fetchDistricts(newId)
+      } else {
+        this.isDisabledOptionDistricts = true
+      }
+    }
+  },
+  mounted () {
+    this.fetchCity()
+  },
+  methods: {
+    async fetchCity () {
+      try {
+        const response = await this.$axios.get('/cities/suggestion')
+        this.listCity = response.data.data || []
+      } catch {
+        this.listCity = []
+      }
+    },
+    async fetchDistricts (cityId) {
+      try {
+        const response = await this.$axios.get(`/districts/suggestion?city_id=${cityId}`)
+        this.listDistrict = response.data.data || []
+      } catch {
+        this.listDistrict = []
       }
     }
   }
