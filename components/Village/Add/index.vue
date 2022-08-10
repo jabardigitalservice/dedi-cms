@@ -182,7 +182,7 @@ export default {
     'form.name' () {
       if (this.form.name.length < 3) {
         this.errors.villageName = 'Isian nama minimal 3 karakter.'
-      } else if (this.form.villageName.length > 100) {
+      } else if (this.form.name.length > 100) {
         this.errors.villageName = 'Isian nama maksimal 100 karakter.'
       } else {
         this.errors.villageName = ''
