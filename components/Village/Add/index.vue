@@ -59,9 +59,8 @@
       </div>
       <div class="form-add-village__form-group">
         <jds-select
-          v-model="form.villageLevel"
+          v-model="form.level"
           class="form-add-village__form-group-field--label"
-          :disabled="true"
           name="Level Desa"
           label="Level Desa"
           :options="optionsLevel"
@@ -113,7 +112,7 @@ export default {
         villageName: '',
         cityId: null,
         districtId: null,
-        villageLevel: '',
+        level: '',
         longitude: '',
         latitude: ''
       },
@@ -128,7 +127,28 @@ export default {
       },
       listCity: [],
       listDistrict: [],
-      optionsLevel: [],
+      optionsLevel: [
+        {
+          value: null,
+          label: 'Belum ada level'
+        },
+        {
+          value: 1,
+          label: 1
+        },
+        {
+          value: 2,
+          label: 2
+        },
+        {
+          value: 3,
+          label: 3
+        },
+        {
+          value: 4,
+          label: 4
+        }
+      ],
       isDisabledOptionDistricts: true
     }
   },
@@ -175,6 +195,13 @@ export default {
         this.fetchDistricts(newId)
       } else {
         this.isDisabledOptionDistricts = true
+      }
+    },
+    'form.level' () {
+      if (this.form.level === undefined) {
+        this.errors.villageLevel = 'Isian level desa wajib diisi'
+      } else {
+        this.errors.villageLevel = ''
       }
     }
   },
