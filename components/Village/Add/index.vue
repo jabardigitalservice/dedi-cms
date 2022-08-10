@@ -11,7 +11,7 @@
           class="form-add-village__form-group-field--label"
           name="id desa"
           label="Kode Wilayah Desa"
-          type="number"
+          type="string"
           placeholder="Masukkan kode wilayah desa"
           autocomplete="false"
         />
@@ -179,6 +179,22 @@ export default {
     }
   },
   watch: {
+    'form.id' () {
+      // This pattern for checking user only allow input number and character (.)
+      const formatText = /(?=.*[^\d.])/g
+      if (formatText.test(this.form.id)) {
+        this.form.id = ''
+      }
+      // formatId is pattern for id village maximal 13 chars (10 digit and 3 symbol) => XX.XX.XX.XXXX
+      const formatId = /(\B(?=(\d{2})+(?!\d))(?=.{4}))/g
+      const newId = this.form.id.replaceAll(/[^0-9]/g, '').replace(formatId, '.')
+      this.form.id = newId
+      if (this.form.id.length > 13) {
+        this.errors.villageId = 'Format isian kode wilayah salah'
+      } else {
+        this.errors.villageId = ''
+      }
+    },
     'form.name' () {
       if (this.form.name.length < 3) {
         this.errors.villageName = 'Isian nama minimal 3 karakter.'
