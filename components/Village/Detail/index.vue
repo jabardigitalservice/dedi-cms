@@ -5,8 +5,7 @@
         <template #icon>
           <div class="village-detail__action-button">
             <div class="village-detail__action-icon">
-              <!-- eslint-disable-next-line vue/no-v-html -->
-              <div v-html="require('~/assets/icons/arrow-left.svg?raw')" />
+              <IconArrowLeft />
             </div>
             Kembali
           </div>
@@ -82,8 +81,10 @@
 </template>
 
 <script>
+import IconArrowLeft from '~/assets/icons/arrow-left.svg?inline'
 export default {
   name: 'ComponentVillageDetail',
+  components: { IconArrowLeft },
   props: {
     item: {
       type: Object,
