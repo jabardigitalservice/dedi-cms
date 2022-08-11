@@ -6,20 +6,47 @@
           {{ header }}
         </div>
         <div class="dialog__content">
-          <div class="dialog__title">
+          <div
+            :class="{
+              'dialog__title' : true,
+              'dialog__title--center' : dialogType === 'process',
+            }"
+          >
+            <span v-if="iconMessage" class="mr-3">
+              <jds-icon :class="iconColor" size="14px" :name="iconMessage" />
+            </span>
             {{ title }}
           </div>
           <div class="dialog__message">
-            {{ message }}
+            <div :class="iconMessage ? 'ml-7' : null">
+              {{ message }}
+            </div>
           </div>
         </div>
-        <div class="dialog__action">
-          <BaseButton label="Batal" :variant="btnLeftVariant" @click="onClose" />
+        <div
+          :class="{
+            'dialog__action' : true,
+            'dialog__action--center' : dialogType !== 'confirmation',
+          }"
+        >
           <BaseButton
-            label="Ya, saya yakin"
+            v-if="dialogType === 'confirmation'"
+            :label="btnLeftLabel"
+            :variant="btnLeftVariant"
+            @click="onClose"
+          />
+          <BaseButton
+            v-if="dialogType === 'confirmation' || dialogType === 'information'"
+            :label="btnRightLabel"
             :variant="btnRightVariant"
             @click="actionBtnRight"
           />
+          <div v-if="dialogType == 'process'">
+            <progress
+              max="100"
+              :value="progressValue"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -31,7 +58,21 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'BaseDialog',
   computed: {
-    ...mapGetters('dialog', ['open', 'header', 'message', 'title', 'btnLeftVariant', 'btnRightVariant', 'actionBtnRight'])
+    ...mapGetters('dialog', [
+      'open',
+      'header',
+      'message',
+      'iconMessage',
+      'iconColor',
+      'title',
+      'btnLeftVariant',
+      'btnRightVariant',
+      'btnLeftLabel',
+      'btnRightLabel',
+      'actionBtnRight',
+      'dialogType',
+      'progressValue'
+    ])
   },
   methods: {
     onClose () {
