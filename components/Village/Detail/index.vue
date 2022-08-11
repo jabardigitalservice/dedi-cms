@@ -53,7 +53,7 @@
           </tr>
           <tr>
             <td><strong>Level Desa</strong></td>
-            <td>{{ item.level || '-' }}</td>
+            <td>{{ item.level || 'Belum Ada' }}</td>
           </tr>
           <tr>
             <td><strong>Longitude</strong></td>
