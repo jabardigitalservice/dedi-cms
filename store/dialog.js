@@ -3,8 +3,14 @@ export const state = () => ({
   header: '',
   title: '',
   message: '',
+  iconMessage: '',
+  iconColor: '',
   btnLeftVariant: 'secondary',
   btnRightVariant: 'primary',
+  btnLeftLabel: 'Batal',
+  btnRightLabel: 'Ya, saya yakin',
+  dialogType: 'confirmation',
+  progressValue: 0,
   actionBtnRight: () => {}
 })
 
@@ -14,6 +20,15 @@ export const mutations = {
   },
   SET_MESSAGE (state, payload) {
     state.message = payload
+  },
+  SET_DETAIL_MESSAGE (state, payload) {
+    state.detailMessage = payload
+  },
+  SET_ICON_MESSAGE (state, payload) {
+    state.iconMessage = payload
+  },
+  SET_ICON_COLOR (state, payload) {
+    state.iconColor = payload
   },
   SET_HEADER (state, payload) {
     state.header = payload
@@ -29,6 +44,18 @@ export const mutations = {
   },
   SET_ACTION_BTN_RIGHT (state, payload) {
     state.actionBtnRight = payload
+  },
+  SET_BUTTON_LEFT_LABEL (state, payload) {
+    state.btnLeftLabel = payload
+  },
+  SET_BUTTON_RIGHT_LABEL (state, payload) {
+    state.btnRightLabel = payload
+  },
+  SET_DIALOG_TYPE (state, payload) {
+    state.dialogType = payload
+  },
+  SET_PROGRESS_VALUE (state, payload) {
+    state.progressValue = payload
   }
 }
 
@@ -38,6 +65,15 @@ export const getters = {
   },
   message (state) {
     return state.message
+  },
+  detailMessage (state) {
+    return state.detailMessage
+  },
+  iconMessage (state) {
+    return state.iconMessage
+  },
+  iconColor (state) {
+    return state.iconColor
   },
   title (state) {
     return state.title
@@ -53,25 +89,49 @@ export const getters = {
   },
   actionBtnRight (state) {
     return state.actionBtnRight
+  },
+  btnLeftLabel (state) {
+    return state.btnLeftLabel
+  },
+  btnRightLabel (state) {
+    return state.btnRightLabel
+  },
+  dialogType (state) {
+    return state.dialogType
+  },
+  progressValue (state) {
+    return state.progressValue
   }
 }
 
 export const actions = {
-  showDialog ({ commit }, payload) {
-    commit('SET_HEADER', payload.header)
+  showDialog ({ commit, state }, payload) {
+    commit('SET_HEADER', payload.header || state.header)
     commit('SET_TITLE', payload.title)
     commit('SET_MESSAGE', payload.message)
-    commit('SET_BUTTON_LEFT_VARIANT', payload.btnLeftVariant)
-    commit('SET_BUTTON_RIGHT_VARIANT', payload.btnRightVariant)
+    commit('SET_ICON_MESSAGE', payload.iconMessage)
+    commit('SET_ICON_COLOR', payload.iconColor)
+    commit('SET_BUTTON_LEFT_VARIANT', payload.btnLeftVariant || state.btnLeftVariant)
+    commit('SET_BUTTON_RIGHT_VARIANT', payload.btnRightVariant || state.btnRightVariant)
+    commit('SET_BUTTON_LEFT_LABEL', payload.btnLeftLabel || state.btnLeftLabel)
+    commit('SET_BUTTON_RIGHT_LABEL', payload.btnRightLabel || state.btnRightLabel)
     commit('SET_ACTION_BTN_RIGHT', payload.actionBtnRight)
+    commit('SET_DIALOG_TYPE', payload.dialogType || state.dialogType)
+    commit('SET_PROGRESS_VALUE', payload.progressValue || state.progressValue)
     commit('SET_OPEN', true)
   },
   closeDialog ({ commit }) {
     commit('SET_HEADER', '')
     commit('SET_TITLE', '')
+    commit('SET_ICON_MESSAGE', '')
+    commit('SET_ICON_COLOR', '')
     commit('SET_BUTTON_LEFT_VARIANT', 'secondary')
     commit('SET_BUTTON_RIGHT_VARIANT', 'primary')
+    commit('SET_BUTTON_LEFT_LABEL', 'Batal')
+    commit('SET_BUTTON_RIGHT_LABEL', 'Ya, saya yakin')
+    commit('SET_DIALOG_TYPE', 'confirmation')
     commit('SET_ACTION_BTN_RIGHT', () => {})
+    commit('SET_PROGRESS_VALUE', 0)
     commit('SET_OPEN', false)
   }
 }
