@@ -118,5 +118,5 @@ export default {
 </script>
 
 <style lang="postcss">
-@import './VillageDetail.pcss';
+@import '../Village.pcss';
 </style>
