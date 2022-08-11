@@ -35,8 +35,10 @@
         @per-page-change="perPageChange"
       >
         <!-- eslint-disable-next-line vue/valid-v-slot -->
-        <template #item.action="{}">
-          <VillageTableAction />
+        <template #item.action="{item}">
+          <VillageTableAction
+            @detail="$router.push(`/data-village/village/detail/${item.id}`)"
+          />
         </template>
       </BaseDataTable>
     </div>
