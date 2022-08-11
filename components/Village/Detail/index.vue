@@ -65,7 +65,13 @@
           </tr>
           <tr>
             <td>
-              Lihat di Gmaps
+              <BaseButton
+                v-if="item.location.lat && item.location.lng"
+                type="button"
+                label="Lihat di Gmaps"
+                variant="primary"
+                @click="onClickButton"
+              />
             </td>
             <td />
           </tr>
@@ -101,18 +107,10 @@ export default {
     }
   },
   methods: {
-    refreshData () {
-      this.$emit('updated')
-    },
-    formatDate (date) {
-      if (date) {
-        // format date from utc timezone to locale date string with custom format
-        const newDate = new Date(date)
-        const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' }
-        const formattedDate = newDate.toLocaleDateString('id', options).replace(/\./g, ':')
-        return formattedDate
-      } else {
-        return '-'
+    onClickButton () {
+      const { lng, lat } = this.item.location || null
+      if (lng && lat) {
+        window.open(`https://www.google.com/maps/search/?api=1&query=${lat},${lng}`, '_blank')
       }
     }
   }
