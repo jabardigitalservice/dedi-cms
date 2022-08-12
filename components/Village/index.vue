@@ -38,6 +38,7 @@
         <template #item.action="{item}">
           <VillageTableAction
             @detail="$router.push(`/data-village/village/detail/${item.id}`)"
+            @delete="deleteDataVillage(item)"
           />
         </template>
       </BaseDataTable>
@@ -121,6 +122,44 @@ export default {
     },
     previousPage (value) {
       this.query.current_page = value
+    },
+    refreshDatatable () {
+      this.query = {
+        per_page: 10,
+        current_page: 1
+      }
+      this.$fetch()
+    },
+    deleteDataVillage (item) {
+      this.$store.dispatch('dialog/showDialog', {
+        header: 'Hapus Data Desa',
+        title: 'Apakah Anda yakin akan menghapus Data Desa ini?',
+        message: `Desa Digital - ${item.name}`,
+        btnRightVariant: 'danger',
+        btnLeftVariant: 'secondary',
+        actionBtnRight: () => this.actiondeleteDataVillage(item)
+      })
+    },
+    async actiondeleteDataVillage (item) {
+      try {
+        const response = await this.$axios.delete(`/villages/${item.id}`)
+        if (response) {
+          this.refreshDatatable()
+          this.$store.dispatch('dialog/showDialog', {
+            header: 'Hapus Data Desa Berhasil',
+            title: 'Desa ini berhasil dihapus',
+            message: `Desa Digital - ${item.name}`,
+            dialogType: 'information',
+            iconMessage: 'trash',
+            iconColor: 'text-red-500',
+            btnLeftLabel: 'Saya Mengerti',
+            btnLeftVariant: 'primary'
+          })
+        }
+      } catch (error) {
+        this.$store.dispatch('dialog/closeDialog')
+        this.$store.dispatch('toast/showToast', { type: 'error', message: 'Data Desa gagal dihapus' })
+      }
     }
   }
 }
