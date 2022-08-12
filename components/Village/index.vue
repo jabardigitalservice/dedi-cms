@@ -4,7 +4,7 @@
     <div class="data-village__datatable">
       <div class="data-village__datatable-header">
         <div class="data-village__datatable-header-box-right">
-          <BaseButton variant="secondary">
+          <BaseButton variant="secondary" @click="addVillage">
             <template #icon>
               <div class="data-village__datatable-header-add">
                 <div class="data-village__datatable-header-plus-icon">
@@ -43,6 +43,7 @@
         </template>
       </BaseDataTable>
     </div>
+    <VillageAdd :show="showModalAddVillage" @close="showModalAddVillage = false" />
   </div>
 </template>
 
@@ -67,7 +68,8 @@ export default {
       query: {
         current_page: 1,
         per_page: 10
-      }
+      },
+      showModalAddVillage: false
     }
   },
   async fetch () {
@@ -129,6 +131,9 @@ export default {
         current_page: 1
       }
       this.$fetch()
+    },
+    addVillage () {
+      this.showModalAddVillage = true
     },
     deleteDataVillage (item) {
       this.$store.dispatch('dialog/showDialog', {
