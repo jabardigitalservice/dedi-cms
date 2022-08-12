@@ -1,10 +1,13 @@
 <template>
   <BaseModal
-    :show="true"
+    :show="modalShow"
+    :is-form-completed="true"
     label-right-btn="Tambahkan"
     title="Tambah - Desa"
+    @submit="showConfirmationModal"
+    @close="onModalClose"
   >
-    <form v-if="true" class="form-add-village" autocomplete="off">
+    <form v-if="modalShow" class="form-add-village" autocomplete="off">
       <div class="form-add-village__form-group">
         <BaseInputText
           v-model="form.id"
@@ -103,6 +106,15 @@
 <script>
 export default {
   name: 'ComponentVillageAdd',
+  props: {
+    /**
+     * make modal visible or not
+     */
+    show: {
+      type: Boolean,
+      default: false
+    }
+  },
   data () {
     return {
       modalShow: false,
@@ -110,8 +122,8 @@ export default {
       form: {
         id: '',
         name: '',
-        city_id: null,
-        district_id: null,
+        city_id: '',
+        district_id: '',
         level: '',
         longitude: '',
         latitude: ''
@@ -179,6 +191,12 @@ export default {
     }
   },
   watch: {
+    show: {
+      handler (val) {
+        this.modalShow = val
+      },
+      immediate: true
+    },
     'form.id' () {
       // This pattern for checking user only allow input number and character (.)
       const formatText = /(?=.*[^\d.])/g
@@ -239,6 +257,90 @@ export default {
         this.listDistrict = response.data.data || []
       } catch {
         this.listDistrict = []
+      }
+    },
+    async addNewVillage (newVillage) {
+      await this.$axios.post('/villages', newVillage, {
+        onUploadProgress: function (progressEvent) {
+          const percentCompleted = parseInt(Math.round((progressEvent.loaded / progressEvent.total) * 100))
+          if (this.showProcessModal) { this.showProcessModal(percentCompleted) }
+        }.bind(this)
+      })
+        .then(() => {
+          this.$store.dispatch('dialog/showDialog', {
+            header: 'Tambah Data Desa Berhasil',
+            title: 'Desa yang Anda tambahkan berhasil disimpan.',
+            message: `DESA DIGITAL - ${this.form.name}`,
+            iconMessage: 'check-mark-circle',
+            iconColor: 'text-green-700',
+            btnLeftVariant: 'primary',
+            btnLeftLabel: 'Saya mengerti',
+            dialogType: 'information',
+            actionBtnLeft: () => this.onModalClose()
+          })
+        })
+        .catch((error) => {
+          const { response: { status, data: { errors } } } = error || {}
+          if (status === 422 && errors) {
+            this.errors.id = errors?.id || null
+            this.errors.name = errors?.name || null
+            this.errors.city_id = errors?.city_id || null
+            this.errors.district_id = errors?.district_id || null
+            this.errors.level = errors?.level || null
+            this.errors.longitude = errors?.longitude || null
+            this.errors.latitude = errors?.latitude || null
+          }
+          this.$store.dispatch('dialog/showDialog', {
+            header: 'Tambah Data Desa Gagal',
+            title: 'Projek yang Anda buat gagal disimpan.',
+            message: `DESA DIGITAL - ${this.form.name}`,
+            iconMessage: 'warning',
+            iconColor: 'text-red-700',
+            btnLeftLabel: 'Keluar',
+            btnLeftVariant: 'secondary',
+            btnRightLabel: 'Coba Kembali',
+            btnRightVariant: 'primary',
+            dialogType: 'confirmation',
+            actionBtnLeft: () => this.onModalClose(),
+            actionBtnRight: () => this.closeDialogModal()
+          })
+        })
+    },
+    showConfirmationModal () {
+      this.$store.dispatch('dialog/showDialog', {
+        header: 'Konfirmasi Tambah Desa ',
+        title: 'Apakah Anda yakin dengan data yang telah dimasukkan?',
+        btnLeftLabel: 'Cek Kembali',
+        btnRightVariant: 'primary',
+        btnLeftVariant: 'secondary',
+        dialogType: 'confirmation',
+        actionBtnRight: () => this.addNewVillage(this.form)
+      })
+    },
+    showProcessModal (percent) {
+      this.$store.dispatch('dialog/showDialog', {
+        header: 'Meyimpan Data Desa',
+        title: 'Sedang proses menyimpan ...',
+        dialogType: 'process',
+        progressValue: percent
+      })
+    },
+    onModalClose () {
+      this.$emit('close')
+      this.resetForm()
+    },
+    closeDialogModal () {
+      this.$store.dispatch('dialog/closeDialog')
+    },
+    resetForm () {
+      this.form = {
+        id: '',
+        name: '',
+        city_id: '',
+        district_id: '',
+        level: '',
+        longitude: '',
+        latitude: ''
       }
     }
   }
