@@ -30,13 +30,13 @@
           }"
         >
           <BaseButton
-            v-if="dialogType === 'confirmation'"
+            v-if="dialogType === 'confirmation' || dialogType === 'information'"
             :label="btnLeftLabel"
             :variant="btnLeftVariant"
             @click="onClose"
           />
           <BaseButton
-            v-if="dialogType === 'confirmation' || dialogType === 'information'"
+            v-if="dialogType === 'confirmation'"
             :label="btnRightLabel"
             :variant="btnRightVariant"
             @click="actionBtnRight"
