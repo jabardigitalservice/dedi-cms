@@ -11,6 +11,7 @@ export const state = () => ({
   btnRightLabel: 'Ya, saya yakin',
   dialogType: 'confirmation',
   progressValue: 0,
+  actionBtnLeft: () => {},
   actionBtnRight: () => {}
 })
 
@@ -41,6 +42,9 @@ export const mutations = {
   },
   SET_BUTTON_RIGHT_VARIANT (state, payload) {
     state.btnRightVariant = payload
+  },
+  SET_ACTION_BTN_LEFT (state, payload) {
+    state.actionBtnLeft = payload
   },
   SET_ACTION_BTN_RIGHT (state, payload) {
     state.actionBtnRight = payload
@@ -87,6 +91,9 @@ export const getters = {
   btnRightVariant (state) {
     return state.btnRightVariant
   },
+  actionBtnLeft (state) {
+    return state.actionBtnLeft
+  },
   actionBtnRight (state) {
     return state.actionBtnRight
   },
@@ -115,6 +122,7 @@ export const actions = {
     commit('SET_BUTTON_RIGHT_VARIANT', payload.btnRightVariant || state.btnRightVariant)
     commit('SET_BUTTON_LEFT_LABEL', payload.btnLeftLabel || state.btnLeftLabel)
     commit('SET_BUTTON_RIGHT_LABEL', payload.btnRightLabel || state.btnRightLabel)
+    commit('SET_ACTION_BTN_LEFT', payload.actionBtnLeft)
     commit('SET_ACTION_BTN_RIGHT', payload.actionBtnRight)
     commit('SET_DIALOG_TYPE', payload.dialogType || state.dialogType)
     commit('SET_PROGRESS_VALUE', payload.progressValue || state.progressValue)
@@ -133,5 +141,10 @@ export const actions = {
     commit('SET_ACTION_BTN_RIGHT', () => {})
     commit('SET_PROGRESS_VALUE', 0)
     commit('SET_OPEN', false)
+  },
+  async closeDialogAction ({ dispatch, commit }, customAction) {
+    await customAction()
+    await dispatch('closeDialog')
+    await commit('SET_ACTION_BTN_LEFT', () => {})
   }
 }
