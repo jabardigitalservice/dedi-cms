@@ -4,7 +4,7 @@
     <div class="data-village__datatable">
       <div class="data-village__datatable-header">
         <div class="data-village__datatable-header-box-right">
-          <BaseButton variant="secondary">
+          <BaseButton variant="secondary" @click="addVillage">
             <template #icon>
               <div class="data-village__datatable-header-add">
                 <div class="data-village__datatable-header-plus-icon">
@@ -22,6 +22,7 @@
           :button="false"
           class="data-village__datatable-header-search"
           placeholder="Cari Data"
+          @input="onSearch"
         />
       </div>
       <BaseDataTable
@@ -43,10 +44,12 @@
         </template>
       </BaseDataTable>
     </div>
+    <VillageAdd :show="showModalAddVillage" @close="showModalAddVillage = false" />
   </div>
 </template>
 
 <script>
+import { debounce } from 'lodash'
 import { headerDataVillage, headerTableDataVillage } from '@/constants/dataVillage'
 export default {
   name: 'ComponentVillage',
@@ -65,9 +68,11 @@ export default {
         disabled: false
       },
       query: {
+        name: null,
         current_page: 1,
         per_page: 10
-      }
+      },
+      showModalAddVillage: false
     }
   },
   async fetch () {
@@ -108,6 +113,18 @@ export default {
     this.pagination.itemsPerPageOptions = this.generateItemsPerPageOptions
   },
   methods: {
+    searchTitle: debounce(function (value) {
+      if (value.length > 2) {
+        this.query.name = value
+      } else {
+        this.query.name = null
+        this.query.current_page = 1
+        this.query.per_page = 10
+      }
+    }, 500),
+    onSearch (value) {
+      this.searchTitle(value)
+    },
     perPageChange (value) {
       if (value) {
         this.query.per_page = value
@@ -129,6 +146,9 @@ export default {
         current_page: 1
       }
       this.$fetch()
+    },
+    addVillage () {
+      this.showModalAddVillage = true
     },
     deleteDataVillage (item) {
       this.$store.dispatch('dialog/showDialog', {
