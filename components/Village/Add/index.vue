@@ -350,7 +350,7 @@ export default {
           }
           this.$store.dispatch('dialog/showDialog', {
             header: 'Tambah Data Desa Gagal',
-            title: 'Projek yang Anda buat gagal disimpan.',
+            title: 'Project yang Anda buat gagal disimpan.',
             message: `DESA DIGITAL - ${this.form.name}`,
             iconMessage: 'warning',
             iconColor: 'text-red-700',
