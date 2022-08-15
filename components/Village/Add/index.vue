@@ -1,7 +1,7 @@
 <template>
   <BaseModal
     :show="modalShow"
-    :is-form-completed="true"
+    :is-form-completed="isFormCompleted"
     label-right-btn="Tambahkan"
     title="Tambah - Desa"
     @submit="showConfirmationModal"
@@ -14,22 +14,25 @@
           class="form-add-village__form-group-field--label"
           name="id desa"
           label="Kode Wilayah Desa"
-          type="string"
+          type="text"
           placeholder="Masukkan kode wilayah desa"
           autocomplete="false"
+          :error="!!(errors.villageId )"
         />
         <div v-if="errors.villageId" class="text-red-700">
           {{ errors.villageId }}
         </div>
       </div>
       <div class="form-add-village__form-group">
-        <jds-input-text
+        <BaseInputText
           v-model="form.name"
           class="form-add-village__form-group-field--label"
           name="nama"
           label="Nama Desa"
+          type="text"
           placeholder="Masukkan nama desa"
           autocomplete="false"
+          :error="!!(errors.villageName)"
         />
         <div v-if="errors.villageName" class="text-red-700">
           {{ errors.villageName }}
@@ -44,6 +47,7 @@
           label="Kabupaten/Kota"
           options-header="Kabupaten/Kota"
           :options="optionsCity"
+          :error-message="errors.city"
           placeholder="Pilih Kabupaten/Kota"
         />
       </div>
@@ -57,6 +61,7 @@
           label="Kecamatan"
           options-header="Kecamatan"
           :options="optionsDistrict"
+          :error-message="errors.district"
           placeholder="Pilih Kecamatan"
         />
       </div>
@@ -73,26 +78,30 @@
       </div>
       <div class="form-add-village__form-group flex flex-row-2 justify-between mb-4">
         <div class="w-[250px]">
-          <jds-input-text
+          <BaseInputText
             v-model="form.longitude"
             class="form-add-village__form-group-field--label"
             name="longitude"
             label="Longitude"
+            type="number"
             placeholder="Contoh: 6.219212"
             autocomplete="false"
+            :error="!!(errors.longitude)"
           />
           <div v-if="errors.longitude" class="text-red-700">
             {{ errors.longitude }}
           </div>
         </div>
         <div class="w-[250px]">
-          <jds-input-text
+          <BaseInputText
             v-model="form.latitude"
             class="form-add-village__form-group-field--label"
             name="latitude"
             label="Latitude"
+            type="number"
             placeholder="Contoh: 6.219212"
             autocomplete="false"
+            :error="!!(errors.latitude)"
           />
           <div v-if="errors.latitude" class="text-red-700">
             {{ errors.latitude }}
@@ -124,7 +133,7 @@ export default {
         name: '',
         city_id: '',
         district_id: '',
-        level: '',
+        level: 0,
         longitude: '',
         latitude: ''
       },
@@ -188,6 +197,23 @@ export default {
         })
       }
       return districts
+    },
+    isFormCompleted () {
+      return !!((
+        this.form.id.length &&
+        this.form.name.length &&
+        (this.form.city_id === undefined || this.form.city_id.length) &&
+        (this.form.district_id === undefined || this.form.district_id.length) &&
+        !(this.form.level === 0 || this.form.level === undefined) &&
+        this.form.longitude.length &&
+        this.form.latitude.length &&
+        !this.errors.villageId &&
+        !this.errors.villageName &&
+        !this.errors.city &&
+        !this.errors.district &&
+        !this.errors.longitude &&
+        !this.errors.latitude
+      ))
     }
   },
   watch: {
@@ -210,32 +236,64 @@ export default {
       if (this.form.id.length > 13) {
         this.errors.villageId = 'Format isian kode wilayah salah'
       } else {
-        this.errors.villageId = ''
+        this.errors.villageId = null
       }
     },
     'form.name' () {
-      if (this.form.name.length < 3) {
+      if (this.form.name.length > 0 && this.form.name.length < 3) {
         this.errors.villageName = 'Isian nama minimal 3 karakter.'
       } else if (this.form.name.length > 100) {
         this.errors.villageName = 'Isian nama maksimal 100 karakter.'
       } else {
-        this.errors.villageName = ''
+        this.errors.villageName = null
       }
     },
     'form.city_id' (newId, oldId) {
       if (newId && newId !== oldId) {
         this.isDisabledOptionDistricts = false
-        this.form.district_id = null
+        this.form.district_id = ''
         this.fetchDistricts(newId)
       } else {
         this.isDisabledOptionDistricts = true
+      }
+
+      if (newId === undefined) {
+        this.errors.city = 'Isian Kabupaten/Kota wajib diisi'
+      } else {
+        this.errors.city = null
+      }
+    },
+    'form.district_id' () {
+      if (this.form.district_id === undefined) {
+        this.errors.district = 'Isian Kecamatan wajib diisi'
+      } else {
+        this.errors.district = null
       }
     },
     'form.level' () {
       if (this.form.level === undefined) {
         this.errors.villageLevel = 'Isian level desa wajib diisi'
       } else {
-        this.errors.villageLevel = ''
+        this.errors.villageLevel = null
+      }
+    },
+    'form.longitude' () {
+      const regexPoint = /^(-?\d+(\.\d+)?)$/
+      if (regexPoint.test(this.form.longitude) || !this.form.latitude.length) {
+        this.errors.longitude = null
+      } else {
+        this.errors.longitude = 'Format isian longitude salah'
+      }
+    },
+    'form.latitude' () {
+      if (this.form.latitude.length === '') {
+        this.form.latitude = ''
+      }
+      const regexPoint = /^(-?\d+(\.\d+)?)$/
+      if (regexPoint.test(this.form.latitude) || !this.form.latitude.length) {
+        this.errors.latitude = null
+      } else {
+        this.errors.latitude = 'Format isian latitude salah'
       }
     }
   },
@@ -338,9 +396,18 @@ export default {
         name: '',
         city_id: '',
         district_id: '',
-        level: '',
+        level: 0,
         longitude: '',
         latitude: ''
+      }
+      this.errors = {
+        villageId: null,
+        villageName: null,
+        villageLevel: null,
+        city: null,
+        district: null,
+        longitude: null,
+        latitude: null
       }
     }
   }
