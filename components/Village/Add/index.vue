@@ -233,7 +233,7 @@ export default {
       const formatId = /(\B(?=(\d{2})+(?!\d))(?=.{4}))/g
       const newId = this.form.id.replaceAll(/[^0-9]/g, '').replace(formatId, '.')
       this.form.id = newId
-      if (this.form.id.length < 13 || this.form.id.length > 13) {
+      if (this.form.id.length < 13 && this.form.id.length > 13) {
         this.errors.villageId = 'Format isian kode wilayah salah'
       } else {
         this.errors.villageId = null
