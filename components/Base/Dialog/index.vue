@@ -69,6 +69,7 @@ export default {
       'btnRightVariant',
       'btnLeftLabel',
       'btnRightLabel',
+      'actionBtnLeft',
       'actionBtnRight',
       'dialogType',
       'progressValue'
@@ -76,7 +77,11 @@ export default {
   },
   methods: {
     onClose () {
-      this.$store.dispatch('dialog/closeDialog')
+      if (this.actionBtnLeft) {
+        this.$store.dispatch('dialog/closeDialogAction', this.actionBtnLeft)
+      } else {
+        this.$store.dispatch('dialog/closeDialog')
+      }
     }
   }
 }
