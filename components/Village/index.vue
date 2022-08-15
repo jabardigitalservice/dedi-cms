@@ -22,6 +22,7 @@
           :button="false"
           class="data-village__datatable-header-search"
           placeholder="Cari Data"
+          @input="onSearch"
         />
       </div>
       <BaseDataTable
@@ -47,6 +48,7 @@
 </template>
 
 <script>
+import { debounce } from 'lodash'
 import { headerDataVillage, headerTableDataVillage } from '@/constants/dataVillage'
 export default {
   name: 'ComponentVillage',
@@ -65,6 +67,7 @@ export default {
         disabled: false
       },
       query: {
+        name: null,
         current_page: 1,
         per_page: 10
       }
@@ -108,6 +111,18 @@ export default {
     this.pagination.itemsPerPageOptions = this.generateItemsPerPageOptions
   },
   methods: {
+    searchTitle: debounce(function (value) {
+      if (value.length > 2) {
+        this.query.name = value
+      } else {
+        this.query.name = null
+        this.query.current_page = 1
+        this.query.per_page = 10
+      }
+    }, 500),
+    onSearch (value) {
+      this.searchTitle(value)
+    },
     perPageChange (value) {
       if (value) {
         this.query.per_page = value
