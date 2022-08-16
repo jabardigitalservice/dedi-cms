@@ -1,0 +1,40 @@
+.form-edit-village {
+  @apply text-sm leading-[23px] text-gray-800;
+
+  &__title {
+    @apply font-roboto text-gray-900 text-base leading-[23px] font-medium mb-1;
+  }
+
+  &__button {
+    @apply my-3 relative inline-block;
+
+    &-btn {
+      @apply bg-green-700 text-white w-[135px] h-[38px]
+      text-sm py-[9px] font-sans font-bold rounded-lg;
+
+      &:hover {
+        @apply bg-green-800;
+      }
+    }
+
+    input[type=file] {
+      position: absolute;
+      left: 0;
+      top: 0;
+      opacity: 0;
+    }
+  }
+
+  &__form-group {
+    @apply mt-6 w-full;
+
+    &--position {
+      @apply flex flex-row justify-between mb-4;
+    }
+  }
+}
+
+/* Override jds-design-system */
+.form-add-village__form-group-field--label .jds-form-control-label {
+  @apply !pb-1;
+}

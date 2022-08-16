@@ -173,3 +173,7 @@ export default {
   }
 }
 </script>
+
+<style lang="postcss">
+@import './VillageEdit.pcss';
+</style>
