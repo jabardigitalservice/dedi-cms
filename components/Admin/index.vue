@@ -86,7 +86,7 @@ export default {
         q: null,
         per_page: 5,
         sort_by: 'desc',
-        order_by: 'updated_at',
+        order_by: 'users.updated_at',
         current_page: 1,
         is_admin: true
       },
@@ -160,9 +160,9 @@ export default {
       const key = Object.keys(value)[0]
       if (key && value[key] !== 'no-sort') {
         this.query.sort_by = value[key]
-        this.query.order_by = key === 'status' ? 'is_active' : key
+        this.query.order_by = key === 'status' ? 'users.is_active' : `users.${key}`
       } else {
-        this.query.order_by = 'updated_at'
+        this.query.order_by = 'users.updated_at'
         this.query.sort_by = 'desc'
       }
     },
@@ -171,7 +171,7 @@ export default {
         q: null,
         per_page: 5,
         sort_by: 'desc',
-        order_by: 'updated_at',
+        order_by: 'users.updated_at',
         is_admin: true,
         current_page: 1
       }
