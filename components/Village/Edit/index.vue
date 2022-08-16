@@ -272,6 +272,20 @@ export default {
       } else {
         this.errors.latitude = 'Format isian latitude salah'
       }
+    },
+    'form.city_id' (newId, oldId) {
+      if (newId && newId !== oldId) {
+        this.isDisabledOptionDistricts = false
+        this.fetchDistricts(newId)
+      } else {
+        this.isDisabledOptionDistricts = true
+      }
+
+      if (newId === undefined) {
+        this.errors.city = 'Isian Kabupaten/Kota wajib diisi'
+      } else {
+        this.errors.city = null
+      }
     }
   },
   mounted () {
