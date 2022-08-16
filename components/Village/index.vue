@@ -46,7 +46,7 @@
       </BaseDataTable>
     </div>
     <VillageAdd :show="showModalAddVillage" @close="showModalAddVillage = false" />
-    <VillageEdit :show="showModalEditVillage" @close="showModalEditVillage = false" />
+    <VillageEdit :show="showModalEditVillage" :item="itemVillage" @close="showModalEditVillage = false" />
   </div>
 </template>
 
@@ -75,7 +75,8 @@ export default {
         per_page: 10
       },
       showModalAddVillage: false,
-      showModalEditVillage: false
+      showModalEditVillage: false,
+      itemVillage: {}
     }
   },
   async fetch () {
@@ -186,6 +187,7 @@ export default {
     },
     editDataVillage (item) {
       this.showModalEditVillage = true
+      this.itemVillage = item
     }
   }
 }

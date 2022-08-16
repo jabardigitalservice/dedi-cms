@@ -122,6 +122,13 @@ export default {
     show: {
       type: Boolean,
       default: false
+    },
+    /**
+     * object of village
+     */
+    item: {
+      type: Object,
+      default: () => ({})
     }
   },
   data () {
@@ -169,12 +176,75 @@ export default {
           label: 4
         }
       ],
-      isDisabledOptionDistricts: true
+      isDisabledOptionDistricts: true,
+      isFormCompleted: false
     }
+  },
+  computed: {
+    optionsCity () {
+      let city = []
+      if (Array.isArray(this.listCity) && this.listCity.length) {
+        city = this.listCity.map((item) => {
+          return {
+            value: item.id,
+            label: item.name
+          }
+        })
+      }
+      return city
+    },
+    optionsDistrict () {
+      let districts = []
+      if (Array.isArray(this.listDistrict) && this.listDistrict.length) {
+        districts = this.listDistrict.map((item) => {
+          return {
+            value: item.id,
+            label: item.name
+          }
+        })
+      }
+      return districts
+    }
+  },
+  watch: {
+    show: {
+      handler () {
+        this.form = {
+          ...this.form,
+          ...this.item,
+          city_id: this.item.city?.id,
+          district_id: this.item.district?.id,
+          longitude: this.item.location?.lng.toString(),
+          latitude: this.item.location?.lat.toString()
+        }
+        if (this.district_id !== null || this.district_id !== '') { this.isDisabledOptionDistricts = false }
+        this.fetchDistricts(this.form.city_id)
+      },
+      immediate: true
+    }
+  },
+  mounted () {
+    this.fetchCity()
   },
   methods: {
     onModalClose () {
       this.$emit('close')
+    },
+    async fetchCity () {
+      try {
+        const response = await this.$axios.get('/cities/suggestion')
+        this.listCity = response.data.data || []
+      } catch {
+        this.listCity = []
+      }
+    },
+    async fetchDistricts (cityId) {
+      try {
+        const response = await this.$axios.get(`/districts/suggestion?city_id=${cityId}`)
+        this.listDistrict = response.data.data || []
+      } catch {
+        this.listDistrict = []
+      }
     }
   }
 }
