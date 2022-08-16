@@ -253,6 +253,25 @@ export default {
       } else {
         this.errors.villageLevel = null
       }
+    },
+    'form.longitude' () {
+      const regexPoint = /^(-?\d+(\.\d+)?)$/
+      if (regexPoint.test(this.form.longitude) || !this.form.latitude.length) {
+        this.errors.longitude = null
+      } else {
+        this.errors.longitude = 'Format isian longitude salah'
+      }
+    },
+    'form.latitude' () {
+      if (this.form.latitude.length === '') {
+        this.form.latitude = ''
+      }
+      const regexPoint = /^(-?\d+(\.\d+)?)$/
+      if (regexPoint.test(this.form.latitude) || !this.form.latitude.length) {
+        this.errors.latitude = null
+      } else {
+        this.errors.latitude = 'Format isian latitude salah'
+      }
     }
   },
   mounted () {
