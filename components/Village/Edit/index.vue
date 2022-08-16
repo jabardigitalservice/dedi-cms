@@ -237,6 +237,15 @@ export default {
       } else {
         this.errors.villageId = 'Format isian kode wilayah salah'
       }
+    },
+    'form.name' () {
+      if (this.form.name.length > 0 && this.form.name.length < 3) {
+        this.errors.villageName = 'Isian nama minimal 3 karakter.'
+      } else if (this.form.name.length > 100) {
+        this.errors.villageName = 'Isian nama maksimal 100 karakter.'
+      } else {
+        this.errors.villageName = null
+      }
     }
   },
   mounted () {
