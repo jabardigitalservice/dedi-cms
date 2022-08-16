@@ -176,8 +176,7 @@ export default {
           label: 4
         }
       ],
-      isDisabledOptionDistricts: true,
-      isFormCompleted: false
+      isDisabledOptionDistricts: true
     }
   },
   computed: {
@@ -204,6 +203,23 @@ export default {
         })
       }
       return districts
+    },
+    isFormCompleted () {
+      return !!((
+        this.form.id.length &&
+        this.form.name.length &&
+        (this.form.city_id === undefined || this.form.city_id.length) &&
+        (this.form.district_id === undefined || this.form.district_id.length) &&
+        !(this.form.level === 0 || this.form.level === undefined) &&
+        this.form.longitude.length &&
+        this.form.latitude.length &&
+        !this.errors.villageId &&
+        !this.errors.villageName &&
+        !this.errors.city &&
+        !this.errors.district &&
+        !this.errors.longitude &&
+        !this.errors.latitude
+      ))
     }
   },
   watch: {
