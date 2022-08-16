@@ -286,6 +286,13 @@ export default {
       } else {
         this.errors.city = null
       }
+    },
+    'form.district_id' () {
+      if (this.form.district_id === undefined) {
+        this.errors.district = 'Isian Kecamatan wajib diisi'
+      } else {
+        this.errors.district = null
+      }
     }
   },
   mounted () {
