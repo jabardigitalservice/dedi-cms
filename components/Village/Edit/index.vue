@@ -113,6 +113,7 @@
 </template>
 
 <script>
+import { isEqual, cloneDeep } from 'lodash'
 export default {
   name: 'ComponentVillageEdit',
   props: {
@@ -176,7 +177,9 @@ export default {
           label: 4
         }
       ],
-      isDisabledOptionDistricts: true
+      isDisabledOptionDistricts: true,
+      isChangedForm: false,
+      cloneForm: {}
     }
   },
   computed: {
@@ -218,7 +221,8 @@ export default {
         !this.errors.city &&
         !this.errors.district &&
         !this.errors.longitude &&
-        !this.errors.latitude
+        !this.errors.latitude &&
+        this.isChangedForm
       ))
     }
   },
@@ -235,8 +239,19 @@ export default {
         }
         if (this.district_id !== null || this.district_id !== '') { this.isDisabledOptionDistricts = false }
         this.fetchDistricts(this.form.city_id)
+        this.cloneForm = cloneDeep(this.form)
       },
       immediate: true
+    },
+    form: {
+      handler () {
+        if (!isEqual(this.form, this.cloneForm)) {
+          this.isChangedForm = true
+        } else {
+          this.isChangedForm = false
+        }
+      },
+      deep: true
     },
     'form.id' () {
       // This pattern for checking user only allow input number and character (.)
