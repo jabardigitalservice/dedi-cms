@@ -40,11 +40,13 @@
           <VillageTableAction
             @detail="$router.push(`/data-village/village/detail/${item.id}`)"
             @delete="deleteDataVillage(item)"
+            @edit="editDataVillage(item)"
           />
         </template>
       </BaseDataTable>
     </div>
     <VillageAdd :show="showModalAddVillage" @close="showModalAddVillage = false" />
+    <VillageEdit :show="showModalEditVillage" />
   </div>
 </template>
 
@@ -72,7 +74,8 @@ export default {
         current_page: 1,
         per_page: 10
       },
-      showModalAddVillage: false
+      showModalAddVillage: false,
+      showModalEditVillage: false
     }
   },
   async fetch () {
@@ -180,6 +183,9 @@ export default {
         this.$store.dispatch('dialog/closeDialog')
         this.$store.dispatch('toast/showToast', { type: 'error', message: 'Data Desa gagal dihapus' })
       }
+    },
+    editDataVillage (item) {
+      this.showModalEditVillage = true
     }
   }
 }
