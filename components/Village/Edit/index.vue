@@ -5,6 +5,7 @@
     :is-form-completed="isFormCompleted"
     label-right-btn="Simpan Perubahan"
     title="Ubah Data - Desa"
+    @close="onModalClose"
   >
     <form v-if="show" class="form-edit-village" @submit.prevent>
       <div class="form-edit-village__form-group">
@@ -169,6 +170,11 @@ export default {
         }
       ],
       isDisabledOptionDistricts: true
+    }
+  },
+  methods: {
+    onModalClose () {
+      this.$emit('close')
     }
   }
 }
