@@ -246,6 +246,13 @@ export default {
       } else {
         this.errors.villageName = null
       }
+    },
+    'form.level' () {
+      if (this.form.level === undefined) {
+        this.errors.villageLevel = 'Isian level desa wajib diisi'
+      } else {
+        this.errors.villageLevel = null
+      }
     }
   },
   mounted () {
