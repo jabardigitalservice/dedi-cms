@@ -391,6 +391,7 @@ export default {
             dialogType: 'information',
             actionBtnLeft: () => this.onModalClose()
           })
+          this.$emit('stored')
         })
         .catch((error) => {
           const { response: { status, data: { errors } } } = error || {}

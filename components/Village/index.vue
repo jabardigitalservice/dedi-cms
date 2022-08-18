@@ -46,7 +46,7 @@
       </BaseDataTable>
     </div>
     <VillageAdd :show="showModalAddVillage" @close="showModalAddVillage = false" />
-    <VillageEdit :show="showModalEditVillage" :item="itemVillage" @close="showModalEditVillage = false" />
+    <VillageEdit :show="showModalEditVillage" :item="itemVillage" @stored="refreshDatatable" @close="showModalEditVillage = false" />
   </div>
 </template>
 
