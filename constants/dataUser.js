@@ -38,3 +38,30 @@ export const headerTableUserAdmin = [
     text: 'Aksi'
   }
 ]
+
+export const headerTableUserMitra = [
+  {
+    key: 'name',
+    text: 'Nama User',
+    sortable: false
+  },
+  {
+    key: 'partnerName',
+    text: 'Nama Perusahaan',
+    sortable: false
+  },
+  {
+    key: 'email',
+    text: 'Email',
+    sortable: false
+  },
+  {
+    key: 'customStatus',
+    text: 'Status',
+    sortable: false
+  },
+  {
+    key: 'action',
+    text: 'Aksi'
+  }
+]
