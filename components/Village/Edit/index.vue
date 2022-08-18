@@ -6,6 +6,7 @@
     label-right-btn="Simpan Perubahan"
     title="Ubah Data - Desa"
     @close="onModalClose"
+    @submit="showConfirmationModal"
   >
     <form v-if="show" class="form-edit-village" @submit.prevent>
       <div class="form-edit-village__form-group">
@@ -348,6 +349,75 @@ export default {
       } catch {
         this.listDistrict = []
       }
+    },
+    showConfirmationModal () {
+      this.$store.dispatch('dialog/showDialog', {
+        header: 'Konfirmasi Perubahan',
+        title: 'Apakah Anda yakin dengan data yang telah dimasukkan?',
+        btnLeftLabel: 'Cek Kembali',
+        btnRightVariant: 'primary',
+        btnLeftVariant: 'secondary',
+        dialogType: 'confirmation',
+        actionBtnRight: () => this.onSubmitChangeData(this.form)
+      })
+    },
+    showProcessModal (percent) {
+      this.$store.dispatch('dialog/showDialog', {
+        header: 'Meyimpan Data Desa',
+        title: 'Sedang proses menyimpan ...',
+        dialogType: 'process',
+        progressValue: percent
+      })
+    },
+    closeDialogModal () {
+      this.$store.dispatch('dialog/closeDialog')
+    },
+    async onSubmitChangeData (changeVillage) {
+      await this.$axios.put(`/villages/${this.form.id}`, changeVillage, {
+        onUploadProgress: function (progressEvent) {
+          const percentCompleted = parseInt(Math.round((progressEvent.loaded / progressEvent.total) * 100))
+          if (this.showProcessModal) { this.showProcessModal(percentCompleted) }
+        }.bind(this)
+      })
+        .then(() => {
+          this.$store.dispatch('dialog/showDialog', {
+            header: 'Tambah Data Desa Berhasil',
+            title: 'Desa yang Anda tambahkan berhasil disimpan.',
+            message: `DESA DIGITAL - ${this.form.name}`,
+            iconMessage: 'check-mark-circle',
+            iconColor: 'text-green-700',
+            btnLeftVariant: 'primary',
+            btnLeftLabel: 'Saya mengerti',
+            dialogType: 'information',
+            actionBtnLeft: () => this.onModalClose()
+          })
+        })
+        .catch((error) => {
+          const { response: { status, data: { errors } } } = error || {}
+          if (status === 422 && errors) {
+            this.errors.id = errors?.id || null
+            this.errors.name = errors?.name || null
+            this.errors.city_id = errors?.city_id || null
+            this.errors.district_id = errors?.district_id || null
+            this.errors.level = errors?.level || null
+            this.errors.longitude = errors?.longitude || null
+            this.errors.latitude = errors?.latitude || null
+          }
+          this.$store.dispatch('dialog/showDialog', {
+            header: 'Tambah Data Desa Gagal',
+            title: 'Project yang Anda buat gagal disimpan.',
+            message: `DESA DIGITAL - ${this.form.name}`,
+            iconMessage: 'warning',
+            iconColor: 'text-red-700',
+            btnLeftLabel: 'Keluar',
+            btnLeftVariant: 'secondary',
+            btnRightLabel: 'Coba Kembali',
+            btnRightVariant: 'primary',
+            dialogType: 'confirmation',
+            actionBtnLeft: () => this.onModalClose(),
+            actionBtnRight: () => this.closeDialogModal()
+          })
+        })
     }
   }
 }
