@@ -29,7 +29,7 @@ export default {
       this.selectedSubMenu = value
 
       // @todo: remove after all menu developed
-      if (value !== 'Admin' || value !== 'Mitra') {
+      if (value === 'Admin' || value === 'Mitra') {
         this.isMaintenance = false
       } else {
         this.isMaintenance = true
