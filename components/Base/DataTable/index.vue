@@ -5,6 +5,10 @@
       v-on="$listeners"
     >
       <!-- eslint-disable-next-line vue/valid-v-slot -->
+      <template #item.customStatus="{ item }">
+        <slot name="item.customStatus" :item="item" />
+      </template>
+      <!-- eslint-disable-next-line vue/valid-v-slot -->
       <template #item.action="{ item }">
         <slot name="item.action" :item="item" />
       </template>
