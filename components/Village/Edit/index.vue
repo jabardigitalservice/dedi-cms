@@ -288,7 +288,7 @@ export default {
     },
     'form.longitude' () {
       const regexPoint = /^(-?\d+(\.\d+)?)$/
-      if (regexPoint.test(this.form.longitude) || !this.form.latitude.length) {
+      if (regexPoint.test(this.form.longitude) || !this.form.longitude.length) {
         this.errors.longitude = null
       } else {
         this.errors.longitude = 'Format isian longitude salah'
