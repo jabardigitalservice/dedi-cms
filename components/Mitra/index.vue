@@ -51,7 +51,6 @@
         <!-- eslint-disable-next-line vue/valid-v-slot -->
         <template #item.action="{item}">
           <MitraTableAction
-            :is-active="item.is_active"
             :status="item.status_partner"
           />
         </template>
@@ -103,8 +102,7 @@ export default {
         return {
           ...item,
           createdDate: formatDate(item.created_at),
-          partnerName: item.partner.name || '-',
-          status: item.is_active ? 'Aktif' : 'Non-Aktif'
+          partnerName: item.partner.name || '-'
         }
       })
     },
@@ -147,7 +145,7 @@ export default {
       const key = Object.keys(value)[0]
       if (key && value[key] !== 'no-sort') {
         this.query.sort_by = value[key]
-        this.query.order_by = key === 'status' ? 'users.is_active' : `users.${key}`
+        this.query.order_by = `users.${key}`
       } else {
         this.query.order_by = 'users.created_at'
         this.query.sort_by = 'desc'
