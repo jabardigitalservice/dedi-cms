@@ -38,6 +38,7 @@
         <template #item.customStatus="{item}">
           <span
             :class="{
+              'mitra__datatable-status' : true,
               'mitra__datatable-status-green' : item.status_partner === 'Terverifikasi',
               'mitra__datatable-status-yellow' : item.status_partner === 'Menunggu Verifikasi',
               'mitra__datatable-status-red' : item.status_partner === 'Ditolak',
@@ -183,20 +184,22 @@ export default {
     }
 
     &-status {
+      @apply px-4 py-[6px] rounded-[31px] border;
+
       &-green {
-        @apply px-4 py-[6px] rounded-[31px] bg-green-50 border border-green-400;
+        @apply bg-green-50 border-green-400;
       }
       &-yellow {
-        @apply px-4 py-[6px] rounded-[31px] bg-yellow-50 border border-yellow-400;
+        @apply bg-yellow-50 border-yellow-400;
       }
       &-red {
-        @apply px-4 py-[6px] rounded-[31px] bg-red-50 border border-red-400;
+        @apply bg-red-50 border-red-400;
       }
       &-blue {
-        @apply px-4 py-[6px] rounded-[31px] bg-blue-50 border border-blue-400;
+        @apply bg-blue-50 border-blue-400;
       }
       &-gray {
-        @apply px-4 py-[6px] rounded-[31px] bg-gray-200 border border-gray-400;
+        @apply bg-gray-200 border-gray-400;
       }
     }
 
