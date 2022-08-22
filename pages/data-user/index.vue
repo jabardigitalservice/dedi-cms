@@ -29,7 +29,11 @@ export default {
       this.selectedSubMenu = value
 
       // @todo: remove after all menu developed
-      this.isMaintenance = value !== 'Admin'
+      if (value === 'Admin' || value === 'Mitra') {
+        this.isMaintenance = false
+      } else {
+        this.isMaintenance = true
+      }
     }
   }
 }
