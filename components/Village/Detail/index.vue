@@ -11,7 +11,7 @@
           </div>
         </template>
       </BaseButton>
-      <BaseButton variant="secondary">
+      <BaseButton variant="secondary" @click="showEditVillage = true">
         <template #icon>
           <div class="village-detail__action-button">
             <div class="village-detail__action-icon">
@@ -77,6 +77,7 @@
         </tbody>
       </jds-simple-table>
     </div>
+    <VillageEdit :show="showEditVillage" :item="mItem" @stored="refreshData" @close="showEditVillage = false" />
   </div>
 </template>
 
@@ -93,6 +94,7 @@ export default {
   },
   data () {
     return {
+      showEditVillage: false,
       mItem: {}
     }
   },
@@ -108,6 +110,9 @@ export default {
     }
   },
   methods: {
+    refreshData () {
+      this.$emit('updated')
+    },
     onClickButton () {
       const { lng, lat } = this.item.location || null
       if (lng && lat) {
