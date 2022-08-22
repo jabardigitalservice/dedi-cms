@@ -83,7 +83,7 @@
             class="form-add-village__form-group-field--label"
             name="longitude"
             label="Longitude"
-            type="number"
+            type="text"
             placeholder="Contoh: 6.219212"
             autocomplete="false"
             :error="!!(errors.longitude)"
@@ -98,7 +98,7 @@
             class="form-add-village__form-group-field--label"
             name="latitude"
             label="Latitude"
-            type="number"
+            type="text"
             placeholder="Contoh: 6.219212"
             autocomplete="false"
             :error="!!(errors.latitude)"
@@ -279,16 +279,13 @@ export default {
     },
     'form.longitude' () {
       const regexPoint = /^(-?\d+(\.\d+)?)$/
-      if (regexPoint.test(this.form.longitude) || !this.form.latitude.length) {
+      if (regexPoint.test(this.form.longitude) || !this.form.longitude.length) {
         this.errors.longitude = null
       } else {
         this.errors.longitude = 'Format isian longitude salah'
       }
     },
     'form.latitude' () {
-      if (this.form.latitude.length === '') {
-        this.form.latitude = ''
-      }
       const regexPoint = /^(-?\d+(\.\d+)?)$/
       if (regexPoint.test(this.form.latitude) || !this.form.latitude.length) {
         this.errors.latitude = null
