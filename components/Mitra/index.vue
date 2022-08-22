@@ -38,19 +38,21 @@
         <template #item.customStatus="{item}">
           <span
             :class="{
-              'mitra__datatable-status-green' : item.status === 'Aktif',
-              'mitra__datatable-status-blue' : item.status === 'Non-Aktif',
-              'mitra__datatable-status-yellow' : item.status === 'Menunggu Verifikasi',
-              'mitra__datatable-status-red' : item.status === 'Ditolak',
+              'mitra__datatable-status-green' : item.status_partner === 'Terverifikasi',
+              'mitra__datatable-status-yellow' : item.status_partner === 'Menunggu Verifikasi',
+              'mitra__datatable-status-red' : item.status_partner === 'Ditolak',
+              'mitra__datatable-status-blue' : item.status_partner === 'Aktif',
+              'mitra__datatable-status-gray' : item.status_partner === 'Nonaktif',
             }"
           >
-            {{ item.status }}
+            {{ item.status_partner }}
           </span>
         </template>
         <!-- eslint-disable-next-line vue/valid-v-slot -->
         <template #item.action="{item}">
           <MitraTableAction
             :is-active="item.is_active"
+            :status="item.status_partner"
           />
         </template>
       </BaseDataTable>
@@ -60,6 +62,7 @@
 
 <script>
 import { headerTableUserMitra } from '@/constants/dataUser'
+import { formatDate } from '~/utils'
 
 export default {
   name: 'ComponentMitra',
@@ -79,7 +82,7 @@ export default {
       query: {
         per_page: 5,
         sort_by: 'desc',
-        order_by: 'users.updated_at',
+        order_by: 'users.created_at',
         current_page: 1,
         is_admin: false,
         roles: 'mitra'
@@ -99,6 +102,7 @@ export default {
       return this.data.map((item) => {
         return {
           ...item,
+          createdDate: formatDate(item.created_at),
           partnerName: item.partner.name || '-',
           status: item.is_active ? 'Aktif' : 'Non-Aktif'
         }
@@ -145,7 +149,7 @@ export default {
         this.query.sort_by = value[key]
         this.query.order_by = key === 'status' ? 'users.is_active' : `users.${key}`
       } else {
-        this.query.order_by = 'users.updated_at'
+        this.query.order_by = 'users.created_at'
         this.query.sort_by = 'desc'
       }
     }
@@ -181,18 +185,20 @@ export default {
     }
 
     &-status {
-      @apply;
       &-green {
-        @apply px-4 py-[6px] rounded-[31px] bg-green-50 border-green-400;
-      }
-      &-blue {
-        @apply px-4 py-[6px] rounded-[31px] bg-blue-50 border-blue-400;
+        @apply px-4 py-[6px] rounded-[31px] bg-green-50 border border-green-400;
       }
       &-yellow {
-        @apply px-4 py-[6px] rounded-[31px] bg-yellow-50 border-yellow-400;
+        @apply px-4 py-[6px] rounded-[31px] bg-yellow-50 border border-yellow-400;
       }
       &-red {
-        @apply px-4 py-[6px] rounded-[31px] bg-red-50 border-red-400;
+        @apply px-4 py-[6px] rounded-[31px] bg-red-50 border border-red-400;
+      }
+      &-blue {
+        @apply px-4 py-[6px] rounded-[31px] bg-blue-50 border border-blue-400;
+      }
+      &-gray {
+        @apply px-4 py-[6px] rounded-[31px] bg-gray-200 border border-gray-400;
       }
     }
 
