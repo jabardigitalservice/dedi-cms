@@ -295,9 +295,6 @@ export default {
       }
     },
     'form.latitude' () {
-      if (this.form.latitude.length === '') {
-        this.form.latitude = ''
-      }
       const regexPoint = /^(-?\d+(\.\d+)?)$/
       if (regexPoint.test(this.form.latitude) || !this.form.latitude.length) {
         this.errors.latitude = null
