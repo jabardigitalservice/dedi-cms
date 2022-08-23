@@ -29,16 +29,14 @@
             Detail
           </button>
         </li>
-        <li v-if="!isVerified">
-          <button class="action__dropdown-item" @click="$emit('verify')">
+        <li>
+          <button v-if="status === 'Menunggu Verifikasi'" class="action__dropdown-item" @click="$emit('verify')">
             Verifikasi Akun
           </button>
-        </li>
-        <li>
-          <button v-if="!isActive" class="action__dropdown-item" @click="$emit('activate')">
+          <button v-if="status === 'Nonaktif'" class="action__dropdown-item" @click="$emit('activate')">
             Aktif
           </button>
-          <button v-else class="action__dropdown-item" @click="$emit('deactivate')">
+          <button v-if="status === 'Aktif'" class="action__dropdown-item" @click="$emit('deactivate')">
             Non Aktif
           </button>
         </li>
@@ -61,13 +59,9 @@ export default {
     onClickaway
   },
   props: {
-    isActive: {
-      type: Boolean,
-      default: true
-    },
-    isVerified: {
-      type: Boolean,
-      default: false
+    status: {
+      type: String,
+      default: ''
     }
   },
   data () {

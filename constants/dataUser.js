@@ -56,6 +56,11 @@ export const headerTableUserMitra = [
     sortable: false
   },
   {
+    key: 'createdDate',
+    text: 'Dibuat Pada',
+    sortable: false
+  },
+  {
     key: 'customStatus',
     text: 'Status',
     sortable: false
