@@ -53,6 +53,7 @@
         <template #item.action="{item}">
           <MitraTableAction
             :status="item.status_partner"
+            @detail="$router.push(`/data-user/mitra/detail/${item.id}`)"
           />
         </template>
       </BaseDataTable>
