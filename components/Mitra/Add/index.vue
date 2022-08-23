@@ -146,3 +146,50 @@ export default {
   }
 }
 </script>
+
+<style lang="postcss" scoped>
+.form-add-partner {
+  @apply py-4 text-sm leading-[23px] text-gray-800;
+
+  &__image {
+    @apply w-[88px] h-[88px] bg-gray-50 text-gray-400 flex justify-center items-center
+    border border-gray-400 rounded-full box-border border-dashed stroke-dash-2;
+
+    &--attached {
+      @apply border-none overflow-hidden;
+
+    &--uploaded {
+      @apply bg-cover;
+    }
+    }
+  }
+
+  &__title {
+    @apply font-roboto text-gray-900 text-base leading-[23px] font-medium mb-1;
+  }
+
+  &__button {
+    @apply my-3 relative inline-block;
+
+    &-btn {
+      @apply bg-green-700 text-white w-[135px] h-[38px]
+      text-sm py-[9px] font-sans font-bold rounded-lg;
+
+      &:hover {
+        @apply bg-green-800;
+      }
+    }
+
+    input[type=file] {
+      position: absolute;
+      left: 0;
+      top: 0;
+      opacity: 0;
+    }
+  }
+
+  &__form-group {
+    @apply mt-6 w-full;
+  }
+}
+</style>
