@@ -11,16 +11,21 @@
           </div>
         </template>
       </BaseButton>
-      <BaseButton variant="secondary">
-        <template #icon>
-          <div class="mitra-detail__action-button">
-            <div class="mitra-detail__action-icon">
-              <jds-icon size="14px" name="pencil" />
-            </div>
-            Ubah Data
-          </div>
-        </template>
-      </BaseButton>
+      <div class="mitra-detail__action-button">
+        <BaseButton
+          variant="secondary"
+          label="Hapus Mitra"
+        />
+        <BaseButton
+          variant="secondary"
+          label="Ubah Data Mitra"
+        />
+        <BaseButton
+          v-if="item.status_partner === statusPartner.waiting"
+          variant="primary"
+          label="Verifikasi Mitra"
+        />
+      </div>
     </div>
     <div class="mitra-detail__content">
       <h1 class="mitra-detail__content-header">
