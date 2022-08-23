@@ -1,3 +1,52 @@
+
+.mitra {
+  @apply min-h-[calc(100vh-200px)] flex flex-col gap-[14px];
+
+  &__datatable {
+    @apply flex flex-col gap-[14px] py-[14px] px-6 rounded-lg bg-white;
+
+    &-header {
+      @apply flex items-center justify-between;
+
+      &-box-right{
+        @apply flex items-center;
+      }
+
+      &-add {
+        @apply flex items-center gap-2;
+      }
+
+      &-plus-icon{
+        @apply w-5 h-5 flex justify-center items-center;
+      }
+
+      &-search {
+        @apply justify-items-end w-[232px];
+      }
+    }
+  }
+
+  &__status {
+    @apply px-4 py-[6px] rounded-[31px] border;
+
+    &-green {
+      @apply bg-green-50 border-green-400;
+    }
+    &-yellow {
+      @apply bg-yellow-50 border-yellow-400;
+    }
+    &-red {
+      @apply bg-red-50 border-red-400;
+    }
+    &-blue {
+      @apply bg-blue-50 border-blue-400;
+    }
+    &-gray {
+      @apply bg-gray-200 border-gray-400;
+    }
+  }
+}
+
 .jds-simple-table{
   & th:first-of-type {
     @apply rounded-tl-lg;

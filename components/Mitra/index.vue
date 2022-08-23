@@ -38,12 +38,12 @@
         <template #item.customStatus="{item}">
           <span
             :class="{
-              'mitra__datatable-status' : true,
-              'mitra__datatable-status-green' : item.status_partner === 'Terverifikasi',
-              'mitra__datatable-status-yellow' : item.status_partner === 'Menunggu Verifikasi',
-              'mitra__datatable-status-red' : item.status_partner === 'Ditolak',
-              'mitra__datatable-status-blue' : item.status_partner === 'Aktif',
-              'mitra__datatable-status-gray' : item.status_partner === 'Nonaktif',
+              'mitra__status' : true,
+              'mitra__status-green' : item.status_partner === statusPartner.verified,
+              'mitra__status-yellow' : item.status_partner === statusPartner.waiting,
+              'mitra__status-red' : item.status_partner === statusPartner.rejected,
+              'mitra__status-blue' : item.status_partner === statusPartner.active,
+              'mitra__status-gray' : item.status_partner === statusPartner.inactive,
             }"
           >
             {{ item.status_partner }}
@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import { headerTableUserMitra } from '@/constants/dataUser'
+import { headerTableUserMitra, statusPartner } from '@/constants/dataUser'
 import { formatDate } from '~/utils'
 
 export default {
@@ -87,7 +87,8 @@ export default {
         current_page: 1,
         is_admin: false,
         roles: 'mitra'
-      }
+      },
+      statusPartner
     }
   },
   async fetch () {
@@ -158,53 +159,5 @@ export default {
 </script>
 
 <style lang="postcss">
-.mitra {
-  @apply min-h-[calc(100vh-200px)] flex flex-col gap-[14px];
-
-  &__datatable {
-    @apply flex flex-col gap-[14px] py-[14px] px-6 rounded-lg bg-white;
-
-    &-header {
-      @apply flex items-center justify-between;
-
-      &-box-right{
-        @apply flex items-center;
-      }
-
-      &-add {
-        @apply flex items-center gap-2;
-      }
-
-      &-plus-icon{
-        @apply w-5 h-5 flex justify-center items-center;
-      }
-
-      &-search {
-        @apply justify-items-end w-[232px];
-      }
-    }
-
-    &-status {
-      @apply px-4 py-[6px] rounded-[31px] border;
-
-      &-green {
-        @apply bg-green-50 border-green-400;
-      }
-      &-yellow {
-        @apply bg-yellow-50 border-yellow-400;
-      }
-      &-red {
-        @apply bg-red-50 border-red-400;
-      }
-      &-blue {
-        @apply bg-blue-50 border-blue-400;
-      }
-      &-gray {
-        @apply bg-gray-200 border-gray-400;
-      }
-    }
-
-  }
-}
-
+@import './Mitra.pcss';
 </style>
