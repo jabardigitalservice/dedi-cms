@@ -68,6 +68,7 @@
           type="text"
           placeholder="Masukkan nama User"
           autocomplete="false"
+          :error="!!(errors.name)"
         />
         <div v-if="errors.name" class="text-red-700">
           {{ errors.name }}
@@ -81,6 +82,7 @@
           type="text"
           placeholder="Masukkan nama Mitra"
           autocomplete="off"
+          :error="!!(errors.company)"
         />
         <div v-if="errors.company" class="text-red-700">
           {{ errors.company }}
@@ -94,6 +96,7 @@
           type="email"
           placeholder="Masukkan alamat email"
           autocomplete="off"
+          :error="!!(errors.email)"
         />
         <div v-if="errors.email" class="text-red-700">
           {{ errors.email }}
