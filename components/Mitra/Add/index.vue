@@ -1,6 +1,7 @@
 <template>
   <BaseModal
     :show="modalShow"
+    :is-form-completed="isFormCompleted"
     :loading="loading"
     label-right-btn="Tambahkan"
     title="Tambah - Mitra Baru"
@@ -138,6 +139,20 @@ export default {
         company: null,
         email: null
       }
+    }
+  },
+  computed: {
+    isFormCompleted () {
+      return !!((
+        this.form.name.length &&
+        this.form.company.length &&
+        this.form.email.length &&
+        this.fileImage &&
+        !this.uploadFileErrorMessage.length &&
+        !this.errors.name &&
+        !this.errors.company &&
+        !this.errors.email
+      ))
     }
   },
   watch: {
