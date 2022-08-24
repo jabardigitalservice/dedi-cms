@@ -1,6 +1,6 @@
 <template>
   <BaseModal
-    :show="true"
+    :show="modalShow"
     :is-form-completed="isFormCompleted"
     :loading="loading"
     label-right-btn="Tambahkan"
@@ -8,7 +8,7 @@
     @submit="showConfirmationModal"
     @close="onModalClose"
   >
-    <form v-if="true" class="form-add-partner" autocomplete="off">
+    <form v-if="modalShow" class="form-add-partner" autocomplete="off">
       <div class="grid grid-cols-4">
         <div class="col-span-1">
           <div
