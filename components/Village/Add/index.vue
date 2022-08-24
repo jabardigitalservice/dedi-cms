@@ -278,7 +278,7 @@ export default {
       }
     },
     'form.longitude' () {
-      const regexPoint = /^(-?\d+(\.\d+)?)$/
+      const regexPoint = /^-?(\d+)(\.\d+)$/
       if (regexPoint.test(this.form.longitude) || !this.form.longitude.length) {
         this.errors.longitude = null
       } else {
@@ -286,7 +286,7 @@ export default {
       }
     },
     'form.latitude' () {
-      const regexPoint = /^(-?\d+(\.\d+)?)$/
+      const regexPoint = /^-?(\d+)(\.\d+)$/
       if (regexPoint.test(this.form.latitude) || !this.form.latitude.length) {
         this.errors.latitude = null
       } else {
