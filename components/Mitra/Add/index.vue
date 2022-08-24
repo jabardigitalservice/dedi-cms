@@ -61,10 +61,11 @@
         </div>
       </div>
       <div class="form-add-partner__form-group">
-        <jds-input-text
+        <BaseInputText
           v-model="form.name"
           name="nama"
           label="Nama User"
+          type="text"
           placeholder="Masukkan nama User"
           autocomplete="false"
         />
@@ -77,8 +78,8 @@
           v-model="form.company"
           name="company"
           label="Nama Perusahaan"
+          type="text"
           placeholder="Masukkan nama Mitra"
-          type="company"
           autocomplete="off"
         />
         <div v-if="errors.company" class="text-red-700">
@@ -86,7 +87,7 @@
         </div>
       </div>
       <div class="form-add-partner__form-group">
-        <jds-input-text
+        <BaseInputText
           v-model="form.email"
           name="email"
           label="Email"
