@@ -238,7 +238,8 @@ export default {
         btnLeftLabel: 'Cek Kembali',
         btnRightVariant: 'primary',
         btnLeftVariant: 'secondary',
-        dialogType: 'confirmation'
+        dialogType: 'confirmation',
+        actionBtnRight: () => this.onSubmit(this.form)
       })
     },
     onModalClose () {
@@ -269,6 +270,64 @@ export default {
         dialogType: 'process',
         progressValue: percent
       })
+    },
+    onSubmit (form) {
+      this.loading = true
+      this.submitFile(this.fileImage)
+        .then((response) => {
+          const { source, original_name: originalName, path } = response || null
+          form.avatar = source
+          form.avatar_original_name = originalName
+          this.imageSource = path
+        })
+        .then(async () => {
+          try {
+            await this.$axios.post('/users', form, {
+              onUploadProgress: function (progressEvent) {
+                const percentCompleted = parseInt(Math.round((progressEvent.loaded / progressEvent.total) * 100))
+                if (this.showProcessModal) { this.showProcessModal(percentCompleted) }
+              }.bind(this)
+            })
+            this.$store.dispatch('dialog/showDialog', {
+              header: 'Tambah Data Mitra Berhasil',
+              title: 'Tambah data mitra berhasil disimpan.',
+              message: `${this.form.name} - ${this.form.company}`,
+              iconMessage: 'check-mark-circle',
+              iconColor: 'text-green-700',
+              btnLeftVariant: 'primary',
+              btnLeftLabel: 'Saya mengerti',
+              dialogType: 'information',
+              actionBtnLeft: () => this.onModalClose()
+            })
+            this.resetForm()
+          } catch (error) {
+            const { response: { status, data: { errors } } } = error || {}
+            if (status === 422 && errors) {
+              this.errors.name = errors?.name || null
+              this.errors.email = errors?.email || null
+              this.errors.company = errors?.company || null
+            }
+            this.$store.dispatch('dialog/showDialog', {
+              header: 'Tambah Data Mitra Gagal',
+              title: 'Data Mitra yang  Anda tambahkan gagal disimpan.',
+              message: `${this.form.name} - ${this.form.company}`,
+              iconMessage: 'warning',
+              iconColor: 'text-red-700',
+              btnLeftLabel: 'Keluar',
+              btnLeftVariant: 'secondary',
+              btnRightLabel: 'Coba Kembali',
+              btnRightVariant: 'primary',
+              dialogType: 'confirmation',
+              actionBtnLeft: () => this.onModalClose(),
+              actionBtnRight: () => this.closeDialogModal()
+            })
+          }
+        })
+        .catch(() => {
+          this.$store.dispatch('toast/showToast', { type: 'error', message: 'Gambar gagal diupload' })
+        }).finally(() => {
+          this.loading = false
+        })
     }
   }
 }
