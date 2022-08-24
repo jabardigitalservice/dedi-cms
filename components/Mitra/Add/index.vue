@@ -244,6 +244,20 @@ export default {
     onModalClose () {
       this.$emit('close')
       this.resetForm()
+    },
+    submitFile (image) {
+      return new Promise((resolve, reject) => {
+        this.$axios.post('/files/upload', image, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }).then((response) => {
+          const { data } = response.data
+          resolve(data)
+        }).catch((error) => {
+          reject(error)
+        })
+      })
     }
   }
 }
