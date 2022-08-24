@@ -70,3 +70,11 @@ export const headerTableUserMitra = [
     text: 'Aksi'
   }
 ]
+
+export const statusPartner = {
+  waiting: 'Menunggu Verifikasi',
+  verified: 'Terverifikasi',
+  rejected: 'Ditolak',
+  active: 'Aktif',
+  inactive: 'Nonaktif'
+}

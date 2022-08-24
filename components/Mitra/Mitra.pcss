@@ -1,0 +1,97 @@
+
+.mitra {
+  @apply min-h-[calc(100vh-200px)] flex flex-col gap-[14px];
+
+  &__datatable {
+    @apply flex flex-col gap-[14px] py-[14px] px-6 rounded-lg bg-white;
+
+    &-header {
+      @apply flex items-center justify-between;
+
+      &-box-right{
+        @apply flex items-center;
+      }
+
+      &-add {
+        @apply flex items-center gap-2;
+      }
+
+      &-plus-icon{
+        @apply w-5 h-5 flex justify-center items-center;
+      }
+
+      &-search {
+        @apply justify-items-end w-[232px];
+      }
+    }
+  }
+
+  &__status {
+    @apply px-4 py-[6px] rounded-[31px] border;
+
+    &-green {
+      @apply bg-green-50 border-green-400;
+    }
+    &-yellow {
+      @apply bg-yellow-50 border-yellow-400;
+    }
+    &-red {
+      @apply bg-red-50 border-red-400;
+    }
+    &-blue {
+      @apply bg-blue-50 border-blue-400;
+    }
+    &-gray {
+      @apply bg-gray-200 border-gray-400;
+    }
+  }
+}
+
+.jds-simple-table{
+  & th:first-of-type {
+    @apply rounded-tl-lg;
+  }
+  & th:last-of-type {
+    @apply rounded-tr-lg;
+  }
+
+  & tr:last-of-type td:first-of-type {
+    @apply rounded-bl-lg;
+  }
+
+  & tr:last-of-type td:last-of-type {
+    @apply rounded-br-lg;
+  }
+}
+
+.mitra-detail {
+  @apply min-h-[calc(100vh-72px-52px)];
+
+  &__action {
+    @apply bg-[#EDEFF3] sticky top-[72px] z-2 -mt-[26px] pt-[26px] -mb-[11px] pb-[14px] flex justify-between items-center;
+  
+    &-button {
+      @apply flex gap-2 items-center;
+    }
+
+    &-icon {
+      @apply h-5 w-5 flex justify-center items-center;
+    }
+  }
+
+  &__content {
+    @apply px-6 py-4 bg-white rounded-lg mt-[14px] flex flex-col gap-[14px];
+
+    &-header {
+      @apply font-roboto text-[21px] leading-[34px] font-medium text-green-700;
+    }
+
+    &-image {
+      @apply rounded-lg w-full h-[397px] object-cover;
+    }
+
+    &-table {
+      @apply text-blue-gray-800;
+    }
+  } 
+}
