@@ -5,6 +5,7 @@
     :loading="loading"
     label-right-btn="Tambahkan"
     title="Tambah - Mitra Baru"
+    @submit="showConfirmationModal"
   >
     <form v-if="true" class="form-add-partner" autocomplete="off">
       <div class="grid grid-cols-4">
@@ -209,6 +210,16 @@ export default {
         this.fileImage = null
         this.isAttached = false
       }
+    },
+    showConfirmationModal () {
+      this.$store.dispatch('dialog/showDialog', {
+        header: 'Konfirmasi Tambah Mitra',
+        title: 'Apakah Anda yakin dengan data mitra yang akan ditambahkan?',
+        btnLeftLabel: 'Cek Kembali',
+        btnRightVariant: 'primary',
+        btnLeftVariant: 'secondary',
+        dialogType: 'confirmation'
+      })
     }
   }
 }
