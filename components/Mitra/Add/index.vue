@@ -131,6 +131,7 @@ export default {
         name: '',
         company: '',
         email: '',
+        roles: 'mitra',
         avatar: '',
         avatar_original_name: ''
       },
@@ -217,6 +218,7 @@ export default {
         name: '',
         company: '',
         email: '',
+        roles: 'mitra',
         avatar: '',
         avatar_original_name: ''
       }
