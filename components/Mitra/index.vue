@@ -57,6 +57,7 @@
         </template>
       </BaseDataTable>
     </div>
+    <MitraAdd />
   </div>
 </template>
 

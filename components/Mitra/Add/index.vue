@@ -1,12 +1,12 @@
 <template>
   <BaseModal
-    :show="modalShow"
+    :show="true"
     :is-form-completed="isFormCompleted"
     :loading="loading"
     label-right-btn="Tambahkan"
     title="Tambah - Mitra Baru"
   >
-    <form v-if="modalShow" class="form-add-partner" autocomplete="off">
+    <form v-if="true" class="form-add-partner" autocomplete="off">
       <div class="grid grid-cols-4">
         <div class="col-span-1">
           <div
@@ -161,6 +161,13 @@ export default {
         this.modalShow = val
       },
       immediate: true
+    },
+    'form.name' () {
+      if (this.form.name.length > 0 && this.form.name.length < 3) {
+        this.errors.name = 'Isian nama minimal 3 karakter.'
+      } else {
+        this.errors.name = ''
+      }
     }
   }
 }
