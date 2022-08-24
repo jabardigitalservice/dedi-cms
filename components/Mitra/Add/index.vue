@@ -48,6 +48,7 @@
               type="file"
               hidden="true"
               accept="image/png, image/jpeg, image/svg+xml"
+              @change="onFileChange"
             >
           </div>
           <div v-if="fileImage">
@@ -175,6 +176,38 @@ export default {
         this.errors.email = 'Isian email tidak valid.'
       } else {
         this.errors.email = ''
+      }
+    }
+  },
+  methods: {
+    setFile (value) {
+      const formData = new FormData()
+      formData.append('file', value)
+      this.fileImage = formData
+    },
+    onFileChange () {
+      if (this.$refs.file.files[0]) {
+        const isValidFormat = ['image/png', 'image/jpeg'].includes(this.$refs.file.files[0].type)
+        if (isValidFormat) {
+          if (this.$refs.file.files[0].size > 1024 * 1024) {
+            this.fileImage = null
+            this.uploadFileErrorMessage = 'Gambar anda melebihi ukuran maksimal'
+            this.isAttached = false
+            this.imageSource = null
+          } else {
+            this.uploadFileErrorMessage = ''
+            this.isAttached = true
+            this.setFile(this.$refs.file.files[0])
+            this.imageSource = URL.createObjectURL(this.$refs.file.files[0])
+          }
+        } else {
+          this.fileImage = null
+          this.uploadFileErrorMessage = 'Maaf file yang anda masukan tidak didukung'
+          this.isAttached = false
+        }
+      } else {
+        this.fileImage = null
+        this.isAttached = false
       }
     }
   }
