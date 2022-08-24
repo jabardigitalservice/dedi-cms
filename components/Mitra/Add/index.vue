@@ -6,6 +6,7 @@
     label-right-btn="Tambahkan"
     title="Tambah - Mitra Baru"
     @submit="showConfirmationModal"
+    @close="onModalClose"
   >
     <form v-if="true" class="form-add-partner" autocomplete="off">
       <div class="grid grid-cols-4">
@@ -239,6 +240,10 @@ export default {
         btnLeftVariant: 'secondary',
         dialogType: 'confirmation'
       })
+    },
+    onModalClose () {
+      this.$emit('close')
+      this.resetForm()
     }
   }
 }
