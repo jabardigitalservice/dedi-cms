@@ -59,7 +59,7 @@
         </template>
       </BaseDataTable>
     </div>
-    <MitraAdd :show="showModalAddMitra" />
+    <MitraAdd :show="showModalAddMitra" @close="showModalAddMitra = false" />
   </div>
 </template>
 
