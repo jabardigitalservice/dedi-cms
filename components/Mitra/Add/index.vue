@@ -211,6 +211,25 @@ export default {
         this.isAttached = false
       }
     },
+    resetForm () {
+      this.form = {
+        name: '',
+        company: '',
+        email: '',
+        avatar: '',
+        avatar_original_name: ''
+      }
+      this.imageSource = null
+      this.fileImage = null
+      this.isAttached = false
+      this.uploadFileErrorMessage = ''
+      this.loading = false
+      this.errors = {
+        name: null,
+        company: null,
+        email: null
+      }
+    },
     showConfirmationModal () {
       this.$store.dispatch('dialog/showDialog', {
         header: 'Konfirmasi Tambah Mitra',
