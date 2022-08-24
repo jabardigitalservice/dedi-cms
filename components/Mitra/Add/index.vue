@@ -245,6 +245,9 @@ export default {
       this.$emit('close')
       this.resetForm()
     },
+    closeDialogModal () {
+      this.$store.dispatch('dialog/closeDialog')
+    },
     submitFile (image) {
       return new Promise((resolve, reject) => {
         this.$axios.post('/files/upload', image, {
