@@ -168,6 +168,14 @@ export default {
       } else {
         this.errors.name = ''
       }
+    },
+    'form.email' () {
+      const pattern = /^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/
+      if (!pattern.test(this.form.email)) {
+        this.errors.email = 'Isian email tidak valid.'
+      } else {
+        this.errors.email = ''
+      }
     }
   }
 }
