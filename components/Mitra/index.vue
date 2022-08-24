@@ -21,6 +21,7 @@
           :button="false"
           placeholder="Cari data"
           class="mitra__datatable-header-search"
+          @input="onSearch"
         />
       </div>
       <BaseDataTable
@@ -62,6 +63,7 @@
 </template>
 
 <script>
+import debounce from 'lodash.debounce'
 import { headerTableUserMitra, statusPartner } from '@/constants/dataUser'
 import { formatDate } from '~/utils'
 
@@ -81,6 +83,7 @@ export default {
         disabled: false
       },
       query: {
+        q: null,
         per_page: 5,
         sort_by: 'desc',
         order_by: 'users.created_at',
@@ -129,6 +132,16 @@ export default {
     this.pagination.itemsPerPageOptions = this.generateItemsPerPageOptions
   },
   methods: {
+    searchTitle: debounce(function (value) {
+      if (value.length > 2) {
+        this.query.q = value
+      } else {
+        this.query.q = null
+      }
+    }, 500),
+    onSearch (value) {
+      this.searchTitle(value)
+    },
     perPageChange (value) {
       if (value) {
         this.query.per_page = value
