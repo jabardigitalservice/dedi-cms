@@ -175,10 +175,10 @@ export default {
     },
     'form.email' () {
       const pattern = /^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/
-      if (!pattern.test(this.form.email)) {
-        this.errors.email = 'Isian email tidak valid.'
-      } else {
+      if (pattern.test(this.form.email) || !this.form.email.length) {
         this.errors.email = ''
+      } else {
+        this.errors.email = 'Isian email tidak valid.'
       }
     }
   },
