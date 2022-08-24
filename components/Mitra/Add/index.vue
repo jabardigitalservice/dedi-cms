@@ -261,6 +261,14 @@ export default {
           reject(error)
         })
       })
+    },
+    showProcessModal (percent) {
+      this.$store.dispatch('dialog/showDialog', {
+        header: 'Meyimpan Data Mitra',
+        title: 'Sedang proses menyimpan ...',
+        dialogType: 'process',
+        progressValue: percent
+      })
     }
   }
 }
