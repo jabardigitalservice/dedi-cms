@@ -3,7 +3,7 @@
     <div class="mitra__datatable">
       <div class="mitra__datatable-header">
         <div class="mitra__datatable-header-box-right">
-          <BaseButton variant="secondary">
+          <BaseButton variant="secondary" @click="addNewMitra">
             <template #icon>
               <div class="mitra__datatable-header-add">
                 <div class="mitra__datatable-header-plus-icon">
@@ -59,6 +59,7 @@
         </template>
       </BaseDataTable>
     </div>
+    <MitraAdd :show="showModalAddMitra" @close="showModalAddMitra = false" />
   </div>
 </template>
 
@@ -91,7 +92,8 @@ export default {
         is_admin: false,
         roles: 'mitra'
       },
-      statusPartner
+      statusPartner,
+      showModalAddMitra: false
     }
   },
   async fetch () {
@@ -166,6 +168,9 @@ export default {
         this.query.order_by = 'users.created_at'
         this.query.sort_by = 'desc'
       }
+    },
+    addNewMitra () {
+      this.showModalAddMitra = true
     }
   }
 }
