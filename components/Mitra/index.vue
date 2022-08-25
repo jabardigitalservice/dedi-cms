@@ -338,6 +338,17 @@ export default {
     addNewMitra () {
       this.showModalAddMitra = true
     },
+    refreshDatatable () {
+      this.query = {
+        per_page: 5,
+        sort_by: 'desc',
+        order_by: 'users.created_at',
+        current_page: 1,
+        is_admin: false,
+        roles: 'mitra'
+      }
+      this.$fetch()
+    },
     async actiondeleteDataPartner (item) {
       try {
         const response = await this.$axios.delete(`/users/${item.id}`)
