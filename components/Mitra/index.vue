@@ -150,10 +150,10 @@ export default {
       },
       query: {
         q: null,
-        per_page: 10,
+        per_page: 5,
         sort_by: 'desc',
         order_by: 'users.created_at',
-        current_page: 3,
+        current_page: 1,
         is_admin: false,
         roles: 'mitra'
       },
