@@ -17,10 +17,6 @@
           label="Hapus Mitra"
         />
         <BaseButton
-          variant="secondary"
-          label="Ubah Data Mitra"
-        />
-        <BaseButton
           v-if="item.status_partner === statusPartner.waiting"
           variant="primary"
           label="Verifikasi Mitra"
