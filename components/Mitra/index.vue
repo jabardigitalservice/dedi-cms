@@ -58,6 +58,7 @@
             :status="item.status_partner"
             @detail="$router.push(`/data-user/mitra/detail/${item.id}`)"
             @verify="verifyUser(item)"
+            @delete="deleteDataPartner(item)"
           />
         </template>
       </BaseDataTable>
@@ -336,6 +337,37 @@ export default {
     },
     addNewMitra () {
       this.showModalAddMitra = true
+    },
+    async actiondeleteDataPartner (item) {
+      try {
+        const response = await this.$axios.delete(`/users/${item.id}`)
+        if (response) {
+          this.refreshDatatable()
+          this.$store.dispatch('dialog/showDialog', {
+            header: 'Hapus Data Desa Berhasil',
+            title: 'Desa ini berhasil dihapus',
+            message: `${item.name} - ${item.company}`,
+            dialogType: 'information',
+            iconMessage: 'trash',
+            iconColor: 'text-red-500',
+            btnLeftLabel: 'Saya Mengerti',
+            btnLeftVariant: 'primary'
+          })
+        }
+      } catch (error) {
+        this.$store.dispatch('dialog/closeDialog')
+        this.$store.dispatch('toast/showToast', { type: 'error', message: 'Data Desa gagal dihapus' })
+      }
+    },
+    deleteDataPartner (item) {
+      this.$store.dispatch('dialog/showDialog', {
+        header: 'Hapus Data Desa',
+        title: 'Apakah Anda yakin akan menghapus Data Desa ini?',
+        message: `Desa Digital - ${item.name}`,
+        btnRightVariant: 'danger',
+        btnLeftVariant: 'secondary',
+        actionBtnRight: () => this.actiondeleteDataPartner(item)
+      })
     }
   }
 }
