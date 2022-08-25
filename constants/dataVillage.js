@@ -47,3 +47,12 @@ export const optionsLevel = [
     label: 4
   }
 ]
+
+// This pattern for checking user only allow input number and character (.)
+export const formatText = /(?=.*[^\d.])/g
+
+// formatId is pattern for id village maximal 13 chars (10 digit and 3 symbol) => XX.XX.XX.XXXX
+export const formatId = /(\B(?=(\d{2})+(?!\d))(?=.{4}))/g
+
+// regexpoint is pattern for longitude and latitude (XXX.XXX) and (-XXX.XXX) and only number
+export const regexPoint = /^-?(\d+)(\.\d+)$/
