@@ -113,7 +113,7 @@
 </template>
 
 <script>
-import { optionsLevel } from '@/constants/dataVillage'
+import { optionsLevel, formatText, formatId, regexPoint } from '@/constants/dataVillage'
 export default {
   name: 'ComponentVillageAdd',
   props: {
@@ -204,13 +204,9 @@ export default {
       immediate: true
     },
     'form.id' () {
-      // This pattern for checking user only allow input number and character (.)
-      const formatText = /(?=.*[^\d.])/g
       if (formatText.test(this.form.id)) {
         this.form.id = ''
       }
-      // formatId is pattern for id village maximal 13 chars (10 digit and 3 symbol) => XX.XX.XX.XXXX
-      const formatId = /(\B(?=(\d{2})+(?!\d))(?=.{4}))/g
       const newId = this.form.id.replaceAll(/[^0-9]/g, '').replace(formatId, '.')
       this.form.id = newId
       if (!this.form.id.length || this.form.id.length === 13) {
@@ -258,7 +254,6 @@ export default {
       }
     },
     'form.longitude' () {
-      const regexPoint = /^-?(\d+)(\.\d+)$/
       if (regexPoint.test(this.form.longitude) || !this.form.longitude.length) {
         this.errors.longitude = null
       } else {
@@ -266,7 +261,6 @@ export default {
       }
     },
     'form.latitude' () {
-      const regexPoint = /^-?(\d+)(\.\d+)$/
       if (regexPoint.test(this.form.latitude) || !this.form.latitude.length) {
         this.errors.latitude = null
       } else {
