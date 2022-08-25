@@ -1,12 +1,10 @@
 <template>
   <div class="data-user">
     <SubMenu :menus="menus" @change="onChangeSubMenu" />
-    <keep-alive v-if="!isMaintenance">
-      <component :is="selectedSubMenu" />
-    </keep-alive>
-    <Maintenance v-else />
+    <component :is="selectedSubMenu" v-if="!isMaintenance" />
 
     <!-- @todo: remove component Maintenance after all menu developed -->
+    <Maintenance v-else />
   </div>
 </template>
 
