@@ -249,21 +249,21 @@ export default {
     },
     verifyUser (item) {
       this.dataMitra = item
-      const { name, partner } = item || null
+      const { name, partner } = item
       this.contentMitra.data = partner?.name ? `${name} - ${partner.name}` : name
       this.contentMitra.header = 'Verifikasi Mitra'
       this.contentMitra.title = 'Apakah anda yakin ingin menerima mitra ini?'
       this.showDialogVerify = true
     },
     onRejectData () {
-      const { email } = this.dataMitra || null
+      const { email } = this.dataMitra
       this.contentMitra.data = email
       this.contentMitra.header = 'Email Penolakan'
       this.contentMitra.title = 'Dikirim kepada'
       this.contentMitra.showNotes = true
     },
     async onVerifyReject () {
-      const { id } = this.dataMitra || null
+      const { id } = this.dataMitra
       try {
         const response = await this.$axios.put(`/users/${id}/verify`, { is_verify: false, notes: this.contentMitra.notes })
         if (response) {
@@ -296,7 +296,7 @@ export default {
       }
     },
     async onVerifyAccept () {
-      const { id } = this.dataMitra || null
+      const { id } = this.dataMitra
       try {
         const response = await this.$axios.put(`/users/${id}/verify`, { is_verify: true })
         if (response) {
