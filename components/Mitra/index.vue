@@ -344,9 +344,9 @@ export default {
         if (response) {
           this.refreshDatatable()
           this.$store.dispatch('dialog/showDialog', {
-            header: 'Hapus Data Desa Berhasil',
-            title: 'Desa ini berhasil dihapus',
-            message: `${item.name} - ${item.company}`,
+            header: 'Hapus Data Mitra Berhasil',
+            title: 'Mitra ini berhasil dihapus.',
+            message: `${item.name} - ${item.partner.name}`,
             dialogType: 'information',
             iconMessage: 'trash',
             iconColor: 'text-red-500',
@@ -361,9 +361,9 @@ export default {
     },
     deleteDataPartner (item) {
       this.$store.dispatch('dialog/showDialog', {
-        header: 'Hapus Data Desa',
-        title: 'Apakah Anda yakin akan menghapus Data Desa ini?',
-        message: `Desa Digital - ${item.name}`,
+        header: 'Hapus Mitra',
+        title: 'Apakah Anda yakin akan menghapus data mitra ini?',
+        message: `${item.name} - ${item.partner.name}`,
         btnRightVariant: 'danger',
         btnLeftVariant: 'secondary',
         actionBtnRight: () => this.actiondeleteDataPartner(item)
