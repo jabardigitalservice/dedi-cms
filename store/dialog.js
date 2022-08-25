@@ -3,6 +3,7 @@ export const state = () => ({
   header: '',
   title: '',
   message: '',
+  detailMessage: '',
   iconMessage: '',
   iconColor: '',
   btnLeftVariant: 'secondary',
@@ -116,6 +117,7 @@ export const actions = {
     commit('SET_HEADER', payload.header || state.header)
     commit('SET_TITLE', payload.title)
     commit('SET_MESSAGE', payload.message)
+    commit('SET_DETAIL_MESSAGE', payload.detailMessage)
     commit('SET_ICON_MESSAGE', payload.iconMessage)
     commit('SET_ICON_COLOR', payload.iconColor)
     commit('SET_BUTTON_LEFT_VARIANT', payload.btnLeftVariant || state.btnLeftVariant)
@@ -131,6 +133,8 @@ export const actions = {
   closeDialog ({ commit }) {
     commit('SET_HEADER', '')
     commit('SET_TITLE', '')
+    commit('SET_MESSAGE', '')
+    commit('SET_DETAIL_MESSAGE', '')
     commit('SET_ICON_MESSAGE', '')
     commit('SET_ICON_COLOR', '')
     commit('SET_BUTTON_LEFT_VARIANT', 'secondary')
