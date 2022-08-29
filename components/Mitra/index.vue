@@ -59,6 +59,8 @@
             @detail="$router.push(`/data-user/mitra/detail/${item.id}`)"
             @verify="verifyUser(item)"
             @delete="deleteDataPartner(item)"
+            @activate="activateUser(item)"
+            @deactivate="deactivateUser(item)"
           />
         </template>
       </BaseDataTable>
@@ -334,6 +336,88 @@ export default {
     onClose () {
       this.showDialogVerify = false
       this.contentMitra.showNotes = false
+    },
+    activateUser (item) {
+      this.dataMitra = item
+      const { name, partner } = item
+      this.contentMitra.data = partner?.name ? `${name} - ${partner.name}` : name
+      this.$store.dispatch('dialog/showDialog', {
+        header: 'Aktifkan Mitra',
+        title: 'Apakah anda yakin ingin mengaktifkan mitra ini?',
+        message: this.contentMitra.data,
+        btnRightLabel: 'Ya, aktifkan mitra ini',
+        actionBtnRight: () => this.onActivateUser()
+      })
+    },
+    async onActivateUser () {
+      const { id } = this.dataMitra
+      try {
+        await this.$axios.patch(`/users/${id}/status`, { is_active: true })
+        this.$store.dispatch('dialog/showDialog', {
+          header: 'Pengaktifan Mitra Berhasil',
+          title: 'Pengaktifan mitra telah berhasil dilakukan.',
+          message: this.contentMitra.data,
+          iconMessage: 'check-mark-circle',
+          iconColor: 'text-green-700',
+          btnLeftVariant: 'primary',
+          btnLeftLabel: 'Saya mengerti',
+          dialogType: 'information',
+          actionBtnLeft: () => this.$fetch()
+        })
+      } catch (error) {
+        this.$store.dispatch('dialog/showDialog', {
+          header: 'Pengaktifan Mitra Gagal',
+          title: 'Pengaktifan mitra gagal dilakukan.',
+          message: this.contentMitra.data,
+          iconMessage: 'warning',
+          iconColor: 'text-red-700',
+          btnLeftLabel: 'Keluar',
+          btnLeftVariant: 'primary',
+          dialogType: 'information',
+          actionBtnLeft: () => this.$fetch()
+        })
+      }
+    },
+    deactivateUser (item) {
+      this.dataMitra = item
+      const { name, partner } = item
+      this.contentMitra.data = partner?.name ? `${name} - ${partner.name}` : name
+      this.$store.dispatch('dialog/showDialog', {
+        header: 'Nonaktifkan Mitra',
+        title: 'Apakah anda yakin ingin menonaktifkan mitra ini?',
+        message: this.contentMitra.data,
+        btnRightLabel: 'Ya, nonaktifkan mitra ini',
+        actionBtnRight: () => this.onDeactivateUser()
+      })
+    },
+    async onDeactivateUser () {
+      const { id } = this.dataMitra
+      try {
+        await this.$axios.patch(`/users/${id}/status`, { is_active: false })
+        this.$store.dispatch('dialog/showDialog', {
+          header: 'Penonaktifan Mitra Berhasil',
+          title: 'Penonaktifan mitra telah berhasil dilakukan.',
+          message: this.contentMitra.data,
+          iconMessage: 'check-mark-circle',
+          iconColor: 'text-green-700',
+          btnLeftVariant: 'primary',
+          btnLeftLabel: 'Saya mengerti',
+          dialogType: 'information',
+          actionBtnLeft: () => this.$fetch()
+        })
+      } catch (error) {
+        this.$store.dispatch('dialog/showDialog', {
+          header: 'Penonaktifan Mitra Gagal',
+          title: 'Penonaktifan mitra gagal dilakukan.',
+          message: this.contentMitra.data,
+          iconMessage: 'warning',
+          iconColor: 'text-red-700',
+          btnLeftLabel: 'Keluar',
+          btnLeftVariant: 'primary',
+          dialogType: 'information',
+          actionBtnLeft: () => this.$fetch()
+        })
+      }
     },
     addNewMitra () {
       this.showModalAddMitra = true
