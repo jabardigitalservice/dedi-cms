@@ -433,7 +433,7 @@ export default {
       }
       this.$fetch()
     },
-    async actiondeleteDataPartner (item) {
+    async actionDeleteDataPartner (item) {
       try {
         const response = await this.$axios.delete(`/users/${item.id}`)
         if (response) {
@@ -461,7 +461,7 @@ export default {
         message: `${item.name} - ${item.partner.name}`,
         btnRightVariant: 'danger',
         btnLeftVariant: 'secondary',
-        actionBtnRight: () => this.actiondeleteDataPartner(item)
+        actionBtnRight: () => this.actionDeleteDataPartner(item)
       })
     }
   }
