@@ -22,6 +22,11 @@
               {{ message }}
             </div>
           </div>
+          <div v-if="detailMessage" class="dialog__title">
+            <div :class="iconMessage ? 'ml-7' : null">
+              {{ detailMessage }}
+            </div>
+          </div>
         </div>
         <div
           :class="{
@@ -62,6 +67,7 @@ export default {
       'open',
       'header',
       'message',
+      'detailMessage',
       'iconMessage',
       'iconColor',
       'title',
