@@ -86,6 +86,9 @@
         <div class="dialog__text">
           Tersisa {{ contentMitra.lengthNotes }} karakter
         </div>
+        <div v-if="contentMitra.error" class="text-red-700">
+          {{ contentMitra.error }}
+        </div>
       </div>
       <div
         :class="{
@@ -170,7 +173,8 @@ export default {
         data: '',
         notes: '',
         showNotes: false,
-        lengthNotes: 5000
+        lengthNotes: 5000,
+        error: null
       },
       showModalAddMitra: false
     }
@@ -211,6 +215,9 @@ export default {
     'contentMitra.notes' () {
       const maxLength = 5000
       this.contentMitra.lengthNotes = maxLength - this.contentMitra.notes.length
+      if (this.contentMitra.notes.length > 1) {
+        this.contentMitra.error = null
+      }
     }
   },
   mounted () {
@@ -287,17 +294,23 @@ export default {
           })
         }
       } catch (error) {
-        this.$store.dispatch('dialog/showDialog', {
-          header: 'Penolakan Mitra Gagal',
-          title: 'Penolakan mitra gagal dilakukan.',
-          message: this.contentMitra.data,
-          iconMessage: 'warning',
-          iconColor: 'text-red-700',
-          btnLeftLabel: 'Keluar',
-          btnLeftVariant: 'primary',
-          dialogType: 'information',
-          actionBtnLeft: () => this.$fetch()
-        })
+        const { response: { status, data: { errors } } } = error
+        if (status === 422 && errors) {
+          this.contentMitra.error = errors?.notes || null
+        } else {
+          this.onClose()
+          this.$store.dispatch('dialog/showDialog', {
+            header: 'Penolakan Mitra Gagal',
+            title: 'Penolakan mitra gagal dilakukan.',
+            message: this.contentMitra.data,
+            iconMessage: 'warning',
+            iconColor: 'text-red-700',
+            btnLeftLabel: 'Keluar',
+            btnLeftVariant: 'primary',
+            dialogType: 'information',
+            actionBtnLeft: () => this.$fetch()
+          })
+        }
       }
     },
     async onVerifyAccept () {
@@ -320,6 +333,7 @@ export default {
           })
         }
       } catch (error) {
+        this.onClose()
         this.$store.dispatch('dialog/showDialog', {
           header: 'Penerimaan Mitra Gagal',
           title: 'Penerimaan mitra gagal dilakukan.',
@@ -336,6 +350,8 @@ export default {
     onClose () {
       this.showDialogVerify = false
       this.contentMitra.showNotes = false
+      this.contentMitra.notes = ''
+      this.contentMitra.error = null
     },
     activateUser (item) {
       this.dataMitra = item
