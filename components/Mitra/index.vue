@@ -351,6 +351,7 @@ export default {
       this.showDialogVerify = false
       this.contentMitra.showNotes = false
       this.contentMitra.notes = ''
+      this.contentMitra.error = null
     },
     activateUser (item) {
       this.dataMitra = item
