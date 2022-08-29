@@ -58,6 +58,7 @@
             :status="item.status_partner"
             @detail="$router.push(`/data-user/mitra/detail/${item.id}`)"
             @verify="verifyUser(item)"
+            @delete="deleteDataPartner(item)"
             @activate="activateUser(item)"
             @deactivate="deactivateUser(item)"
           />
@@ -420,6 +421,48 @@ export default {
     },
     addNewMitra () {
       this.showModalAddMitra = true
+    },
+    refreshDatatable () {
+      this.query = {
+        per_page: 5,
+        sort_by: 'desc',
+        order_by: 'users.created_at',
+        current_page: 1,
+        is_admin: false,
+        roles: 'mitra'
+      }
+      this.$fetch()
+    },
+    async actionDeleteDataPartner (item) {
+      try {
+        const response = await this.$axios.delete(`/users/${item.id}`)
+        if (response) {
+          this.refreshDatatable()
+          this.$store.dispatch('dialog/showDialog', {
+            header: 'Hapus Data Mitra Berhasil',
+            title: 'Mitra ini berhasil dihapus.',
+            message: `${item.name} - ${item.partner.name}`,
+            dialogType: 'information',
+            iconMessage: 'trash',
+            iconColor: 'text-red-500',
+            btnLeftLabel: 'Saya Mengerti',
+            btnLeftVariant: 'primary'
+          })
+        }
+      } catch (error) {
+        this.$store.dispatch('dialog/closeDialog')
+        this.$store.dispatch('toast/showToast', { type: 'error', message: 'Data Desa gagal dihapus' })
+      }
+    },
+    deleteDataPartner (item) {
+      this.$store.dispatch('dialog/showDialog', {
+        header: 'Hapus Mitra',
+        title: 'Apakah Anda yakin akan menghapus data mitra ini?',
+        message: `${item.name} - ${item.partner.name}`,
+        btnRightVariant: 'danger',
+        btnLeftVariant: 'secondary',
+        actionBtnRight: () => this.actionDeleteDataPartner(item)
+      })
     }
   }
 }

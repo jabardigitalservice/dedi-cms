@@ -15,10 +15,7 @@
         <BaseButton
           variant="secondary"
           label="Hapus Mitra"
-        />
-        <BaseButton
-          variant="secondary"
-          label="Ubah Data Mitra"
+          @click="deleteDataPartner(item)"
         />
         <BaseButton
           v-if="item.status_partner === statusPartner.waiting"
@@ -155,6 +152,37 @@ export default {
   methods: {
     refreshData () {
       this.$emit('updated')
+    },
+    deleteDataPartner (item) {
+      this.$store.dispatch('dialog/showDialog', {
+        header: 'Hapus Mitra',
+        title: 'Apakah Anda yakin akan menghapus data mitra ini?',
+        message: `${item.name} - ${item.partner.name}`,
+        btnRightVariant: 'danger',
+        btnLeftVariant: 'secondary',
+        actionBtnRight: () => this.actiondeleteDataPartner(item)
+      })
+    },
+    async actiondeleteDataPartner (item) {
+      try {
+        const response = await this.$axios.delete(`/users/${item.id}`)
+        if (response) {
+          this.$store.dispatch('dialog/showDialog', {
+            header: 'Hapus Data Mitra Berhasil',
+            title: 'Mitra ini berhasil dihapus.',
+            message: `${item.name} - ${item.partner.name}`,
+            dialogType: 'information',
+            iconMessage: 'trash',
+            iconColor: 'text-red-500',
+            btnLeftLabel: 'Saya Mengerti',
+            btnLeftVariant: 'primary',
+            actionBtnLeft: () => this.$router.push('/data-user')
+          })
+        }
+      } catch (error) {
+        this.$store.dispatch('dialog/closeDialog')
+        this.$store.dispatch('toast/showToast', { type: 'error', message: 'Data Desa gagal dihapus' })
+      }
     }
   }
 }
