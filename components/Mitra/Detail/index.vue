@@ -1,7 +1,7 @@
 <template>
   <div class="mitra-detail">
     <div class="mitra-detail__action">
-      <BaseButton variant="primary" @click="$router.go(-1)">
+      <BaseButton variant="primary" @click="goBack">
         <template #icon>
           <div class="mitra-detail__action-button">
             <div class="mitra-detail__action-icon">
@@ -152,6 +152,11 @@ export default {
   methods: {
     refreshData () {
       this.$emit('updated')
+    },
+    goBack () {
+      this.$store.commit('setSubMenu', 'Mitra')
+      this.$store.commit('setTrackPage', true)
+      this.$router.push('/data-user')
     },
     deleteDataPartner (item) {
       this.$store.dispatch('dialog/showDialog', {

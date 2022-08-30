@@ -1,7 +1,7 @@
 <template>
   <div class="admin-detail">
     <div class="admin-detail__action">
-      <BaseButton variant="primary" @click="$router.go(-1)">
+      <BaseButton variant="primary" @click="goBack">
         <template #icon>
           <div class="admin-detail__action-button">
             <div class="admin-detail__action-icon">
@@ -122,6 +122,11 @@ export default {
   methods: {
     refreshData () {
       this.$emit('updated')
+    },
+    goBack () {
+      this.$store.commit('setSubMenu', 'Admin')
+      this.$store.commit('setTrackPage', true)
+      this.$router.push('/data-user')
     },
     formatDate (date) {
       if (date) {
