@@ -247,6 +247,7 @@ export default {
     onModalClose () {
       this.$emit('close')
       this.resetForm()
+      this.$emit('refresh')
     },
     closeDialogModal () {
       this.$store.dispatch('dialog/closeDialog')
