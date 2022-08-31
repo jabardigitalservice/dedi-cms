@@ -130,7 +130,7 @@
         </div>
       </div>
     </MitraDialog>
-    <MitraAdd :show="showModalAddMitra" @close="showModalAddMitra = false" />
+    <MitraAdd :show="showModalAddMitra" @refresh="refreshDatatable" @close="showModalAddMitra = false" />
   </div>
 </template>
 
@@ -453,7 +453,6 @@ export default {
       try {
         const response = await this.$axios.delete(`/users/${item.id}`)
         if (response) {
-          this.refreshDatatable()
           this.$store.dispatch('dialog/showDialog', {
             header: 'Hapus Data Mitra Berhasil',
             title: 'Mitra ini berhasil dihapus.',
@@ -462,7 +461,8 @@ export default {
             iconMessage: 'trash',
             iconColor: 'text-red-500',
             btnLeftLabel: 'Saya Mengerti',
-            btnLeftVariant: 'primary'
+            btnLeftVariant: 'primary',
+            actionBtnLeft: () => this.refreshDatatable()
           })
         }
       } catch (error) {
