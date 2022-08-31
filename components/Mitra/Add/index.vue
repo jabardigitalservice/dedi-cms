@@ -111,6 +111,7 @@
 </template>
 
 <script>
+import { rolesUser } from '@/constants/dataUser'
 export default {
   name: 'MitraAdd',
   props: {
@@ -131,7 +132,7 @@ export default {
         name: '',
         company: '',
         email: '',
-        roles: 'mitra',
+        roles: rolesUser.mitra,
         avatar: '',
         avatar_original_name: ''
       },
@@ -218,7 +219,7 @@ export default {
         name: '',
         company: '',
         email: '',
-        roles: 'mitra',
+        roles: rolesUser.mitra,
         avatar: '',
         avatar_original_name: ''
       }

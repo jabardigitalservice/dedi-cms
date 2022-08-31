@@ -93,6 +93,7 @@
 
 <script>
 import { isEqual, cloneDeep } from 'lodash'
+import { rolesUser } from '@/constants/dataUser'
 export default {
   name: 'ComponentAdminEdit',
   props: {
@@ -121,6 +122,7 @@ export default {
       form: {
         name: '',
         email: '',
+        roles: rolesUser.admin,
         avatar: '',
         avatar_original_name: '',
         fileImage: null
