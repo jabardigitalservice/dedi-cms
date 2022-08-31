@@ -121,6 +121,7 @@ export default {
       form: {
         name: '',
         email: '',
+        roles: this.$config.userRoles.one,
         avatar: '',
         avatar_original_name: '',
         fileImage: null

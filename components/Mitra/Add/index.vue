@@ -131,7 +131,7 @@ export default {
         name: '',
         company: '',
         email: '',
-        roles: 'mitra',
+        roles: this.$config.userRoles.two,
         avatar: '',
         avatar_original_name: ''
       },
@@ -218,7 +218,7 @@ export default {
         name: '',
         company: '',
         email: '',
-        roles: 'mitra',
+        roles: this.$config.userRoles.two,
         avatar: '',
         avatar_original_name: ''
       }

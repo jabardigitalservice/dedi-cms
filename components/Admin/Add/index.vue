@@ -127,6 +127,7 @@ export default {
         name: '',
         email: '',
         password: '',
+        roles: this.$config.userRoles.one,
         avatar: '',
         avatar_original_name: ''
       },
@@ -227,6 +228,7 @@ export default {
         name: '',
         email: '',
         password: '',
+        roles: this.$config.userRoles.one,
         avatar: '',
         avatar_original_name: ''
       }
