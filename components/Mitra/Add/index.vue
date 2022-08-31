@@ -132,7 +132,7 @@ export default {
         name: '',
         company: '',
         email: '',
-        roles: rolesUser.mitra,
+        roles: this.$config.userRoles.two,
         avatar: '',
         avatar_original_name: ''
       },

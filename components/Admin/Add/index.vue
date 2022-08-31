@@ -107,7 +107,6 @@
 </template>
 
 <script>
-import { rolesUser } from '@/constants/dataUser'
 export default {
   name: 'ComponentAdminAdd',
   props: {
@@ -128,7 +127,7 @@ export default {
         name: '',
         email: '',
         password: '',
-        roles: rolesUser.admin,
+        roles: this.$config.userRoles.one,
         avatar: '',
         avatar_original_name: ''
       },
@@ -229,7 +228,6 @@ export default {
         name: '',
         email: '',
         password: '',
-        roles: 'superadmin',
         avatar: '',
         avatar_original_name: ''
       }

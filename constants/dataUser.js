@@ -78,8 +78,3 @@ export const statusPartner = {
   active: 'Aktif',
   inactive: 'Nonaktif'
 }
-
-export const rolesUser = {
-  admin: 'superadmin',
-  mitra: 'mitra'
-}

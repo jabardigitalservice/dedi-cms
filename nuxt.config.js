@@ -34,6 +34,14 @@ export default {
     ]
   },
 
+  // Environment dynamic
+  publicRuntimeConfig: {
+    userRoles: {
+      one: process.env.USER_ROLES_01,
+      two: process.env.USER_ROLES_02
+    }
+  },
+
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     '@/assets/css/global.postcss'
