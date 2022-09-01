@@ -227,10 +227,11 @@ export default {
     searchTitle: debounce(function (value) {
       if (value.length > 2) {
         this.query.q = value
-      } else {
+        this.$fetch()
+      } else if (value.length === 0) {
         this.query.q = null
+        this.$fetch()
       }
-      this.$fetch()
     }, 500),
     onSearch (value) {
       this.searchTitle(value)
