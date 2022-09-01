@@ -125,6 +125,14 @@ export default {
       handler () {
         this.$fetch()
       }
+    },
+    search (value) {
+      if (value.length > 2) {
+        this.query.q = value
+        this.$fetch()
+      } else {
+        this.query.q = null
+      }
     }
   },
   mounted () {
