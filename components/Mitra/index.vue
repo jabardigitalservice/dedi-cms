@@ -218,14 +218,6 @@ export default {
       if (this.contentMitra.notes.length > 1) {
         this.contentMitra.error = null
       }
-    },
-    search (value) {
-      if (value.length > 2) {
-        this.query.q = value
-        this.$fetch()
-      } else {
-        this.query.q = null
-      }
     }
   },
   mounted () {
@@ -238,6 +230,7 @@ export default {
       } else {
         this.query.q = null
       }
+      this.$fetch()
     }, 500),
     onSearch (value) {
       this.searchTitle(value)
