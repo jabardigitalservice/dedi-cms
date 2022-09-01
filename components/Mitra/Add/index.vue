@@ -180,6 +180,11 @@ export default {
       } else {
         this.errors.email = 'Isian email tidak valid.'
       }
+    },
+    'form.company' (newCompany, oldCompany) {
+      if (newCompany && newCompany !== oldCompany) {
+        this.errors.company = null
+      }
     }
   },
   methods: {
