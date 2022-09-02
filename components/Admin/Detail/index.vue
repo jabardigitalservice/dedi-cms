@@ -40,7 +40,13 @@
               <strong>Foto Profil</strong>
             </td>
             <td>
-              <img width="90" height="90" class="rounded-full object-cover w-[90px] h-[90px]" :src="item.avatar.path" :alt="item.name">
+              <img
+                width="90"
+                height="90"
+                class="rounded-full object-cover w-[90px] h-[90px]"
+                :src="item.avatar.path || defaultImgPath"
+                :alt="item.name"
+              >
             </td>
           </tr>
           <tr>
@@ -76,15 +82,15 @@
             <td width="200">
               <strong>Dibuat pada</strong>
             </td>
-            <td>{{ formatDate(item.created_at) }}</td>
+            <td>{{ formatDateTime(item.created_at) }}</td>
           </tr>
           <tr>
             <td><strong>Terakhir diupdate</strong></td>
-            <td>{{ formatDate(item.updated_at) }}</td>
+            <td>{{ formatDateTime(item.updated_at) }}</td>
           </tr>
           <tr>
             <td><strong>Login terakhir</strong></td>
-            <td>{{ formatDate(item.last_login_at) }}</td>
+            <td>{{ formatDateTime(item.last_login_at) }}</td>
           </tr>
         </tbody>
       </jds-simple-table>
@@ -94,6 +100,7 @@
 </template>
 
 <script>
+import { formatDateTime } from '~/utils'
 export default {
   name: 'ComponentAdminDetail',
   props: {
@@ -105,7 +112,9 @@ export default {
   data () {
     return {
       showEditAdmin: false,
-      mItem: {}
+      mItem: {},
+      formatDateTime,
+      defaultImgPath: require('~/assets/icons/User_Default_Avatar.svg')
     }
   },
   watch: {
@@ -127,17 +136,6 @@ export default {
       this.$store.commit('setSubMenu', 'Admin')
       this.$store.commit('setTrackPage', true)
       this.$router.push('/data-user')
-    },
-    formatDate (date) {
-      if (date) {
-        // format date from utc timezone to locale date string with custom format
-        const newDate = new Date(date)
-        const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' }
-        const formattedDate = newDate.toLocaleDateString('id', options).replace(/\./g, ':')
-        return formattedDate
-      } else {
-        return '-'
-      }
     }
   }
 }
