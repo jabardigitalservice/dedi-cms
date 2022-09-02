@@ -114,7 +114,7 @@ export default {
       showEditAdmin: false,
       mItem: {},
       formatDateTime,
-      defaultImgPath: require('~/assets/icons//User_Default_Avatar.svg')
+      defaultImgPath: require('~/assets/icons/User_Default_Avatar.svg')
     }
   },
   watch: {
