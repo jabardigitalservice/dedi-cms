@@ -19,7 +19,6 @@
         @previous-page="previousPage"
         @page-change="pageChange"
         @per-page-change="perPageChange"
-        @change:sort="sortChange"
       />
     </div>
   </div>
@@ -74,16 +73,6 @@ export default {
     },
     previousPage (value) {
       this.query.current_page = value
-    },
-    sortChange (value) {
-      const key = Object.keys(value)[0]
-      if (key && value[key] !== 'no-sort') {
-        this.query.sort_by = value[key]
-        this.query.order_by = `users.${key}`
-      } else {
-        this.query.order_by = 'users.created_at'
-        this.query.sort_by = 'desc'
-      }
     }
   }
 }
