@@ -29,7 +29,9 @@ export default {
       this.selectedSubMenu = value
 
       // @todo: remove after all menu developed
-      if (value === 'Admin' || value === 'Mitra') {
+      const activeMenus = menus.slice(0, -1)
+
+      if (activeMenus.map(el => el.value).includes(value)) {
         this.isMaintenance = false
       } else {
         this.isMaintenance = true

@@ -78,3 +78,40 @@ export const statusPartner = {
   active: 'Aktif',
   inactive: 'Nonaktif'
 }
+
+export const headerTableUserDesa = [
+  {
+    key: 'name',
+    text: 'Nama User',
+    sortable: false
+  },
+  {
+    key: 'email',
+    text: 'Email',
+    sortable: false
+  },
+  {
+    key: 'desa',
+    text: 'Desa',
+    sortable: false
+  },
+  {
+    key: 'kecamatan',
+    text: 'Kecamatan',
+    sortable: false
+  },
+  {
+    key: 'kabupaten',
+    text: 'Kabupaten',
+    sortable: false
+  },
+  {
+    key: 'status',
+    text: 'Status',
+    sortable: false
+  },
+  {
+    key: 'action',
+    text: 'Aksi'
+  }
+]
