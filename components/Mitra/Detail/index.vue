@@ -18,7 +18,7 @@
           @click="deleteDataPartner(item)"
         />
         <BaseButton
-          v-if="item.status_partner === statusPartner.waiting"
+          v-if="item.status === userStatus.waiting"
           variant="primary"
           label="Verifikasi Mitra"
         />
@@ -74,14 +74,14 @@
               <span
                 :class="{
                   'mitra__status' : true,
-                  'mitra__status-green' : item.status_partner === statusPartner.verified,
-                  'mitra__status-yellow' : item.status_partner === statusPartner.waiting,
-                  'mitra__status-red' : item.status_partner === statusPartner.rejected,
-                  'mitra__status-blue' : item.status_partner === statusPartner.active,
-                  'mitra__status-gray' : item.status_partner === statusPartner.inactive,
+                  'mitra__status-green' : item.status === userStatus.verified,
+                  'mitra__status-yellow' : item.status === userStatus.waiting,
+                  'mitra__status-red' : item.status === userStatus.rejected,
+                  'mitra__status-blue' : item.status === userStatus.active,
+                  'mitra__status-gray' : item.status === userStatus.inactive,
                 }"
               >
-                {{ item.status_partner }}
+                {{ item.status }}
               </span>
             </td>
           </tr>
@@ -119,7 +119,7 @@
 <script>
 import IconArrowLeft from '~/assets/icons/arrow-left.svg?inline'
 import { formatDateTime } from '~/utils'
-import { statusPartner } from '@/constants/dataUser'
+import { userStatus } from '@/constants/dataUser'
 
 export default {
   name: 'ComponentMitraDetail',
@@ -133,7 +133,7 @@ export default {
   data () {
     return {
       mItem: {},
-      statusPartner,
+      userStatus,
       formatDateTime,
       defaultImgPath: require('~/assets/icons/User_Default_Avatar.svg')
     }

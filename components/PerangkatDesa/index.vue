@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { headerTableUserDesa, statusPartner } from '@/constants/dataUser'
+import { headerTableUserDesa, userStatus } from '@/constants/dataUser'
 import { generateItemsPerPageOptions } from '~/utils'
 
 export default {
@@ -35,7 +35,7 @@ export default {
     return {
       search: '',
       headerTableUserDesa,
-      statusPartner,
+      userStatus,
       data: [],
       pagination: {
         currentPage: 1,
