@@ -41,11 +41,11 @@
             <div
               :class="{
                 'mitra__status' : true,
-                'mitra__status-green' : item.status === statusPartner.verified,
-                'mitra__status-yellow' : item.status === statusPartner.waiting,
-                'mitra__status-red' : item.status === statusPartner.rejected,
-                'mitra__status-blue' : item.status === statusPartner.active,
-                'mitra__status-gray' : item.status === statusPartner.inactive,
+                'mitra__status-green' : item.status === userStatus.verified,
+                'mitra__status-yellow' : item.status === userStatus.waiting,
+                'mitra__status-red' : item.status === userStatus.rejected,
+                'mitra__status-blue' : item.status === userStatus.active,
+                'mitra__status-gray' : item.status === userStatus.inactive,
               }"
             >
               {{ item.status }}
@@ -136,7 +136,7 @@
 
 <script>
 import debounce from 'lodash.debounce'
-import { headerTableUserMitra, statusPartner } from '@/constants/dataUser'
+import { headerTableUserMitra, userStatus } from '@/constants/dataUser'
 import { formatDateTime } from '~/utils'
 
 export default {
@@ -163,7 +163,7 @@ export default {
         is_admin: false,
         roles: 'mitra'
       },
-      statusPartner,
+      userStatus,
       dataMitra: null,
       showDialogVerify: false,
       contentMitra: {

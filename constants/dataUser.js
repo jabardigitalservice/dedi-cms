@@ -71,7 +71,7 @@ export const headerTableUserMitra = [
   }
 ]
 
-export const statusPartner = {
+export const userStatus = {
   waiting: 'Menunggu Verifikasi',
   verified: 'Terverifikasi',
   rejected: 'Ditolak',
