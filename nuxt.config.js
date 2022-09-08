@@ -38,7 +38,8 @@ export default {
   publicRuntimeConfig: {
     userRoles: {
       one: process.env.USER_ROLES_01,
-      two: process.env.USER_ROLES_02
+      two: process.env.USER_ROLES_02,
+      three: process.env.USER_ROLES_03
     }
   },
 
