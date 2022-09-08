@@ -81,12 +81,16 @@ export default {
     }
   },
   async fetch () {
-    const response = await this.$axios.get('/users', { params: this.query })
-    const { data, meta } = response.data
-    this.data = data || []
-    this.pagination.currentPage = meta?.current_page || 1
-    this.pagination.totalRows = meta?.total || 0
-    this.pagination.itemsPerPage = meta?.per_page || this.query.per_page
+    try {
+      const response = await this.$axios.get('/users', { params: this.query })
+      const { data, meta } = response.data
+      this.data = data || []
+      this.pagination.currentPage = meta?.current_page || 1
+      this.pagination.totalRows = meta?.total || 0
+      this.pagination.itemsPerPage = meta?.per_page || this.query.per_page
+    } catch (error) {
+      this.pagination.disabled = true
+    }
   },
   computed: {
     dataUser () {
