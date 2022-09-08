@@ -18,7 +18,7 @@
           @click="deleteDataPartner(item)"
         />
         <BaseButton
-          v-if="item.status_partner === userStatus.waiting"
+          v-if="item.status === userStatus.waiting"
           variant="primary"
           label="Verifikasi Mitra"
         />
@@ -74,14 +74,14 @@
               <span
                 :class="{
                   'mitra__status' : true,
-                  'mitra__status-green' : item.status_partner === userStatus.verified,
-                  'mitra__status-yellow' : item.status_partner === userStatus.waiting,
-                  'mitra__status-red' : item.status_partner === userStatus.rejected,
-                  'mitra__status-blue' : item.status_partner === userStatus.active,
-                  'mitra__status-gray' : item.status_partner === userStatus.inactive,
+                  'mitra__status-green' : item.status === userStatus.verified,
+                  'mitra__status-yellow' : item.status === userStatus.waiting,
+                  'mitra__status-red' : item.status === userStatus.rejected,
+                  'mitra__status-blue' : item.status === userStatus.active,
+                  'mitra__status-gray' : item.status === userStatus.inactive,
                 }"
               >
-                {{ item.status_partner }}
+                {{ item.status }}
               </span>
             </td>
           </tr>
