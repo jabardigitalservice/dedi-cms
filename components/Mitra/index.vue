@@ -41,21 +41,21 @@
             <div
               :class="{
                 'mitra__status' : true,
-                'mitra__status-green' : item.status_partner === statusPartner.verified,
-                'mitra__status-yellow' : item.status_partner === statusPartner.waiting,
-                'mitra__status-red' : item.status_partner === statusPartner.rejected,
-                'mitra__status-blue' : item.status_partner === statusPartner.active,
-                'mitra__status-gray' : item.status_partner === statusPartner.inactive,
+                'mitra__status-green' : item.status === statusPartner.verified,
+                'mitra__status-yellow' : item.status === statusPartner.waiting,
+                'mitra__status-red' : item.status === statusPartner.rejected,
+                'mitra__status-blue' : item.status === statusPartner.active,
+                'mitra__status-gray' : item.status === statusPartner.inactive,
               }"
             >
-              {{ item.status_partner }}
+              {{ item.status }}
             </div>
           </div>
         </template>
         <!-- eslint-disable-next-line vue/valid-v-slot -->
         <template #item.action="{item}">
           <MitraTableAction
-            :status="item.status_partner"
+            :status="item.status"
             @detail="$router.push(`/data-user/mitra/detail/${item.id}`)"
             @verify="verifyUser(item)"
             @delete="deleteDataPartner(item)"
