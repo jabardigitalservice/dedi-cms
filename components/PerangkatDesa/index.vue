@@ -51,7 +51,7 @@ export default {
         order_by: 'users.created_at',
         current_page: 1,
         is_admin: false,
-        roles: 'desa'
+        roles: this.$config.userRoles.three
       }
     }
   },
