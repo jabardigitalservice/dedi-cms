@@ -106,7 +106,7 @@ export const headerTableUserDesa = [
     sortable: false
   },
   {
-    key: 'status',
+    key: 'customStatus',
     text: 'Status',
     sortable: false
   },
