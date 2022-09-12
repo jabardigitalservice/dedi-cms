@@ -9,6 +9,7 @@
           :button="false"
           placeholder="Cari data"
           class="desa__datatable-header-search"
+          @input="onSearch"
         />
       </div>
       <BaseDataTable
@@ -50,6 +51,7 @@
 </template>
 
 <script>
+import debounce from 'lodash.debounce'
 import { headerTableUserDesa, userStatus } from '@/constants/dataUser'
 import { generateItemsPerPageOptions } from '~/utils'
 
@@ -116,6 +118,18 @@ export default {
     this.pagination.itemsPerPageOptions = generateItemsPerPageOptions(this.pagination.itemsPerPage)
   },
   methods: {
+    searchTitle: debounce(function (value) {
+      if (value.length > 2) {
+        this.query.q = value
+        this.$fetch()
+      } else if (value.length === 0) {
+        this.query.q = null
+        this.$fetch()
+      }
+    }, 500),
+    onSearch (value) {
+      this.searchTitle(value)
+    },
     perPageChange (value) {
       if (value) {
         this.query.per_page = value
