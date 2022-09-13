@@ -44,6 +44,7 @@
           <PerangkatDesaTableAction
             :status="item.status"
             @delete="deleteData(item)"
+            @detail="$router.push(`/data-user/perangkat-desa/detail/${item.id}`)"
           />
         </template>
       </BaseDataTable>
