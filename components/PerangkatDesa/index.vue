@@ -27,12 +27,12 @@
           <div class="flex justify-center">
             <div
               :class="{
-                'mitra__status' : true,
-                'mitra__status-green' : item.status === userStatus.verified,
-                'mitra__status-yellow' : item.status === userStatus.waiting,
-                'mitra__status-red' : item.status === userStatus.rejected,
-                'mitra__status-blue' : item.status === userStatus.active,
-                'mitra__status-gray' : item.status === userStatus.inactive,
+                'desa__status' : true,
+                'desa__status-green' : item.status === userStatus.verified,
+                'desa__status-yellow' : item.status === userStatus.waiting,
+                'desa__status-red' : item.status === userStatus.rejected,
+                'desa__status-blue' : item.status === userStatus.active,
+                'desa__status-gray' : item.status === userStatus.inactive,
               }"
             >
               {{ item.status }}
@@ -44,10 +44,76 @@
           <PerangkatDesaTableAction
             :status="item.status"
             @delete="deleteData(item)"
+            @verify="verifyUser(item)"
           />
         </template>
       </BaseDataTable>
     </div>
+    <BaseCustomDialog
+      :show="showDialogVerify"
+      :header="contentPerangkatDesa.header"
+      :title="contentPerangkatDesa.title"
+      :data="contentPerangkatDesa.data"
+    >
+      <div v-if="contentPerangkatDesa.showNotes === true" class="mx-6 mb-6">
+        <div class="mt-4 mb-2">
+          Masukkan alasan penolakan Perangkat Desa
+        </div>
+        <textarea
+          v-model.trim="contentPerangkatDesa.notes"
+          class="desa__notes"
+          name="Notes"
+          placeholder="Masukkan disini"
+          rows="6"
+          maxlength="5000"
+        />
+        <div class="dialog__text">
+          Tersisa {{ contentPerangkatDesa.lengthNotes }} karakter
+        </div>
+        <div v-if="contentPerangkatDesa.error" class="text-red-700">
+          {{ contentPerangkatDesa.error }}
+        </div>
+      </div>
+      <div
+        :class="{
+          'dialog__action': true,
+          'dialog__action-between': contentPerangkatDesa.showNotes === false,
+          'dialog__action-end': contentPerangkatDesa.showNotes === true
+        }"
+      >
+        <div v-if="contentPerangkatDesa.showNotes === false">
+          <BaseButton
+            label="Batal"
+            variant="secondary"
+            @click="onClose"
+          />
+        </div>
+        <div v-if="contentPerangkatDesa.showNotes === false">
+          <BaseButton
+            label="Tidak, tolak Perangkat Desa"
+            variant="secondary"
+            @click="onRejectData"
+          />
+          <BaseButton
+            label="Ya, terima Perangkat Desa"
+            variant="primary"
+            @click="onVerifyAccept"
+          />
+        </div>
+        <div v-else>
+          <BaseButton
+            label="Kembali"
+            variant="secondary"
+            @click="onClose"
+          />
+          <BaseButton
+            label="Kirim Sekarang"
+            variant="primary"
+            @click="onVerifyReject"
+          />
+        </div>
+      </div>
+    </BaseCustomDialog>
   </div>
 </template>
 
@@ -80,7 +146,20 @@ export default {
         current_page: 1,
         is_admin: false,
         roles: this.$config.userRoles.three
-      }
+      },
+      dataPerangkatDesa: null,
+      showDialogVerify: false,
+      contentPerangkatDesa: {
+        header: '',
+        title: '',
+        name: '',
+        data: '',
+        notes: '',
+        showNotes: false,
+        lengthNotes: 5000,
+        error: null
+      },
+      showModalAddPerangkatDesa: false
     }
   },
   async fetch () {
@@ -145,6 +224,100 @@ export default {
     },
     previousPage (value) {
       this.query.current_page = value
+    },
+    verifyUser (item) {
+      this.dataPerangkatDesa = item
+      const { name, partner } = item
+      this.contentPerangkatDesa.data = partner?.name ? `${name} - ${partner.name}` : name
+      this.contentPerangkatDesa.header = 'Verifikasi Perangkat Desa'
+      this.contentPerangkatDesa.title = 'Apakah anda yakin ingin menerima Perangkat Desa ini?'
+      this.showDialogVerify = true
+    },
+    onRejectData () {
+      const { email } = this.dataPerangkatDesa
+      this.contentPerangkatDesa.data = email
+      this.contentPerangkatDesa.header = 'Email Penolakan'
+      this.contentPerangkatDesa.title = 'Dikirim kepada'
+      this.contentPerangkatDesa.showNotes = true
+    },
+    async onVerifyReject () {
+      const { id } = this.dataPerangkatDesa
+      try {
+        const response = await this.$axios.put(`/users/${id}/verify`, { is_verify: false, notes: this.contentPerangkatDesa.notes })
+        if (response) {
+          this.onClose()
+          this.$store.dispatch('dialog/showDialog', {
+            header: 'Penolakan Perangkat Desa Berhasil',
+            title: 'Penolakan Perangkat Desa telah berhasil dilakukan.',
+            message: this.contentPerangkatDesa.data,
+            detailMessage: 'Email terkait konfirmasi penolakan telah dikirimkan ke email Perangkat Desa bersangkutan.',
+            iconMessage: 'check-mark-circle',
+            iconColor: 'text-green-700',
+            btnLeftVariant: 'primary',
+            btnLeftLabel: 'Saya mengerti',
+            dialogType: 'information',
+            actionBtnLeft: () => this.$fetch()
+          })
+        }
+      } catch (error) {
+        const { response: { status, data: { errors } } } = error
+        if (status === 422 && errors) {
+          this.contentPerangkatDesa.error = errors?.notes || null
+        } else {
+          this.onClose()
+          this.$store.dispatch('dialog/showDialog', {
+            header: 'Penolakan Perangkat Desa Gagal',
+            title: 'Penolakan Perangkat Desa gagal dilakukan.',
+            message: this.contentPerangkatDesa.data,
+            iconMessage: 'warning',
+            iconColor: 'text-red-700',
+            btnLeftLabel: 'Keluar',
+            btnLeftVariant: 'primary',
+            dialogType: 'information',
+            actionBtnLeft: () => this.$fetch()
+          })
+        }
+      }
+    },
+    async onVerifyAccept () {
+      const { id } = this.dataPerangkatDesa
+      try {
+        const response = await this.$axios.put(`/users/${id}/verify`, { is_verify: true })
+        if (response) {
+          this.onClose()
+          this.$store.dispatch('dialog/showDialog', {
+            header: 'Penerimaan Perangkat Desa Berhasil',
+            title: 'Penerimaan Perangkat Desa telah berhasil dilakukan.',
+            message: this.contentPerangkatDesa.data,
+            detailMessage: 'Email terkait konfirmasi penerimaan telah dikirimkan ke email Perangkat Desa bersangkutan.',
+            iconMessage: 'check-mark-circle',
+            iconColor: 'text-green-700',
+            btnLeftVariant: 'primary',
+            btnLeftLabel: 'Saya mengerti',
+            dialogType: 'information',
+            actionBtnLeft: () => this.$fetch()
+          })
+        }
+      } catch (error) {
+        this.onClose()
+        this.$store.dispatch('dialog/showDialog', {
+          header: 'Penerimaan Perangkat Desa Gagal',
+          title: 'Penerimaan Perangkat Desa gagal dilakukan.',
+          message: this.contentPerangkatDesa.data,
+          iconMessage: 'warning',
+          iconColor: 'text-red-700',
+          btnLeftLabel: 'Keluar',
+          btnLeftVariant: 'primary',
+          dialogType: 'information',
+          actionBtnLeft: () => this.$fetch()
+        })
+      }
+    },
+    onClose () {
+      this.showDialogVerify = false
+      this.contentPerangkatDesa.showNotes = false
+      this.contentPerangkatDesa.notes = ''
+      this.contentPerangkatDesa.error = null
     },
     deleteData (item) {
       this.$store.dispatch('dialog/showDialog', {
