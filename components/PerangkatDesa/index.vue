@@ -55,7 +55,7 @@
       :title="contentPerangkatDesa.title"
       :data="contentPerangkatDesa.data"
     >
-      <div v-if="contentPerangkatDesa.showNotes === true" class="mx-6 mb-6">
+      <div v-if="contentPerangkatDesa.showNotes" class="mx-6 mb-6">
         <div class="mt-4 mb-2">
           Masukkan alasan penolakan Perangkat Desa
         </div>
@@ -77,18 +77,18 @@
       <div
         :class="{
           'dialog__action': true,
-          'dialog__action-between': contentPerangkatDesa.showNotes === false,
-          'dialog__action-end': contentPerangkatDesa.showNotes === true
+          'dialog__action-between': !contentPerangkatDesa.showNotes,
+          'dialog__action-end': contentPerangkatDesa.showNotes
         }"
       >
-        <div v-if="contentPerangkatDesa.showNotes === false">
+        <div v-if="!contentPerangkatDesa.showNotes">
           <BaseButton
             label="Batal"
             variant="secondary"
             @click="onClose"
           />
         </div>
-        <div v-if="contentPerangkatDesa.showNotes === false">
+        <div v-if="!contentPerangkatDesa.showNotes">
           <BaseButton
             label="Tidak, tolak Perangkat Desa"
             variant="secondary"
