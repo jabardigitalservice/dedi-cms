@@ -23,7 +23,7 @@
 
 <script>
 export default {
-  name: 'MitraDialog',
+  name: 'CustomDialog',
   props: {
     /**
      * make modal visible or not
@@ -51,5 +51,5 @@ export default {
 </script>
 
 <style lang="postcss">
-@import './DialogMitra.pcss';
+@import './CustomDialog.pcss';
 </style>
