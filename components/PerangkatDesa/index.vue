@@ -192,6 +192,13 @@ export default {
       handler () {
         this.$fetch()
       }
+    },
+    'contentPerangkatDesa.notes' () {
+      const maxLength = 5000
+      this.contentPerangkatDesa.lengthNotes = maxLength - this.contentPerangkatDesa.notes.length
+      if (this.contentPerangkatDesa.notes.length > 1) {
+        this.contentPerangkatDesa.error = null
+      }
     }
   },
   mounted () {
