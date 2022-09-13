@@ -227,8 +227,8 @@ export default {
     },
     verifyUser (item) {
       this.dataPerangkatDesa = item
-      const { name, partner } = item
-      this.contentPerangkatDesa.data = partner?.name ? `${name} - ${partner.name}` : name
+      const { name } = item
+      this.contentPerangkatDesa.data = name
       this.contentPerangkatDesa.header = 'Verifikasi Perangkat Desa'
       this.contentPerangkatDesa.title = 'Apakah anda yakin ingin menerima Perangkat Desa ini?'
       this.showDialogVerify = true
