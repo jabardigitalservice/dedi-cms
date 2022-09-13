@@ -195,3 +195,7 @@ export default {
   }
 }
 </script>
+
+<style lang="postcss" scoped>
+@import '../Desa.pcss';
+</style>
