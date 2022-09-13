@@ -41,8 +41,9 @@
         </template>
         <!-- eslint-disable-next-line vue/valid-v-slot -->
         <template #item.action="{item}">
-          <MitraTableAction
+          <PerangkatDesaTableAction
             :status="item.status"
+            @delete="deleteData(item)"
           />
         </template>
       </BaseDataTable>
@@ -144,6 +145,37 @@ export default {
     },
     previousPage (value) {
       this.query.current_page = value
+    },
+    deleteData (item) {
+      this.$store.dispatch('dialog/showDialog', {
+        header: 'Hapus Perangkat Desa',
+        title: 'Apakah Anda yakin akan menghapus data perangkat desa ini?',
+        message: item.name,
+        btnRightVariant: 'danger',
+        btnLeftVariant: 'secondary',
+        actionBtnRight: () => this.actionDeleteData(item)
+      })
+    },
+    async actionDeleteData (item) {
+      try {
+        const response = await this.$axios.delete(`/users/${item.id}`)
+        if (response) {
+          this.$store.dispatch('dialog/showDialog', {
+            header: 'Hapus Data Perangkat Desa Berhasil',
+            title: 'Perangkat Desa ini berhasil dihapus.',
+            message: item.name,
+            dialogType: 'information',
+            iconMessage: 'trash',
+            iconColor: 'text-red-500',
+            btnLeftLabel: 'Saya Mengerti',
+            btnLeftVariant: 'primary',
+            actionBtnLeft: () => this.refreshDatatable()
+          })
+        }
+      } catch (error) {
+        this.$store.dispatch('dialog/closeDialog')
+        this.$store.dispatch('toast/showToast', { type: 'error', message: 'Data Desa gagal dihapus' })
+      }
     }
   }
 }
