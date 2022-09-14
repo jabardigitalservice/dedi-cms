@@ -350,7 +350,7 @@ export default {
             iconColor: 'text-red-500',
             btnLeftLabel: 'Saya Mengerti',
             btnLeftVariant: 'primary',
-            actionBtnLeft: () => this.refreshDatatable()
+            actionBtnLeft: () => this.$fetch()
           })
         }
       } catch (error) {
