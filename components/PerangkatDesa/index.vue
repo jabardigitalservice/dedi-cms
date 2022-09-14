@@ -45,6 +45,7 @@
             :status="item.status"
             @delete="deleteData(item)"
             @verify="verifyUser(item)"
+            @deactivate="deactivateUser(item)"
           />
         </template>
       </BaseDataTable>
@@ -355,6 +356,47 @@ export default {
       } catch (error) {
         this.$store.dispatch('dialog/closeDialog')
         this.$store.dispatch('toast/showToast', { type: 'error', message: 'Data Desa gagal dihapus' })
+      }
+    },
+    deactivateUser (item) {
+      this.dataPerangkatDesa = item
+      const { name, village } = item
+      this.contentPerangkatDesa.data = village?.name ? `${name} - ${village.name}` : name
+      this.$store.dispatch('dialog/showDialog', {
+        header: 'Nonaktifkan Perangkat Desa',
+        title: 'Apakah anda yakin ingin menonaktifkan Perangkat Desa ini?',
+        message: this.contentPerangkatDesa.data,
+        btnRightLabel: 'Ya, nonaktifkan Perangkat Desa ini',
+        actionBtnRight: () => this.onDeactivateUser()
+      })
+    },
+    async onDeactivateUser () {
+      const { id } = this.dataPerangkatDesa
+      try {
+        await this.$axios.patch(`/users/${id}/status`, { is_active: false })
+        this.$store.dispatch('dialog/showDialog', {
+          header: 'Penonaktifan Perangkat Desa Berhasil',
+          title: 'Penonaktifan Perangkat Desa telah berhasil dilakukan.',
+          message: this.contentPerangkatDesa.data,
+          iconMessage: 'check-mark-circle',
+          iconColor: 'text-green-700',
+          btnLeftVariant: 'primary',
+          btnLeftLabel: 'Saya mengerti',
+          dialogType: 'information',
+          actionBtnLeft: () => this.$fetch()
+        })
+      } catch (error) {
+        this.$store.dispatch('dialog/showDialog', {
+          header: 'Penonaktifan Perangkat Desa Gagal',
+          title: 'Penonaktifan Perangkat Desa gagal dilakukan.',
+          message: this.contentPerangkatDesa.data,
+          iconMessage: 'warning',
+          iconColor: 'text-red-700',
+          btnLeftLabel: 'Keluar',
+          btnLeftVariant: 'primary',
+          dialogType: 'information',
+          actionBtnLeft: () => this.$fetch()
+        })
       }
     }
   }
