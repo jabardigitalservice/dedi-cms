@@ -84,9 +84,10 @@
           <tr>
             <td><strong>Dokumen SK</strong></td>
             <td>
-              <button>
-                Dokumen SK
-              </button>
+              <BaseButton variant="tertiary-paddingless">
+                <span class="pr-2.5">Dokumen SK</span>
+                <IconPdf width="16" height="16" class="text-red-500" />
+              </BaseButton>
             </td>
           </tr>
         </tbody>
@@ -122,12 +123,13 @@
 
 <script>
 import IconArrowLeft from '~/assets/icons/arrow-left.svg?inline'
+import IconPdf from '~/assets/icons/IconPdf.svg?inline'
 import { formatDateTime } from '~/utils'
 import { userStatus } from '@/constants/dataUser'
 
 export default {
   name: 'ComponentPerangkatDesaDetail',
-  components: { IconArrowLeft },
+  components: { IconArrowLeft, IconPdf },
   props: {
     item: {
       type: Object,
