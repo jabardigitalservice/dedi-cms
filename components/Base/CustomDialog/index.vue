@@ -1,15 +1,15 @@
 <template>
   <transition name="fade">
-    <div v-if="show" class="dialog">
-      <div class="dialog__card">
-        <div class="dialog__header">
+    <div v-if="show" class="custom-dialog">
+      <div class="custom-dialog__card">
+        <div class="custom-dialog__header">
           {{ header }}
         </div>
-        <div class="dialog__content">
-          <div class="dialog__text">
+        <div class="custom-dialog__content">
+          <div class="custom-dialog__text">
             {{ title }}
           </div>
-          <div class="dialog__data">
+          <div class="custom-dialog__data">
             <div>
               {{ data }}
             </div>
@@ -23,7 +23,7 @@
 
 <script>
 export default {
-  name: 'MitraDialog',
+  name: 'CustomDialog',
   props: {
     /**
      * make modal visible or not
@@ -51,5 +51,5 @@ export default {
 </script>
 
 <style lang="postcss">
-@import './DialogMitra.pcss';
+@import './CustomDialog.pcss';
 </style>

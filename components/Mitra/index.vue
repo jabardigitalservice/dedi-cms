@@ -65,7 +65,7 @@
         </template>
       </BaseDataTable>
     </div>
-    <MitraDialog
+    <BaseCustomDialog
       :show="showDialogVerify"
       :header="contentMitra.header"
       :title="contentMitra.title"
@@ -129,7 +129,7 @@
           />
         </div>
       </div>
-    </MitraDialog>
+    </BaseCustomDialog>
     <MitraAdd :show="showModalAddMitra" @refresh="refreshDatatable" @close="showModalAddMitra = false" />
   </div>
 </template>
