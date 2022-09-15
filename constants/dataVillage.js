@@ -121,3 +121,35 @@ export const headerTableDesaDigital = [
     text: 'Aksi'
   }
 ]
+
+export const headerTableDesaDigitalLevelFour = [
+  {
+    key: 'name',
+    text: 'Nama Desa',
+    sortable: false
+  },
+  {
+    key: 'districtName',
+    text: 'Kecamatan',
+    sortable: false
+  },
+  {
+    key: 'cityName',
+    text: 'Kabupaten',
+    sortable: false
+  },
+  {
+    key: 'tematik',
+    text: 'Tematik',
+    sortable: false
+  },
+  {
+    key: 'status',
+    text: 'Status Permintaan',
+    sortable: false
+  },
+  {
+    key: 'action',
+    text: 'Aksi'
+  }
+]

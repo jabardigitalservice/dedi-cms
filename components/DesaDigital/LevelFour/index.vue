@@ -13,7 +13,7 @@
         />
       </div>
       <BaseDataTable
-        :headers="headerTableDesaDigital"
+        :headers="headerTableDesaDigitalLevelFour"
         :items="data"
         :pagination="pagination"
         @next-page="nextPage"
@@ -26,14 +26,14 @@
 </template>
 
 <script>
-import { headerDesaDigital, headerTableDesaDigital } from '@/constants/dataVillage'
+import { headerDesaDigital, headerTableDesaDigitalLevelFour } from '@/constants/dataVillage'
 import { generateItemsPerPageOptions } from '~/utils'
 export default {
   name: 'ComponentDesaDigitalLevelFour',
   data () {
     return {
       header: headerDesaDigital[3],
-      headerTableDesaDigital,
+      headerTableDesaDigitalLevelFour,
       search: '',
       data: [],
       pagination: {
