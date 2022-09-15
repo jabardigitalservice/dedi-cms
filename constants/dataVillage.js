@@ -56,3 +56,41 @@ export const formatId = /(\B(?=(\d{2})+(?!\d))(?=.{4}))/g
 
 // regexpoint is pattern for longitude and latitude (XXX.XXX) and (-XXX.XXX) and only number
 export const regexPoint = /^-?(\d+)(\.\d+)$/
+
+export const menus = [
+  {
+    value: 'DesaDigitalLevelOne',
+    label: 'Desa Digital Level 1'
+  },
+  {
+    value: 'DesaDigitalLevelTwo',
+    label: 'Desa Digital Level 2'
+  },
+  {
+    value: 'DesaDigitalLevelThree',
+    label: 'Desa Digital Level 3'
+  },
+  {
+    value: 'DesaDigitalLevelFour',
+    label: 'Desa Digital Level 4'
+  }
+]
+
+export const headerDesaDigital = [
+  {
+    title: 'Desa Digital Level 1',
+    descriptions: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Hendrerit euismod non, semper eu interdum habitasse velit. Eu fermentum fames id.'
+  },
+  {
+    title: 'Desa Digital Level 2',
+    descriptions: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Hendrerit euismod non, semper eu interdum habitasse velit. Eu fermentum fames id.'
+  },
+  {
+    title: 'Desa Digital Level 3',
+    descriptions: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Hendrerit euismod non, semper eu interdum habitasse velit. Eu fermentum fames id.'
+  },
+  {
+    title: 'Desa Digital Level 4',
+    descriptions: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Hendrerit euismod non, semper eu interdum habitasse velit. Eu fermentum fames id.'
+  }
+]
