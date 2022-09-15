@@ -1,4 +1,4 @@
-</<template>
+<template>
   <div class="level-two">
     <SubHeader v-bind="header" />
   </div>
