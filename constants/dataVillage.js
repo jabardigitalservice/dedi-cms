@@ -94,3 +94,30 @@ export const headerDesaDigital = [
     descriptions: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Hendrerit euismod non, semper eu interdum habitasse velit. Eu fermentum fames id.'
   }
 ]
+
+export const headerTableDesaDigital = [
+  {
+    key: 'name',
+    text: 'Nama Desa',
+    sortable: false
+  },
+  {
+    key: 'districtName',
+    text: 'Kecamatan',
+    sortable: false
+  },
+  {
+    key: 'cityName',
+    text: 'Kabupaten',
+    sortable: false
+  },
+  {
+    key: 'status',
+    text: 'Status Permintaan',
+    sortable: false
+  },
+  {
+    key: 'action',
+    text: 'Aksi'
+  }
+]
