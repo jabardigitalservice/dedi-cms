@@ -1,8 +1,7 @@
 <template>
   <div class="desa-digital">
     <SubMenu :menus="menus" @change="onChangeSubMenu" />
-    <component :is="selectedSubMenu" v-if="!isMaintenance" />
-    <Maintenance v-else />
+    <component :is="selectedSubMenu" />
   </div>
 </template>
 
@@ -14,8 +13,7 @@ export default {
   data () {
     return {
       menus,
-      selectedSubMenu: null,
-      isMaintenance: false
+      selectedSubMenu: null
     }
   },
   mounted () {
@@ -25,12 +23,6 @@ export default {
   methods: {
     onChangeSubMenu (value) {
       this.selectedSubMenu = value
-
-      if (menus.map(el => el.value).includes(value)) {
-        this.isMaintenance = false
-      } else {
-        this.isMaintenance = true
-      }
     }
   }
 }
