@@ -315,7 +315,8 @@ export default {
             iconColor: 'text-green-700',
             btnLeftVariant: 'primary',
             btnLeftLabel: 'Saya mengerti',
-            dialogType: 'information'
+            dialogType: 'information',
+            actionBtnLeft: () => this.refreshData()
           })
         }
       } catch (error) {
@@ -332,7 +333,8 @@ export default {
             iconColor: 'text-red-700',
             btnLeftLabel: 'Keluar',
             btnLeftVariant: 'primary',
-            dialogType: 'information'
+            dialogType: 'information',
+            actionBtnLeft: () => this.refreshData()
           })
         }
       }
@@ -352,7 +354,8 @@ export default {
             iconColor: 'text-green-700',
             btnLeftVariant: 'primary',
             btnLeftLabel: 'Saya mengerti',
-            dialogType: 'information'
+            dialogType: 'information',
+            actionBtnLeft: () => this.refreshData()
           })
         }
       } catch (error) {
@@ -365,7 +368,8 @@ export default {
           iconColor: 'text-red-700',
           btnLeftLabel: 'Keluar',
           btnLeftVariant: 'primary',
-          dialogType: 'information'
+          dialogType: 'information',
+          actionBtnLeft: () => this.refreshData()
         })
       }
     }
