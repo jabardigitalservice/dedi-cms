@@ -155,6 +155,7 @@
           <BaseButton
             label="Batal"
             variant="secondary"
+            @click="onClose"
           />
         </div>
         <div v-if="!contentPerangkatDesa.showNotes">
@@ -171,6 +172,7 @@
           <BaseButton
             label="Kembali"
             variant="secondary"
+            @click="onClose"
           />
           <BaseButton
             label="Kirim Sekarang"
@@ -274,6 +276,12 @@ export default {
       this.contentPerangkatDesa.header = 'Verifikasi Perangkat Desa'
       this.contentPerangkatDesa.title = 'Apakah anda yakin ingin menerima Perangkat Desa ini?'
       this.isDialog = true
+    },
+    onClose () {
+      this.isDialog = false
+      this.contentPerangkatDesa.showNotes = false
+      this.contentPerangkatDesa.notes = ''
+      this.contentPerangkatDesa.error = null
     }
   }
 }
