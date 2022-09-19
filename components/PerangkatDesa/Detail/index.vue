@@ -21,6 +21,7 @@
           v-if="item.status === userStatus.waiting"
           variant="primary"
           label="Verifikasi Perangkat Desa"
+          @click="verifyUser(item)"
         />
       </div>
     </div>
@@ -118,6 +119,66 @@
         </tbody>
       </jds-simple-table>
     </div>
+    <BaseCustomDialog
+      :show="isDialog"
+      :header="contentPerangkatDesa.header"
+      :title="contentPerangkatDesa.title"
+      :data="contentPerangkatDesa.data"
+    >
+      <div v-if="contentPerangkatDesa.showNotes" class="mx-6 mb-6">
+        <div class="mt-4 mb-2">
+          Masukkan alasan penolakan Perangkat Desa
+        </div>
+        <textarea
+          v-model.trim="contentPerangkatDesa.notes"
+          class="desa__notes"
+          name="Notes"
+          placeholder="Masukkan disini"
+          rows="6"
+          maxlength="5000"
+        />
+        <div class="dialog__text">
+          Tersisa {{ contentPerangkatDesa.lengthNotes }} karakter
+        </div>
+        <div v-if="contentPerangkatDesa.error" class="text-red-700">
+          {{ contentPerangkatDesa.error }}
+        </div>
+      </div>
+      <div
+        :class="{
+          'dialog__action': true,
+          'dialog__action-between': !contentPerangkatDesa.showNotes,
+          'dialog__action-end': contentPerangkatDesa.showNotes
+        }"
+      >
+        <div v-if="!contentPerangkatDesa.showNotes">
+          <BaseButton
+            label="Batal"
+            variant="secondary"
+          />
+        </div>
+        <div v-if="!contentPerangkatDesa.showNotes">
+          <BaseButton
+            label="Tidak, tolak Perangkat Desa"
+            variant="secondary"
+          />
+          <BaseButton
+            label="Ya, terima Perangkat Desa"
+            variant="primary"
+          />
+        </div>
+        <div v-else>
+          <BaseButton
+            label="Kembali"
+            variant="secondary"
+          />
+          <BaseButton
+            label="Kirim Sekarang"
+            variant="primary"
+          />
+        </div>
+      </div>
+    </BaseCustomDialog>
   </div>
 </template>
 
@@ -140,7 +201,19 @@ export default {
     return {
       mItem: {},
       userStatus,
-      formatDateTime
+      formatDateTime,
+      dataPerangkatDesa: null,
+      isDialog: false,
+      contentPerangkatDesa: {
+        header: '',
+        title: '',
+        name: '',
+        data: '',
+        notes: '',
+        showNotes: false,
+        lengthNotes: 5000,
+        error: null
+      }
     }
   },
   watch: {
@@ -193,6 +266,14 @@ export default {
         this.$store.dispatch('dialog/closeDialog')
         this.$store.dispatch('toast/showToast', { type: 'error', message: 'Data Desa gagal dihapus' })
       }
+    },
+    verifyUser (item) {
+      this.dataPerangkatDesa = item
+      const { name } = item
+      this.contentPerangkatDesa.data = name
+      this.contentPerangkatDesa.header = 'Verifikasi Perangkat Desa'
+      this.contentPerangkatDesa.title = 'Apakah anda yakin ingin menerima Perangkat Desa ini?'
+      this.isDialog = true
     }
   }
 }
