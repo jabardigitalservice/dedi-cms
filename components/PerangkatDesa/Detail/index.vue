@@ -162,6 +162,7 @@
           <BaseButton
             label="Tidak, tolak Perangkat Desa"
             variant="secondary"
+            @click="rejectData"
           />
           <BaseButton
             label="Ya, terima Perangkat Desa"
@@ -282,6 +283,13 @@ export default {
       this.contentPerangkatDesa.showNotes = false
       this.contentPerangkatDesa.notes = ''
       this.contentPerangkatDesa.error = null
+    },
+    rejectData () {
+      const { email } = this.dataPerangkatDesa
+      this.contentPerangkatDesa.data = email
+      this.contentPerangkatDesa.header = 'Email Penolakan'
+      this.contentPerangkatDesa.title = 'Dikirim kepada'
+      this.contentPerangkatDesa.showNotes = true
     }
   }
 }
