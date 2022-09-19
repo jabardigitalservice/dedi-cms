@@ -167,6 +167,7 @@
           <BaseButton
             label="Ya, terima Perangkat Desa"
             variant="primary"
+            @click="verifyPerangkatDesa"
           />
         </div>
         <div v-else>
@@ -334,6 +335,38 @@ export default {
             dialogType: 'information'
           })
         }
+      }
+    },
+    async verifyPerangkatDesa () {
+      const { id } = this.dataPerangkatDesa
+      try {
+        const response = await this.$axios.put(`/users/${id}/verify`, { is_verify: true })
+        if (response) {
+          this.onClose()
+          this.$store.dispatch('dialog/showDialog', {
+            header: 'Penerimaan Perangkat Desa Berhasil',
+            title: 'Penerimaan Perangkat Desa telah berhasil dilakukan.',
+            message: this.contentPerangkatDesa.data,
+            detailMessage: 'Email terkait konfirmasi penerimaan telah dikirimkan ke email Perangkat Desa bersangkutan.',
+            iconMessage: 'check-mark-circle',
+            iconColor: 'text-green-700',
+            btnLeftVariant: 'primary',
+            btnLeftLabel: 'Saya mengerti',
+            dialogType: 'information'
+          })
+        }
+      } catch (error) {
+        this.onClose()
+        this.$store.dispatch('dialog/showDialog', {
+          header: 'Penerimaan Perangkat Desa Gagal',
+          title: 'Penerimaan Perangkat Desa gagal dilakukan.',
+          message: this.contentPerangkatDesa.data,
+          iconMessage: 'warning',
+          iconColor: 'text-red-700',
+          btnLeftLabel: 'Keluar',
+          btnLeftVariant: 'primary',
+          dialogType: 'information'
+        })
       }
     }
   }
