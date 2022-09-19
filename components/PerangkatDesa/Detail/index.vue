@@ -178,6 +178,7 @@
           <BaseButton
             label="Kirim Sekarang"
             variant="primary"
+            @click="sentRejectPerangkatDesa"
           />
         </div>
       </div>
@@ -297,6 +298,43 @@ export default {
       this.contentPerangkatDesa.header = 'Email Penolakan'
       this.contentPerangkatDesa.title = 'Dikirim kepada'
       this.contentPerangkatDesa.showNotes = true
+    },
+    async sentRejectPerangkatDesa () {
+      const { id } = this.dataPerangkatDesa
+      try {
+        const response = await this.$axios.put(`/users/${id}/verify`, { is_verify: false, notes: this.contentPerangkatDesa.notes })
+        if (response) {
+          this.onClose()
+          this.$store.dispatch('dialog/showDialog', {
+            header: 'Penolakan Perangkat Desa Berhasil',
+            title: 'Penolakan Perangkat Desa telah berhasil dilakukan.',
+            message: this.contentPerangkatDesa.data,
+            detailMessage: 'Email terkait konfirmasi penolakan telah dikirimkan ke email Perangkat Desa bersangkutan.',
+            iconMessage: 'check-mark-circle',
+            iconColor: 'text-green-700',
+            btnLeftVariant: 'primary',
+            btnLeftLabel: 'Saya mengerti',
+            dialogType: 'information'
+          })
+        }
+      } catch (error) {
+        const { response: { status, data: { errors } } } = error
+        if (status === 422 && errors) {
+          this.contentPerangkatDesa.error = errors?.notes || null
+        } else {
+          this.onClose()
+          this.$store.dispatch('dialog/showDialog', {
+            header: 'Penolakan Perangkat Desa Gagal',
+            title: 'Penolakan Perangkat Desa gagal dilakukan.',
+            message: this.contentPerangkatDesa.data,
+            iconMessage: 'warning',
+            iconColor: 'text-red-700',
+            btnLeftLabel: 'Keluar',
+            btnLeftVariant: 'primary',
+            dialogType: 'information'
+          })
+        }
+      }
     }
   }
 }
