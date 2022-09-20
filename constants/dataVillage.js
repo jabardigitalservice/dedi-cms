@@ -113,7 +113,7 @@ export const headerTableDesaDigital = [
   },
   {
     key: 'status',
-    text: 'Status Permintaan',
+    text: 'Status Penerima',
     sortable: false
   },
   {
@@ -145,7 +145,7 @@ export const headerTableDesaDigitalLevelFour = [
   },
   {
     key: 'status',
-    text: 'Status Permintaan',
+    text: 'Status Penerima',
     sortable: false
   },
   {
