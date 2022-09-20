@@ -76,8 +76,8 @@ export default {
       return this.data.map((item) => {
         return {
           ...item,
-          districtName: item?.district?.name || '-',
-          cityName: item?.city?.name || '-',
+          districtName: item.district?.name || '-',
+          cityName: item.city?.name || '-',
           status: item.status || '-'
         }
       })
