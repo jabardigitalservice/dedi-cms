@@ -67,7 +67,7 @@ export default {
       this.pagination.currentPage = meta?.current_page || 1
       this.pagination.totalRows = meta?.total || 0
       this.pagination.itemsPerPage = meta?.per_page || this.query.per_page
-    } catch (error) {
+    } catch {
       this.pagination.disabled = true
     }
   },
