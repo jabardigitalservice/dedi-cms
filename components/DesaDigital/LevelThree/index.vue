@@ -14,13 +14,19 @@
       </div>
       <BaseDataTable
         :headers="headerTableDesaDigital"
-        :items="data"
+        :items="dataDesaDigital"
         :pagination="pagination"
+        :loading="$fetchState.pending"
         @next-page="nextPage"
         @previous-page="previousPage"
         @page-change="pageChange"
         @per-page-change="perPageChange"
-      />
+      >
+        <!-- eslint-disable-next-line vue/valid-v-slot -->
+        <template #item.action="{}">
+          <BaseButton variant="primary" label="Lihat Detail" />
+        </template>
+      </BaseDataTable>
     </div>
   </div>
 </template>
@@ -41,7 +47,46 @@ export default {
         totalRows: 0,
         itemsPerPage: 5,
         itemsPerPageOptions: [],
-        disabled: true
+        disabled: false
+      },
+      query: {
+        name: null,
+        per_page: 5,
+        current_page: 1,
+        level: 3,
+        is_active: true
+      }
+    }
+  },
+  async fetch () {
+    try {
+      const response = await this.$axios.get('/villages/list-with-location', { params: this.query })
+      const { data, meta } = response.data
+      this.data = data || []
+      this.pagination.currentPage = meta?.current_page || 1
+      this.pagination.totalRows = meta?.total || 0
+      this.pagination.itemsPerPage = meta?.per_page || this.query.per_page
+    } catch (error) {
+      this.pagination.disabled = true
+    }
+  },
+  computed: {
+    dataDesaDigital () {
+      return this.data.map((item) => {
+        return {
+          ...item,
+          districtName: item?.district?.name || '-',
+          cityName: item?.city?.name || '-',
+          status: item.status || '-'
+        }
+      })
+    }
+  },
+  watch: {
+    query: {
+      deep: true,
+      handler () {
+        this.$fetch()
       }
     }
   },
