@@ -303,22 +303,20 @@ export default {
     async sentRejectPerangkatDesa () {
       const { id } = this.dataPerangkatDesa
       try {
-        const response = await this.$axios.put(`/users/${id}/verify`, { is_verify: false, notes: this.contentPerangkatDesa.notes })
-        if (response) {
-          this.onClose()
-          this.$store.dispatch('dialog/showDialog', {
-            header: 'Penolakan Perangkat Desa Berhasil',
-            title: 'Penolakan Perangkat Desa telah berhasil dilakukan.',
-            message: this.contentPerangkatDesa.data,
-            detailMessage: 'Email terkait konfirmasi penolakan telah dikirimkan ke email Perangkat Desa bersangkutan.',
-            iconMessage: 'check-mark-circle',
-            iconColor: 'text-green-700',
-            btnLeftVariant: 'primary',
-            btnLeftLabel: 'Saya mengerti',
-            dialogType: 'information',
-            actionBtnLeft: () => this.refreshData()
-          })
-        }
+        await this.$axios.put(`/users/${id}/verify`, { is_verify: false, notes: this.contentPerangkatDesa.notes })
+        this.onClose()
+        this.$store.dispatch('dialog/showDialog', {
+          header: 'Penolakan Perangkat Desa Berhasil',
+          title: 'Penolakan Perangkat Desa telah berhasil dilakukan.',
+          message: this.contentPerangkatDesa.data,
+          detailMessage: 'Email terkait konfirmasi penolakan telah dikirimkan ke email Perangkat Desa bersangkutan.',
+          iconMessage: 'check-mark-circle',
+          iconColor: 'text-green-700',
+          btnLeftVariant: 'primary',
+          btnLeftLabel: 'Saya mengerti',
+          dialogType: 'information',
+          actionBtnLeft: () => this.refreshData()
+        })
       } catch (error) {
         const { response: { status, data: { errors } } } = error
         if (status === 422 && errors) {
@@ -342,22 +340,20 @@ export default {
     async verifyPerangkatDesa () {
       const { id } = this.dataPerangkatDesa
       try {
-        const response = await this.$axios.put(`/users/${id}/verify`, { is_verify: true })
-        if (response) {
-          this.onClose()
-          this.$store.dispatch('dialog/showDialog', {
-            header: 'Penerimaan Perangkat Desa Berhasil',
-            title: 'Penerimaan Perangkat Desa telah berhasil dilakukan.',
-            message: this.contentPerangkatDesa.data,
-            detailMessage: 'Email terkait konfirmasi penerimaan telah dikirimkan ke email Perangkat Desa bersangkutan.',
-            iconMessage: 'check-mark-circle',
-            iconColor: 'text-green-700',
-            btnLeftVariant: 'primary',
-            btnLeftLabel: 'Saya mengerti',
-            dialogType: 'information',
-            actionBtnLeft: () => this.refreshData()
-          })
-        }
+        await this.$axios.put(`/users/${id}/verify`, { is_verify: true })
+        this.onClose()
+        this.$store.dispatch('dialog/showDialog', {
+          header: 'Penerimaan Perangkat Desa Berhasil',
+          title: 'Penerimaan Perangkat Desa telah berhasil dilakukan.',
+          message: this.contentPerangkatDesa.data,
+          detailMessage: 'Email terkait konfirmasi penerimaan telah dikirimkan ke email Perangkat Desa bersangkutan.',
+          iconMessage: 'check-mark-circle',
+          iconColor: 'text-green-700',
+          btnLeftVariant: 'primary',
+          btnLeftLabel: 'Saya mengerti',
+          dialogType: 'information',
+          actionBtnLeft: () => this.refreshData()
+        })
       } catch (error) {
         this.onClose()
         this.$store.dispatch('dialog/showDialog', {
