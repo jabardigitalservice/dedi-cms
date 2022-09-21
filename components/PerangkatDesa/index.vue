@@ -44,6 +44,7 @@
           <PerangkatDesaTableAction
             :status="item.status"
             @delete="deleteData(item)"
+            @detail="$router.push(`/data-user/perangkat-desa/detail/${item.id}`)"
             @verify="verifyUser(item)"
             @activate="activateUser(item)"
             @deactivate="deactivateUser(item)"
