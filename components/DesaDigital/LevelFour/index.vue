@@ -53,19 +53,19 @@ export default {
         name: null,
         per_page: 5,
         current_page: 1,
-        level: 4,
-        is_active: true
+        level: 4
       }
     }
   },
   async fetch () {
     try {
-      const response = await this.$axios.get('/villages/list-with-location', { params: this.query })
+      const response = await this.$axios.get('/questionnaires', { params: this.query })
       const { data, meta } = response.data
       this.data = data || []
       this.pagination.currentPage = meta?.current_page || 1
       this.pagination.totalRows = meta?.total || 0
       this.pagination.itemsPerPage = meta?.per_page || this.query.per_page
+      this.pagination.disabled = !(data.length)
     } catch {
       this.pagination.disabled = true
     }
@@ -75,6 +75,7 @@ export default {
       return this.data.map((item) => {
         return {
           ...item,
+          name: item.village?.name || '-',
           districtName: item.district?.name || '-',
           cityName: item.city?.name || '-',
           status: item.status || '-',
