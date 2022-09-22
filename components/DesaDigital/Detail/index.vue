@@ -38,27 +38,6 @@
           </tr>
         </tbody>
       </jds-simple-table>
-      <h1 class="desa-digital-detail__content-header">
-        Identitas Desa
-      </h1>
-      <jds-simple-table class="desa-digital-detail__content-table">
-        <tbody>
-          <tr>
-            <td class="desa-digital-detail__content--width">
-              <strong>No. Tlp Desa</strong>
-            </td>
-            <td>{{ '-' }}</td>
-          </tr>
-          <tr>
-            <td><strong>Nama PIC Desa</strong></td>
-            <td>{{ '-' }}</td>
-          </tr>
-          <tr>
-            <td><strong>No. HP PIC Desa</strong></td>
-            <td>{{ '-' }}</td>
-          </tr>
-        </tbody>
-      </jds-simple-table>
     </div>
     <div class="desa-digital-detail__content">
       <h1 class="desa-digital-detail__content-header">
