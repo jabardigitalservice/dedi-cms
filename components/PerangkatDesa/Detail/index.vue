@@ -271,7 +271,7 @@ export default {
             iconColor: 'text-red-500',
             btnLeftLabel: 'Saya Mengerti',
             btnLeftVariant: 'primary',
-            actionBtnLeft: () => this.$router.push('/data-user')
+            actionBtnLeft: () => this.goBack()
           })
         }
       } catch (error) {
