@@ -138,3 +138,7 @@ export default {
   }
 }
 </script>
+
+<style lang="postcss">
+@import '../DesaDigital.pcss';
+</style>
