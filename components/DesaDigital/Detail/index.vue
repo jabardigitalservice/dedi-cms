@@ -46,8 +46,9 @@
       <jds-simple-table class="desa-digital-detail__content-table">
         <thead>
           <tr>
-            <th>Tentang Desa</th>
-            <th />
+            <th colspan="2">
+              Tentang Desa
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -70,8 +71,9 @@
       <jds-simple-table class="desa-digital-detail__content-table">
         <thead>
           <tr>
-            <th>Fasilitas Desa</th>
-            <th />
+            <th colspan="2">
+              Fasilitas Desa
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -98,8 +100,9 @@
       <jds-simple-table v-show="item.level === 2 || item.level === 3 || item.level === 4" class="desa-digital-detail__content-table">
         <thead>
           <tr>
-            <th>Literasi Desa</th>
-            <th />
+            <th colspan="2">
+              Literasi Desa
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -118,8 +121,9 @@
       <jds-simple-table v-show="item.level === 3 || item.level === 4" class="desa-digital-detail__content-table">
         <thead>
           <tr>
-            <th>Tentang BUMDesa</th>
-            <th />
+            <th colspan="2">
+              Tentang BUMDesa
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -142,8 +146,9 @@
       <jds-simple-table v-show="item.level === 4" class="desa-digital-detail__content-table">
         <thead>
           <tr>
-            <th>Potensi Desa</th>
-            <th />
+            <th colspan="2">
+              Potensi Desa
+            </th>
           </tr>
         </thead>
         <tbody>
