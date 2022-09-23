@@ -1,7 +1,7 @@
 <template>
   <div class="desa-digital-detail">
     <div class="desa-digital-detail__action">
-      <BaseButton variant="primary" @click="$router.go(-1)">
+      <BaseButton variant="primary" @click="goBack">
         <template #icon>
           <div class="desa-digital-detail__action-button">
             <div class="desa-digital-detail__action-icon">
@@ -134,6 +134,25 @@ export default {
       },
       immediate: true,
       deep: true
+    }
+  },
+  methods: {
+    goBack () {
+      this.$store.commit('setTrackPage', true)
+      this.$router.push('/village')
+      switch (this.item.level) {
+        case 1:
+          this.$store.commit('setSubMenu', 'DesaDigitalLevelOne')
+          break
+        case 2:
+          this.$store.commit('setSubMenu', 'DesaDigitalLevelTwo')
+          break
+        case 3:
+          this.$store.commit('setSubMenu', 'DesaDigitalLevelThree')
+          break
+        case 4:
+          this.$store.commit('setSubMenu', 'DesaDigitalLevelFour')
+      }
     }
   }
 }
