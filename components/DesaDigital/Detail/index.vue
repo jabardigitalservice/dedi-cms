@@ -212,9 +212,9 @@ export default {
   },
   methods: {
     joinData (data, otherData) {
-      const newOtherData = otherData === undefined || otherData === null ? '' : `, ${otherData}`
+      const newOtherData = otherData ?? ''
       if (Array.isArray(data)) {
-        return data.join(', ') + newOtherData
+        return data.join(', ') + `, ${newOtherData}`
       } else {
         return '-'
       }
