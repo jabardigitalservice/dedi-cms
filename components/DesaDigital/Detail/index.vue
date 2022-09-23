@@ -23,18 +23,18 @@
               <strong>Nama Lengkap</strong>
               <span>:</span>
             </td>
-            <td>{{ item.properties.pemohon.nama || '-' }}</td>
+            <td>{{ item.properties.applicant.name || '-' }}</td>
           </tr>
           <tr>
             <td>
               <strong>No HP</strong>
               <span>:</span>
             </td>
-            <td>{{ item.properties.pemohon.nomor_telepon || '-' }}</td>
+            <td>{{ item.properties.applicant.phone_number || '-' }}</td>
           </tr>
           <tr>
             <td><strong>Email</strong></td>
-            <td>{{ item.properties.pemohon.email || '-' }}</td>
+            <td>{{ item.properties.applicant.email || '-' }}</td>
           </tr>
         </tbody>
       </jds-simple-table>
@@ -83,15 +83,79 @@
           </tr>
           <tr>
             <td><strong>Suplai Listrik</strong></td>
-            <td>{{ item.properties.fasilitas_desa.suplai_listrik.data || '-' }}</td>
+            <td>{{ item.properties.facility.power_supply.data || '-' }}</td>
           </tr>
           <tr>
             <td><strong>Jaringan Telepon</strong></td>
-            <td>{{ item.properties.fasilitas_desa.jaringan_telepon.data || '-' }}</td>
+            <td>{{ item.properties.facility.cellular_network.data || '-' }}</td>
           </tr>
           <tr>
             <td><strong>Jaringan Intener</strong></td>
-            <td>{{ item.properties.fasilitas_desa.jaringan_internet.data || '-' }}</td>
+            <td>{{ item.properties.facility.internet_network.data || '-' }}</td>
+          </tr>
+        </tbody>
+      </jds-simple-table>
+      <jds-simple-table v-show="item.level === 2 || item.level === 3 || item.level === 4" class="desa-digital-detail__content-table">
+        <thead>
+          <tr>
+            <th>Literasi Desa</th>
+            <th />
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="desa-digital-detail__content--width">
+              <strong>Komunitas di Desa</strong>
+            </td>
+            <td>{{ communities }}</td>
+          </tr>
+          <tr>
+            <td><strong>Pelatihan Literasi Digital</strong></td>
+            <td>{{ item.properties.literacy.training.data || '-' }}</td>
+          </tr>
+        </tbody>
+      </jds-simple-table>
+      <jds-simple-table v-show="item.level === 3 || item.level === 4" class="desa-digital-detail__content-table">
+        <thead>
+          <tr>
+            <th>Tentang BUMDesa</th>
+            <th />
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="desa-digital-detail__content--width">
+              <strong>Sosial Media yang Dikelola</strong>
+            </td>
+            <td>{{ socialMedias }}</td>
+          </tr>
+          <tr>
+            <td><strong>BumDesa</strong></td>
+            <td>{{ item.properties.bumdes.bumdes.data || '-' }}</td>
+          </tr>
+          <tr>
+            <td><strong>Komoditas yang dikelola BUMDesa</strong></td>
+            <td>{{ item.properties.bumdes.commodity.data || '-' }}</td>
+          </tr>
+        </tbody>
+      </jds-simple-table>
+      <jds-simple-table v-show="item.level === 4" class="desa-digital-detail__content-table">
+        <thead>
+          <tr>
+            <th>Potensi Desa</th>
+            <th />
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="desa-digital-detail__content--width">
+              <strong>Kategori Potensi Desa</strong>
+            </td>
+            <td>{{ potentials }}</td>
+          </tr>
+          <tr>
+            <td><strong>Keterangan</strong></td>
+            <td>{{ item.properties.potential.growth_potential || '-' }}</td>
           </tr>
         </tbody>
       </jds-simple-table>
@@ -118,11 +182,16 @@ export default {
   },
   computed: {
     vehicles () {
-      if (Array.isArray(this.item.properties.fasilitas_desa.akses_kendaraan.data)) {
-        return this.item.properties.fasilitas_desa.akses_kendaraan.data.join(', ')
-      } else {
-        return '-'
-      }
+      return this.joinDatas(this.item.properties.facility.vehicle_access.data)
+    },
+    communities () {
+      return this.joinDatas(this.item.properties.literacy.community.data)
+    },
+    socialMedias () {
+      return this.joinDatas(this.item.properties.bumdes.social_media.data)
+    },
+    potentials () {
+      return this.joinDatas(this.item.properties.potential.data, this.item.properties.potential.other_potential)
     }
   },
   watch: {
@@ -137,6 +206,14 @@ export default {
     }
   },
   methods: {
+    joinDatas (datas, otherDatas) {
+      const newOtherDatas = otherDatas === undefined || otherDatas === null ? '' : `, ${otherDatas}`
+      if (Array.isArray(datas)) {
+        return datas.join(', ') + newOtherDatas
+      } else {
+        return '-'
+      }
+    },
     goBack () {
       this.$store.commit('setTrackPage', true)
       this.$router.push('/village')
