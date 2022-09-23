@@ -187,16 +187,16 @@ export default {
   },
   computed: {
     vehicles () {
-      return this.joinDatas(this.item.properties.facility.vehicle_access.data)
+      return this.joinData(this.item.properties.facility.vehicle_access.data)
     },
     communities () {
-      return this.joinDatas(this.item.properties.literacy.community.data)
+      return this.joinData(this.item.properties.literacy.community.data)
     },
     socialMedias () {
-      return this.joinDatas(this.item.properties.bumdes.social_media.data)
+      return this.joinData(this.item.properties.bumdes.social_media.data)
     },
     potentials () {
-      return this.joinDatas(this.item.properties.potential.data, this.item.properties.potential.other_potential)
+      return this.joinData(this.item.properties.potential.data, this.item.properties.potential.other_potential)
     }
   },
   watch: {
@@ -211,10 +211,10 @@ export default {
     }
   },
   methods: {
-    joinDatas (datas, otherDatas) {
-      const newOtherDatas = otherDatas === undefined || otherDatas === null ? '' : `, ${otherDatas}`
-      if (Array.isArray(datas)) {
-        return datas.join(', ') + newOtherDatas
+    joinData (data, otherData) {
+      const newOtherData = otherData === undefined || otherData === null ? '' : `, ${otherData}`
+      if (Array.isArray(data)) {
+        return data.join(', ') + newOtherData
       } else {
         return '-'
       }
