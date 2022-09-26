@@ -23,18 +23,18 @@
               <strong>Nama Lengkap</strong>
               <span>:</span>
             </td>
-            <td>{{ item.properties.applicant.name || '-' }}</td>
+            <td>{{ applicantName }}</td>
           </tr>
           <tr>
             <td>
               <strong>No HP</strong>
               <span>:</span>
             </td>
-            <td>{{ item.properties.applicant.phone_number || '-' }}</td>
+            <td>{{ applicantPhoneNumber }}</td>
           </tr>
           <tr>
             <td><strong>Email</strong></td>
-            <td>{{ item.properties.applicant.email || '-' }}</td>
+            <td>{{ applicantEmail }}</td>
           </tr>
         </tbody>
       </jds-simple-table>
@@ -56,15 +56,15 @@
             <td class="desa-digital-detail__content--width">
               <strong>Nama</strong>
             </td>
-            <td>{{ item.village.name || '-' }}</td>
+            <td>{{ villageName }}</td>
           </tr>
           <tr>
             <td><strong>Kecamatan</strong></td>
-            <td>{{ item.district.name || '-' }}</td>
+            <td>{{ districtName || '-' }}</td>
           </tr>
           <tr>
             <td><strong>Kabupaten/Kota</strong></td>
-            <td>{{ item.city.name || '-' }}</td>
+            <td>{{ cityName }}</td>
           </tr>
         </tbody>
       </jds-simple-table>
@@ -85,15 +85,15 @@
           </tr>
           <tr>
             <td><strong>Suplai Listrik</strong></td>
-            <td>{{ item.properties.facility.power_supply.data || '-' }}</td>
+            <td>{{ powerSupply }}</td>
           </tr>
           <tr>
             <td><strong>Jaringan Telepon</strong></td>
-            <td>{{ item.properties.facility.cellular_network.data || '-' }}</td>
+            <td>{{ cellularNetwork }}</td>
           </tr>
           <tr>
             <td><strong>Jaringan Intener</strong></td>
-            <td>{{ item.properties.facility.internet_network.data || '-' }}</td>
+            <td>{{ internetNetwork }}</td>
           </tr>
         </tbody>
       </jds-simple-table>
@@ -114,7 +114,7 @@
           </tr>
           <tr>
             <td><strong>Pelatihan Literasi Digital</strong></td>
-            <td>{{ item.properties.literacy.training.data || '-' }}</td>
+            <td>{{ training }}</td>
           </tr>
         </tbody>
       </jds-simple-table>
@@ -135,11 +135,11 @@
           </tr>
           <tr>
             <td><strong>BumDesa</strong></td>
-            <td>{{ item.properties.business.bumdes.data || '-' }}</td>
+            <td>{{ bumdes }}</td>
           </tr>
           <tr>
             <td><strong>Komoditas yang dikelola BUMDesa</strong></td>
-            <td>{{ item.properties.business.commodity.data || '-' }}</td>
+            <td>{{ commodities }}</td>
           </tr>
         </tbody>
       </jds-simple-table>
@@ -160,7 +160,7 @@
           </tr>
           <tr>
             <td><strong>Keterangan</strong></td>
-            <td>{{ item.properties.potential.growth_potential || '-' }}</td>
+            <td>{{ growthPotentials }}</td>
           </tr>
         </tbody>
       </jds-simple-table>
@@ -195,17 +195,56 @@ export default {
     showDetailLevelFour () {
       return this.item.level === 4
     },
+    applicantName () {
+      return this.item.properties?.applicant?.name ?? '-'
+    },
+    applicantPhoneNumber () {
+      return this.item.properties?.applicant?.phone_number ?? '-'
+    },
+    applicantEmail () {
+      return this.item.properties?.applicant?.email ?? '-'
+    },
+    villageName () {
+      return this.item.village?.name ?? '-'
+    },
+    districtName () {
+      return this.item.district?.name ?? '-'
+    },
+    cityName () {
+      return this.item.city?.name ?? '-'
+    },
     vehicles () {
-      return this.joinData(this.item.properties.facility.vehicle_access.data)
+      return this.joinData(this.item.properties.facility?.vehicle_access?.data)
+    },
+    powerSupply () {
+      return this.item.properties.facility?.power_supply?.data ?? '-'
+    },
+    cellularNetwork () {
+      return this.item.properties.facility?.cellular_network?.data ?? '-'
+    },
+    internetNetwork () {
+      return this.item.properties.facility?.internet_network?.data ?? '-'
     },
     communities () {
-      return this.joinData(this.item.properties.literacy.community.data)
+      return this.joinData(this.item.properties.literacy?.community?.data)
+    },
+    training () {
+      return this.item.properties.literacy?.training?.data ?? '-'
     },
     socialMedias () {
-      return this.joinData(this.item.properties.business.social_media.data)
+      return this.joinData(this.item.properties.business?.social_media?.data)
+    },
+    bumdes () {
+      return this.item.properties.business?.bumdes?.data ?? '-'
+    },
+    commodities () {
+      return this.item.properties.business?.commodity?.data ?? '-'
     },
     potentials () {
-      return this.joinData(this.item.properties.potential.data, this.item.properties.potential.other_potential)
+      return this.joinData(this.item.properties?.potential?.data, this.item.properties.potential.other_potential)
+    },
+    growthPotentials () {
+      return this.item.properties?.potential?.growth_potential || '-'
     }
   },
   watch: {
