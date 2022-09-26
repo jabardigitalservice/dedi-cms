@@ -24,8 +24,8 @@
         @per-page-change="perPageChange"
       >
         <!-- eslint-disable-next-line vue/valid-v-slot -->
-        <template #item.action="{}">
-          <BaseButton variant="primary" label="Lihat Detail" />
+        <template #item.action="{item}">
+          <BaseButton variant="primary" label="Lihat Detail" @click="$router.push(`/village/detail/${item.id}`)" />
         </template>
       </BaseDataTable>
     </div>
