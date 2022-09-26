@@ -97,7 +97,7 @@
           </tr>
         </tbody>
       </jds-simple-table>
-      <jds-simple-table v-show="item.level === 2 || item.level === 3 || item.level === 4" class="desa-digital-detail__content-table">
+      <jds-simple-table v-show="showDetailLevelTwo" class="desa-digital-detail__content-table">
         <thead>
           <tr>
             <th colspan="2">
@@ -118,7 +118,7 @@
           </tr>
         </tbody>
       </jds-simple-table>
-      <jds-simple-table v-show="item.level === 3 || item.level === 4" class="desa-digital-detail__content-table">
+      <jds-simple-table v-show="showDetailLevelThree" class="desa-digital-detail__content-table">
         <thead>
           <tr>
             <th colspan="2">
@@ -143,7 +143,7 @@
           </tr>
         </tbody>
       </jds-simple-table>
-      <jds-simple-table v-show="item.level === 4" class="desa-digital-detail__content-table">
+      <jds-simple-table v-show="showDetailLevelFour" class="desa-digital-detail__content-table">
         <thead>
           <tr>
             <th colspan="2">
@@ -186,6 +186,15 @@ export default {
     }
   },
   computed: {
+    showDetailLevelTwo () {
+      return this.item.level === 2 || this.item.level === 3 || this.item.level === 4
+    },
+    showDetailLevelThree () {
+      return this.item.level === 3 || this.item.level === 4
+    },
+    showDetailLevelFour () {
+      return this.item.level === 4
+    },
     vehicles () {
       return this.joinData(this.item.properties.facility.vehicle_access.data)
     },
