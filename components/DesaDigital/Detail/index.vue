@@ -135,11 +135,11 @@
           </tr>
           <tr>
             <td><strong>BumDesa</strong></td>
-            <td>{{ item.properties.bumdes.bumdes.data || '-' }}</td>
+            <td>{{ item.properties.business.bumdes.data || '-' }}</td>
           </tr>
           <tr>
             <td><strong>Komoditas yang dikelola BUMDesa</strong></td>
-            <td>{{ item.properties.bumdes.commodity.data || '-' }}</td>
+            <td>{{ item.properties.business.commodity.data || '-' }}</td>
           </tr>
         </tbody>
       </jds-simple-table>
@@ -193,7 +193,7 @@ export default {
       return this.joinData(this.item.properties.literacy.community.data)
     },
     socialMedias () {
-      return this.joinData(this.item.properties.bumdes.social_media.data)
+      return this.joinData(this.item.properties.business.social_media.data)
     },
     potentials () {
       return this.joinData(this.item.properties.potential.data, this.item.properties.potential.other_potential)
