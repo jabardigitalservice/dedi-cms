@@ -1,7 +1,8 @@
 <template>
   <div class="desa-digital">
     <SubMenu :menus="menus" @change="onChangeSubMenu" />
-    <component :is="selectedSubMenu" />
+    <DesaDigitalLevelFour v-if="selectedSubMenu == 4" />
+    <DesaDigital v-else :level="selectedSubMenu" />
   </div>
 </template>
 
@@ -23,6 +24,7 @@ export default {
   methods: {
     onChangeSubMenu (value) {
       this.selectedSubMenu = value
+      this.$store.commit('setSubMenu', value)
     }
   }
 }

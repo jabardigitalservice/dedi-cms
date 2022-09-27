@@ -59,19 +59,19 @@ export const regexPoint = /^-?(\d+)(\.\d+)$/
 
 export const menus = [
   {
-    value: 'DesaDigitalLevelOne',
+    value: 1,
     label: 'Desa Digital Level 1'
   },
   {
-    value: 'DesaDigitalLevelTwo',
+    value: 2,
     label: 'Desa Digital Level 2'
   },
   {
-    value: 'DesaDigitalLevelThree',
+    value: 3,
     label: 'Desa Digital Level 3'
   },
   {
-    value: 'DesaDigitalLevelFour',
+    value: 4,
     label: 'Desa Digital Level 4'
   }
 ]

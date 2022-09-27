@@ -272,16 +272,16 @@ export default {
       this.$router.push('/village')
       switch (this.item.level) {
         case 1:
-          this.$store.commit('setSubMenu', 'DesaDigitalLevelOne')
+          this.$store.commit('setSubMenu', 1)
           break
         case 2:
-          this.$store.commit('setSubMenu', 'DesaDigitalLevelTwo')
+          this.$store.commit('setSubMenu', 2)
           break
         case 3:
-          this.$store.commit('setSubMenu', 'DesaDigitalLevelThree')
+          this.$store.commit('setSubMenu', 3)
           break
         case 4:
-          this.$store.commit('setSubMenu', 'DesaDigitalLevelFour')
+          this.$store.commit('setSubMenu', 4)
       }
     }
   }
