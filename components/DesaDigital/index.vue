@@ -25,7 +25,11 @@
       >
         <!-- eslint-disable-next-line vue/valid-v-slot -->
         <template #item.action="{item}">
-          <BaseButton variant="primary" label="Lihat Detail" @click="$router.push(`/village/detail/${item.id}`)" />
+          <BaseButton
+            variant="primary"
+            label="Lihat Detail"
+            @click="$router.push(`/village/detail/${item.id}`)"
+          />
         </template>
       </BaseDataTable>
     </div>
@@ -36,11 +40,32 @@
 import debounce from 'lodash.debounce'
 import { headerDesaDigital, headerTableDesaDigital } from '@/constants/dataVillage'
 import { generateItemsPerPageOptions } from '~/utils'
+
 export default {
-  name: 'ComponentDesaDigitalLevelThree',
+  name: 'ComponentDesaDigital',
+  props: {
+    /**
+     * Variant level of Desa Digital
+     */
+    level: {
+      type: Number,
+      default: 1
+    }
+  },
   data () {
+    let dataHeader = headerDesaDigital[0]
+    let dataLevel = 1
+
+    if (this.level) {
+      dataHeader = headerDesaDigital[this.level - 1]
+      dataLevel = this.level
+    } else if (this.$store.state.subMenu && this.$store.state.isSameRoutePage) {
+      dataHeader = headerDesaDigital[this.$store.state.subMenu]
+      dataLevel = this.$store.state.subMenu
+    }
+
     return {
-      header: headerDesaDigital[2],
+      header: dataHeader,
       headerTableDesaDigital,
       search: '',
       data: [],
@@ -55,7 +80,7 @@ export default {
         q: null,
         per_page: 5,
         current_page: 1,
-        level: 3
+        level: dataLevel
       }
     }
   },
@@ -86,6 +111,10 @@ export default {
     }
   },
   watch: {
+    level (value) {
+      this.query.level = value
+      this.header = headerDesaDigital[value - 1]
+    },
     query: {
       deep: true,
       handler () {
@@ -129,5 +158,5 @@ export default {
 </script>
 
 <style lang="postcss">
-@import '../DesaDigital.pcss';
+@import './DesaDigital.pcss';
 </style>
