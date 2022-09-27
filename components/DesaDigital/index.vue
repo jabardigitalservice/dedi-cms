@@ -53,15 +53,16 @@ export default {
     }
   },
   data () {
+    const { subMenu, isSameRoutePage } = this.$store.state
     let dataHeader = headerDesaDigital[0]
     let dataLevel = 1
 
     if (this.level) {
       dataHeader = headerDesaDigital[this.level - 1]
       dataLevel = this.level
-    } else if (this.$store.state.subMenu && this.$store.state.isSameRoutePage) {
-      dataHeader = headerDesaDigital[this.$store.state.subMenu]
-      dataLevel = this.$store.state.subMenu
+    } else if (subMenu && isSameRoutePage) {
+      dataHeader = headerDesaDigital[subMenu - 1]
+      dataLevel = subMenu
     }
 
     return {
