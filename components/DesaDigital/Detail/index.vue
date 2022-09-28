@@ -90,7 +90,7 @@
             <td>{{ cellularNetwork }}</td>
           </tr>
           <tr>
-            <td><strong>Jaringan Intener</strong></td>
+            <td><strong>Jaringan Internet</strong></td>
             <td>{{ internetNetwork }}</td>
           </tr>
         </tbody>
