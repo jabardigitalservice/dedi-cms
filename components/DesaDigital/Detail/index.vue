@@ -257,10 +257,9 @@ export default {
     }
   },
   methods: {
-    joinData (data, otherData) {
-      const newOtherData = otherData ?? ''
+    joinData (data) {
       if (Array.isArray(data)) {
-        return data.join(', ') + `, ${newOtherData}`
+        return data.join(', ')
       } else {
         return '-'
       }
