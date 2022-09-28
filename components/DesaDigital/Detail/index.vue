@@ -21,14 +21,12 @@
           <tr>
             <td class="desa-digital-detail__content--width">
               <strong>Nama Lengkap</strong>
-              <span>:</span>
             </td>
             <td>{{ applicantName }}</td>
           </tr>
           <tr>
             <td>
               <strong>No HP</strong>
-              <span>:</span>
             </td>
             <td>{{ applicantPhoneNumber }}</td>
           </tr>
