@@ -106,7 +106,7 @@ export default {
         name,
         avatar
       },
-      defaultAvatar: 'https://avatars.dicebear.com/api/micah/superadmin.svg'
+      defaultAvatar: require('~/assets/icons/User_Default_Avatar.svg')
     }
   },
   computed: {
