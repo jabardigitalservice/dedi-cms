@@ -239,7 +239,7 @@ export default {
       return this.item.properties.business?.commodity?.data ?? '-'
     },
     potentials () {
-      return this.joinData(this.item.properties?.potential?.data, this.item.properties.potential.other_potential)
+      return this.combineData(this.item.properties?.potential?.data, this.item.properties.potential.other_potential)
     },
     growthPotentials () {
       return this.item.properties?.potential?.growth_potential || '-'
@@ -260,6 +260,13 @@ export default {
     joinData (data) {
       if (Array.isArray(data)) {
         return data.join(', ')
+      } else {
+        return '-'
+      }
+    },
+    combineData (data, otherData) {
+      if (Array.isArray(data) && typeof otherData === 'string') {
+        return data.join(', ').concat(', ', otherData)
       } else {
         return '-'
       }
