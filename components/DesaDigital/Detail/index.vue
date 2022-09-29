@@ -21,14 +21,12 @@
           <tr>
             <td class="desa-digital-detail__content--width">
               <strong>Nama Lengkap</strong>
-              <span>:</span>
             </td>
             <td>{{ applicantName }}</td>
           </tr>
           <tr>
             <td>
               <strong>No HP</strong>
-              <span>:</span>
             </td>
             <td>{{ applicantPhoneNumber }}</td>
           </tr>
@@ -92,7 +90,7 @@
             <td>{{ cellularNetwork }}</td>
           </tr>
           <tr>
-            <td><strong>Jaringan Intener</strong></td>
+            <td><strong>Jaringan Internet</strong></td>
             <td>{{ internetNetwork }}</td>
           </tr>
         </tbody>
@@ -241,7 +239,7 @@ export default {
       return this.item.properties.business?.commodity?.data ?? '-'
     },
     potentials () {
-      return this.joinData(this.item.properties?.potential?.data, this.item.properties.potential.other_potential)
+      return this.combineData(this.item.properties?.potential?.data, this.item.properties.potential.other_potential)
     },
     growthPotentials () {
       return this.item.properties?.potential?.growth_potential || '-'
@@ -259,10 +257,16 @@ export default {
     }
   },
   methods: {
-    joinData (data, otherData) {
-      const newOtherData = otherData ?? ''
+    joinData (data) {
       if (Array.isArray(data)) {
-        return data.join(', ') + `, ${newOtherData}`
+        return data.join(', ')
+      } else {
+        return '-'
+      }
+    },
+    combineData (data, otherData) {
+      if (Array.isArray(data) && typeof otherData === 'string') {
+        return data.join(', ').concat(', ', otherData)
       } else {
         return '-'
       }
